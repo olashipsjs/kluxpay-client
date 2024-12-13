@@ -1,13 +1,12 @@
 import Box from '@components/base/box/Box';
 import Dropdown from '@components/dropdown/Dropdown';
 import Iconify from '@components/base/iconify/Iconify';
-import React from 'react';
 
 type Props = {
   offerId: string;
 };
 
-const DeleteOffer = ({ offerId }: Props) => {
+const DeleteOffer = ({  }: Props) => {
   return (
     <Box>
       <Dropdown.Item>

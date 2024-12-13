@@ -1,7 +1,5 @@
-import React from 'react';
 import Tabs from '@components/tabs/Tabs';
 import Iconify from '@components/base/iconify/Iconify';
-import Link from '@components/anchor/Link';
 import Box from '@components/base/box/Box';
 
 const tabs = [

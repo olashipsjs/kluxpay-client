@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@components/base/box/Box';
 import Text from '@components/base/text/Text';
 import Heading from '@components/base/heading/Heading';

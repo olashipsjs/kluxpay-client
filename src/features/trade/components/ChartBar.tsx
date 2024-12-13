@@ -2,10 +2,8 @@ import Badge from '@components/badge/Badge';
 import Button from '@components/base/button/Button';
 import FormField from '@components/formfield/FormField';
 import Iconify from '@components/base/iconify/Iconify';
-import Text from '@components/base/text/Text';
 import TextField from '@components/base/textfield/TextField';
 import { Form, Formik } from 'formik';
-import React from 'react';
 
 const ChartBar = () => {
   return (

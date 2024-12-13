@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import env from 'src/constants/env';
 import client from 'src/lib/queryClient';
 

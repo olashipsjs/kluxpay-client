@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import Box from '@components/base/box/Box';
-import Link from '@components/anchor/Link';
+import Anchor from '@components/anchor/Anchor';
 import Text from '@components/base/text/Text';
 import Heading from '@components/base/heading/Heading';
 import Image from '@components/base/image/Image';
@@ -44,11 +44,11 @@ const Coin = React.memo(({ coin, network }: Props) => {
       : coin.price_change_percentage_24h?.toFixed(2);
 
   return (
-    <Link
+    <Anchor
       ref={linkRef}
       width={'full'}
       textDecoration={'none'}
-      href={`/app/assets/${coin.id}/?days=1&network=${network}`}
+      to={`/app/assets/${coin.id}/?days=1&network=${network}`}
     >
       <Flex
         rounded={16}
@@ -130,7 +130,7 @@ const Coin = React.memo(({ coin, network }: Props) => {
           </Text>
         </Flex>
       </Flex>
-    </Link>
+    </Anchor>
   );
 });
 

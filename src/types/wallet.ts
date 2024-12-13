@@ -5,7 +5,7 @@ type Wallet = {
   publicKey: string;
   privateKey: string;
   platform: string;
-  user: User | null;
+  user: User.Type | null;
 };
 
 export default Wallet;

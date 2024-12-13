@@ -13,7 +13,6 @@ import Loader from '@components/base/button/Loader';
 import Divider from '@components/divider/Divider';
 import Iconify from '@components/base/iconify/Iconify';
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import Overlay from '@components/overlay/Overlay';
 import TradeModal from './TradeModal';
 import number from '@utils/number';

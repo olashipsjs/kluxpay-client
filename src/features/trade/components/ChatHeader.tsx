@@ -1,16 +1,14 @@
 import Avatar from '@components/avatar/Avatar';
-import Box from '@components/base/box/Box';
 import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Text from '@components/base/text/Text';
-import React from 'react';
 
 const actions = [{ label: 'help', icon: 'solar:menu-dots-bold', overlay: '' }];
 
 const ChatHeader = ({ trade }: { trade: any }) => {
-  const { offer, rate, amount } = trade;
+  const { offer } = trade;
 
   return (
     <Flex

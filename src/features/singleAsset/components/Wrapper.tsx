@@ -11,7 +11,7 @@ type Props = {
   days: string;
 };
 
-const Wrapper = ({ id, days }: Props) => {
+const Wrapper = ({ id }: Props) => {
   const network = params.queryValue('network');
   const { coin, error } = useFetchCoinsById(id);
   const platform = coin?.detail_platforms[network || ''];
@@ -28,7 +28,7 @@ const Wrapper = ({ id, days }: Props) => {
         <Alert.Message css={{ flex: 1 }}>
           {error?.message || 'Failed to load coin details.'}
         </Alert.Message>
-        <Alert.Action>Try again</Alert.Action>
+        <Alert.Action to={'/'}>Try again</Alert.Action>
       </Alert>
 
       <Header

@@ -1,4 +1,3 @@
-import Flex from '@components/base/flex/Flex';
 import Overlay from '@components/overlay/Overlay';
 import useOverlay from '@hooks/useOverlay';
 import React from 'react';
@@ -21,7 +20,14 @@ const Compound = React.forwardRef(
       <Overlay
         open={open}
         {...restProps}
-        ref={elementRef}
+        ref={(element) => {
+          elementRef.current = element!;
+
+          if (typeof ref === 'function') {
+            return ref(element);
+          }
+          return elementRef;
+        }}
         children={children}
         element={elementRef}
       />

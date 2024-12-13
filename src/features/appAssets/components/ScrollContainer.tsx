@@ -18,7 +18,7 @@ const ScrollContainer = React.memo(({ label, network }: Props) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const horizontalRef = React.useRef<HTMLDivElement>(null);
 
-  const { coins, isLoading, error } = useGetCoins(network);
+  const { coins, isLoading } = useGetCoins(network);
 
   useGSAP(() => {
     if (!containerRef.current || !horizontalRef.current) return;

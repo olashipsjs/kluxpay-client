@@ -3,7 +3,6 @@ import Box from '@components/base/box/Box';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
-import React from 'react';
 
 const Message = ({
   message,

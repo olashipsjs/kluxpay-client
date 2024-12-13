@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMutation } from '@apollo/client/react/hooks/useMutation';
 import { CREATE_OFFER } from '@graphql/offer';
 import client from 'src/lib/apolloClient';

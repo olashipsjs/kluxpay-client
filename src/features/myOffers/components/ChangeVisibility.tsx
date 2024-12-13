@@ -15,8 +15,8 @@ type Props = {
 };
 
 const ChangeVisibility = ({ offerId, isActive }: Props) => {
-  const [updateOffer, { loading, error }] = useApolloMutation(UPDATE_OFFER, {
-    onCompleted: (data) => {},
+  const [updateOffer, { loading }] = useApolloMutation(UPDATE_OFFER, {
+    onCompleted: () => {},
   });
 
   const handleSubmit = (values: { isActive: boolean }) => {

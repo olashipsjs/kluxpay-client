@@ -1,14 +1,13 @@
-import React from 'react';
 import Box from '@components/base/box/Box';
 import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
-import { useStore } from '@nanostores/react';
-import { userStore } from 'src/stores/userStore';
+import useUser from '@hooks/useUser';
 import useBalance from 'src/hooks/useGetAssetBalance';
 
 const User = () => {
-  const { balance, loading, error } = useBalance({ platform: 'ethereum' });
-  const { user } = useStore(userStore);
+  const { user } = useUser();
+
+  const { balance } = useBalance({ platform: 'ethereum' });
 
   const formattedBalance = balance
     ? new Intl.NumberFormat('en-US', {

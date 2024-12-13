@@ -67,7 +67,12 @@ const Switch = React.forwardRef(
         px={'1px'}
         border={1}
         _hover={{}}
-        ref={btnRef}
+        ref={(element) => {
+          btnRef.current = element!;
+          if (typeof ref === 'function') {
+            ref(element);
+          }
+        }}
         width={width}
         color={color}
         height={height}

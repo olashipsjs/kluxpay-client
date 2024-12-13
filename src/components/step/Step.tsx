@@ -2,8 +2,8 @@ import React from 'react';
 import Box from '@components/base/box/Box';
 import useStep from 'src/hooks/useStep';
 import StepProvider from 'src/providers/StepProvider';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import Flex from '@components/base/flex/Flex';
+import { EmotionJSX } from 'node_modules/@emotion/react/dist/declarations/src/jsx-namespace';
 
 const Compound = React.forwardRef(
   (

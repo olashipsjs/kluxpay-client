@@ -2,7 +2,7 @@ import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
-import Link from '@components/anchor/Link';
+import Anchor from '@components/anchor/Anchor';
 import useStep from '@hooks/useStep';
 
 const TradeSuccess = () => {
@@ -31,14 +31,14 @@ const TradeSuccess = () => {
         Your P2P trade is now live! You're all set to begin the transaction.
       </Heading>
 
-      <Link href={`/app/trade/${data._id}`}>
+      <Anchor to={`/app/trade/${data._id}`}>
         <Button
           mt={24}
           width={'fit'}
         >
           Send a message
         </Button>
-      </Link>
+      </Anchor>
     </Flex>
   );
 };

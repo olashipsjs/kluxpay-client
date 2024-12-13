@@ -6,7 +6,7 @@ import { GET_TRADE } from '@graphql/trade';
 import useApolloQuery from '@hooks/useApolloQuery';
 
 const Wrapper = () => {
-  const { loading, error, data } = useApolloQuery(GET_TRADE, {
+  const { data } = useApolloQuery(GET_TRADE, {
     variables: { id: '6759e0ca59a62e95f7f55de4' },
   });
 

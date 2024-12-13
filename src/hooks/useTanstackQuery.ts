@@ -1,4 +1,3 @@
-import React from 'react';
 import { DefinedInitialDataOptions, useQuery } from '@tanstack/react-query';
 import client from 'src/lib/queryClient';
 

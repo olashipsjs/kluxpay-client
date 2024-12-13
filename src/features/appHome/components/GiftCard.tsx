@@ -1,11 +1,8 @@
 import Box from '@components/base/box/Box';
-import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
-import Grid from '@components/base/grid/Grid';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Text from '@components/base/text/Text';
-import React from 'react';
 
 const GiftCard = () => {
   return (
@@ -14,7 +11,6 @@ const GiftCard = () => {
       rounded={24}
       width={'full'}
       height={'240px'}
-      animate={{ x: [0, 40] }}
       flexDirection={'column'}
       boxShadow={'ringGray95'}
       justifyContent={'between'}

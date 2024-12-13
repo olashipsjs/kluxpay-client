@@ -5,7 +5,6 @@ import Grid from '@components/base/grid/Grid';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Text from '@components/base/text/Text';
-import React from 'react';
 
 const tokens = [
   'logos:bitcoin',
@@ -21,7 +20,6 @@ const TradeCard = () => {
       rounded={24}
       width={'full'}
       height={'240px'}
-      animate={{ x: [0, 40] }}
       flexDirection={'column'}
       boxShadow={'ringGray95'}
       justifyContent={'between'}

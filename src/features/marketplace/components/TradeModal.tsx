@@ -1,5 +1,4 @@
 import React from 'react';
-import Overlay from '@components/overlay/Overlay';
 import useApolloQuery from '@hooks/useApolloQuery';
 import { GET_OFFER } from '@graphql/offer';
 import Flex from '@components/base/flex/Flex';
@@ -294,7 +293,7 @@ const ConversionForm = ({ offer }: { offer: any }) => {
 };
 
 const TradeModal = ({ offerId }: { offerId: string }) => {
-  const { loading, error, data } = useApolloQuery(GET_OFFER, {
+  const { data } = useApolloQuery(GET_OFFER, {
     variables: { id: offerId },
   });
 

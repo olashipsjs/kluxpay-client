@@ -2,7 +2,6 @@ import Badge from '@components/badge/Badge';
 import Heading from '@components/base/heading/Heading';
 import Image from '@components/base/image/Image';
 import Select from '@components/select/Select';
-import Text from '@components/base/text/Text';
 import React from 'react';
 import useFormField from 'src/hooks/useFormField';
 

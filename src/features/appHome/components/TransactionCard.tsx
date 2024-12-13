@@ -2,7 +2,6 @@ import Box from '@components/base/box/Box';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
-import React from 'react';
 
 const TransactionCard = () => {
   return (
@@ -11,7 +10,6 @@ const TransactionCard = () => {
       rounded={24}
       width={'full'}
       height={'240px'}
-      animate={{ x: [0, 40] }}
       flexDirection={'column'}
       boxShadow={'ringGray95'}
       justifyContent={'between'}
@@ -27,7 +25,7 @@ const TransactionCard = () => {
         style={{ flex: 1 }}
         flexDirection={'column'}
       >
-        {Array.from('abcd').map((item) => {
+        {Array.from('abcd').map((_) => {
           return (
             <Flex
               gap={8}

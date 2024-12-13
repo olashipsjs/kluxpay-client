@@ -1,9 +1,0 @@
----
-import Wrapper from "./components/Wrapper";
-
-    const {id} = Astro.params
-
-    const days = Astro.url.searchParams.get('days') || '';
----
-
-<Wrapper client:only id={id!} days={days}/>

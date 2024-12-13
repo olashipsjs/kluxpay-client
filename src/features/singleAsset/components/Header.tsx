@@ -1,4 +1,3 @@
-import React from 'react';
 import Flex from '@components/base/flex/Flex';
 import Text from '@components/base/text/Text';
 import Heading from '@components/base/heading/Heading';
@@ -24,7 +23,7 @@ type Props = {
 const Header = ({ id, image, symbol, price, platform }: Props) => {
   const network = params.queryValue('network');
 
-  const { balance, loading, error } = useGetAssetBalance({
+  const { balance, loading } = useGetAssetBalance({
     contractAddress: platform?.contract_address,
     platform: network || '',
   });

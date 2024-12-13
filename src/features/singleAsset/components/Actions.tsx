@@ -2,7 +2,7 @@ import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
 import Grid from '@components/base/grid/Grid';
 import Iconify from '@components/base/iconify/Iconify';
-import Link from '@components/anchor/Link';
+import Anchor from '@components/anchor/Anchor';
 import Text from '@components/base/text/Text';
 
 const Actions = ({ id }: { id: string }) => {
@@ -46,7 +46,8 @@ const Actions = ({ id }: { id: string }) => {
     >
       {actions.map((action, index) => {
         return (
-          <Link
+          <Anchor
+            to={''}
             key={index}
             width={'full'}
           >
@@ -97,7 +98,7 @@ const Actions = ({ id }: { id: string }) => {
                 {action.caption}
               </Text>
             </Button>
-          </Link>
+          </Anchor>
         );
       })}
     </Grid>

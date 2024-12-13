@@ -4,7 +4,7 @@ import useApolloQuery from '@hooks/useApolloQuery';
 import { GET_OFFERS } from '@graphql/offer';
 
 const List = () => {
-  const { loading, error, data } = useApolloQuery(GET_OFFERS, {
+  const { data } = useApolloQuery(GET_OFFERS, {
     variables: { payload: { type: 'all', limit: 12, assets: 'all', page: 1 } },
   });
 

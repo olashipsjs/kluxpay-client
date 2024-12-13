@@ -1,6 +1,5 @@
 import Flex from '@components/base/flex/Flex';
 import Text from '@components/base/text/Text';
-import React from 'react';
 
 const CustomChartTooltip = ({
   price,

@@ -2,7 +2,7 @@ import Box from '@components/base/box/Box';
 import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
 import Iconify from '@components/base/iconify/Iconify';
-import Link from '@components/anchor/Link';
+import Anchor from '@components/anchor/Anchor';
 import Tabs from '@components/tabs/Tabs';
 import React from 'react';
 import BigChart from 'src/templates/BigChart';
@@ -46,8 +46,8 @@ const CoinChart = ({ id }: Props) => {
                     const isCurrentTab = days === tab.value;
 
                     return (
-                      <Link
-                        href={`http://localhost:4321/app/assets/${id}/?days=${tab.value}&network=${network}`}
+                      <Anchor
+                        to={`http://localhost:4321/app/assets/${id}/?days=${tab.value}&network=${network}`}
                       >
                         <Tabs.Trigger
                           py={4}
@@ -70,7 +70,7 @@ const CoinChart = ({ id }: Props) => {
                         >
                           {tab.name}
                         </Tabs.Trigger>
-                      </Link>
+                      </Anchor>
                     );
                   })}
                 </Tabs.List>
