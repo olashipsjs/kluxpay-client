@@ -1,9 +1,8 @@
-import useApolloMutation from './useApolloMutation';
-import { CREATE_USER } from '@graphql/user';
 import { SEND_MAIL } from '@graphql/mail';
 import { GENERATE_OTP } from '@graphql/otp';
+import { CREATE_USER } from '@graphql/user';
 import { CREATE_WALLET } from '@graphql/wallet';
-import useActionState from './useActionState';
+import useApolloMutation from '@hooks/useApolloMutation';
 
 type Payload = {
   email: string;
@@ -12,23 +11,15 @@ type Payload = {
   password: string;
   dateOfBirth: string;
 };
-const useRegister = (options?: {
-  onCompleted?: (data: any) => void;
-}): [
-  (payload: Payload) => Promise<void>,
-  ReturnType<typeof useActionState>[0]
-] => {
+const useRegister = (options?: { onCompleted?: (data: any) => void }) => {
   options = options || {};
 
-  const [state, setState] = useActionState();
   const [sendMail] = useApolloMutation(SEND_MAIL);
   const [createUser] = useApolloMutation(CREATE_USER);
   const [generateOtp] = useApolloMutation(GENERATE_OTP);
   const [createWallet] = useApolloMutation(CREATE_WALLET);
 
   const register = async (payload: Payload) => {
-    setState({ type: 'LOADING' });
-
     const { email, firstName, lastName, password, dateOfBirth } = payload;
 
     try {
@@ -47,13 +38,13 @@ const useRegister = (options?: {
       }
 
       const [walletResponse, otpResponse, mailResponse] = await Promise.all([
-        createWallet({
+        await createWallet({
           variables: { payload: { email } },
         }),
 
-        generateOtp({ variables: { payload: { email } } }),
+        await generateOtp({ variables: { payload: { email } } }),
 
-        sendMail({
+        await sendMail({
           variables: {
             payload: {
               recipients: email,
@@ -72,7 +63,7 @@ const useRegister = (options?: {
         throw new Error('Registration failed. Please try again later.');
       }
 
-      const code = otpResponse?.data?.generateOtp?.code;
+      const code = await otpResponse?.data?.generateOtp?.code;
 
       if (!code) {
         throw new Error('Registration failed. Please try again later.');
@@ -94,24 +85,14 @@ const useRegister = (options?: {
         },
       });
 
-      const data = userResponse.data?.createUser;
-
-      setState({
-        type: 'SUCCESS',
-        payload: { data },
-      });
-
-      options?.onCompleted && options.onCompleted(data);
+      const data = await userResponse.data?.createUser;
+      return data;
     } catch (error) {
-      console.log({ error });
-      setState({
-        type: 'ERROR',
-        payload: { message: (error as Error).message },
-      });
+      throw error;
     }
   };
 
-  return [register, state];
+  return { register };
 };
 
 export default useRegister;

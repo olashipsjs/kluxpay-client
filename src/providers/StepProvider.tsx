@@ -22,10 +22,8 @@ const StepProvider = ({ defaultStep = 0, children, initialData }: Props) => {
   const [data, setData] = React.useState(initialData);
 
   const next = <T,>(currentData: T, isMax: boolean = false) => {
-    if (isMax === false) {
-      setData((prevData) => ({ ...prevData, ...currentData }));
-      setStep((prevStep) => prevStep + 1);
-    }
+    setData((prevData) => ({ ...prevData, ...currentData }));
+    if (!isMax) setStep((prevStep) => prevStep + 1);
   };
 
   const reset = () => {
@@ -34,7 +32,7 @@ const StepProvider = ({ defaultStep = 0, children, initialData }: Props) => {
   };
 
   const previous = <T,>(currentData: T) => {
-    if (step >= 0) {
+    if (step > 0) {
       setData((prevData) => ({ ...prevData, ...currentData }));
       setStep((prevStep) => prevStep - 1);
     }

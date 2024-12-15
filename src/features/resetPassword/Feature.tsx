@@ -6,6 +6,7 @@ import Generate from './components/Generate';
 import Verify from './components/Verify';
 import ResetPassword from './components/ResetPassword';
 import Success from './components/Success';
+import Anchor from '@components/anchor/Anchor';
 
 const initialData = { email: '', code: '', newPassword: '' };
 
@@ -27,6 +28,25 @@ const ResetPasswordFeature = () => {
           screens={[<Generate />, <Verify />, <ResetPassword />, <Success />]}
         />
       </Step>
+
+      <Text
+        mt={48}
+        as={'p'}
+        fontSize={14}
+        textAlign={'center'}
+      >
+        Jump back to trading?{' '}
+        <Anchor
+          to={'/auth/'}
+          fontSize={'inherit'}
+          color={'orange-60'}
+          _hover={{
+            color: 'orange-40',
+          }}
+        >
+          Log in
+        </Anchor>
+      </Text>
     </React.Fragment>
   );
 };

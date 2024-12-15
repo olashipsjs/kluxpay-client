@@ -8,7 +8,11 @@ const useUser = () => {
     throw new Error('useUser must be used within a UserProvider');
   }
 
-  return context;
+  const { setUser, user } = context;
+
+  const setter = React.useCallback(setUser, [user]);
+
+  return { setUser: setter, user };
 };
 
 export default useUser;

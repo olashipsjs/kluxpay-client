@@ -4,13 +4,12 @@ import Label from '@components/base/label/Label';
 import Button from '@components/base/button/Button';
 import FormField from '@components/formfield/FormField';
 import TextField from '@components/base/textfield/TextField';
-import { SIGN_IN } from 'src/graphql/auth';
 import Alert from '@components/alert/Alert';
-import useLocalStorage from 'src/hooks/useLocalStorage';
-import useApolloMutation from '@hooks/useApolloMutation';
 import { useNavigate } from 'react-router-dom';
 import Anchor from '@components/anchor/Anchor';
 import Text from '@components/base/text/Text';
+import useLogin from '../hooks/useLogin';
+import useAsync from '@hooks/useAsync';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -36,20 +35,13 @@ const initialValues = { email: '', password: '' };
 
 const FormBlock = () => {
   const navigate = useNavigate();
-  const { save } = useLocalStorage('kp_access_token');
-  const [signIn, { error, loading }] = useApolloMutation(SIGN_IN, {
-    onCompleted: (data) => {
-      navigate('/app/');
-      save(data?.signIn?.accessToken);
-    },
+  const { login } = useLogin();
+  const [async, { loading, error }] = useAsync(login, {
+    onCompleted: () => navigate('/app/'),
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
-    await signIn({
-      variables: {
-        payload: values,
-      },
-    });
+    await async(values);
   };
 
   return (
@@ -102,7 +94,7 @@ const FormBlock = () => {
               Forgot password?
               <Anchor
                 ms={4}
-                color={'indigo-60'}
+                color={'orange-60'}
                 fontSize={'inherit'}
                 to={'/auth/reset-password/'}
               >
@@ -118,22 +110,6 @@ const FormBlock = () => {
               <Button.Loader visible={loading}></Button.Loader>
               Login
             </Button>
-
-            <Text
-              mt={20}
-              as={'p'}
-              fontSize={14}
-              textAlign={'center'}
-            >
-              Don't have an an account?
-              <Anchor
-                ms={4}
-                fontSize={'inherit'}
-                to={'/auth/register/'}
-              >
-                Register
-              </Anchor>
-            </Text>
 
             <Alert
               mt={20}

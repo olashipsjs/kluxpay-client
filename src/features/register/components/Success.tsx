@@ -4,6 +4,7 @@ import Text from '@components/base/text/Text';
 import useStep from 'src/hooks/useStep';
 import Flex from '@components/base/flex/Flex';
 import Button from '@components/base/button/Button';
+import Anchor from '@components/anchor/Anchor';
 
 const Success = () => {
   const { data, reset } = useStep<any>();
@@ -32,8 +33,17 @@ const Success = () => {
         lineHeight={'lg'}
         textAlign={'center'}
       >
-        Thank you, {data.firstName}! Your account has been successfully created.
-        Please check your email: {data.email} for a confirmation mail.
+        Your account has been successfully created. Please check your email:{' '}
+        <Anchor
+          target={'_blank'}
+          color={'green-60'}
+          fontSize={'inherit'}
+          to={`mailto:${data.email}`}
+          textDecoration={'underline'}
+        >
+          {data.email}
+        </Anchor>{' '}
+        for a confirmation mail.
       </Text>
 
       <Button

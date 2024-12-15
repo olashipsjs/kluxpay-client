@@ -9,7 +9,8 @@ import Label from '@components/base/label/Label';
 import Grid from '@components/base/grid/Grid';
 import Loader from '@components/base/button/Loader';
 import Alert from '@components/alert/Alert';
-import useRegister from '@hooks/useRegister';
+import useRegister from '../hooks/useRegister';
+import useAsync from '@hooks/useAsync';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('Tell us your first name'),
@@ -34,13 +35,14 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormBlock = () => {
+  const { register } = useRegister();
   const { data, next } = useStep<any>();
-  const [register, { loading, error }] = useRegister({
-    onCompleted: (res) => next(res),
+  const [async, { loading, error }] = useAsync(register, {
+    onCompleted: (res: typeof data) => next(res),
   });
 
   const handleSubmit = async (values: typeof data) => {
-    await register(values);
+    await async(values);
   };
 
   return (
@@ -81,7 +83,7 @@ const FormBlock = () => {
               </Grid>
 
               <FormField
-                mt={12}
+                mt={20}
                 name={'dateOfBirth'}
               >
                 <Label>Date of birth</Label>
@@ -96,7 +98,7 @@ const FormBlock = () => {
               </FormField>
 
               <FormField
-                mt={12}
+                mt={20}
                 name={'email'}
               >
                 <Label>Email</Label>
@@ -112,7 +114,7 @@ const FormBlock = () => {
               </FormField>
 
               <FormField
-                mt={12}
+                mt={20}
                 name={'password'}
               >
                 <Label htmlFor='password'>Password</Label>

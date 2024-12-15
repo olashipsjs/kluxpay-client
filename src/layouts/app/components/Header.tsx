@@ -10,7 +10,10 @@ const Header = () => {
   const { user } = useUser();
 
   return (
-    <Container py={20}>
+    <Container
+      px={20}
+      py={16}
+    >
       <Flex
         alignItems={'center'}
         justifyContent={'between'}
@@ -21,18 +24,19 @@ const Header = () => {
         >
           <Avatar
             hasError
+            size={'24px'}
             backgroundColor={'indigo-60'}
           >
             <Avatar.Fallback
-              fontSize={19}
+              fontSize={13}
               color={'white'}
-              textTransform={'uppercase'}
+              textTransform={'capitalize'}
             >
-              {user?.firstName[0]}
+              {user?.firstName.substring(0, 2)}
             </Avatar.Fallback>
           </Avatar>
           <Heading
-            fontSize={21}
+            fontSize={17}
             textTransform={'capitalize'}
           >
             {user?.firstName}

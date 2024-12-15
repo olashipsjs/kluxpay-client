@@ -114,7 +114,7 @@ const Background = React.forwardRef(
       zIndex = '9',
       width = '100%',
       height = '100%',
-      backdropBlur = 'xs',
+      backdropBlur = 'sm',
       position = 'absolute',
       backgroundColor = 'rgba(0, 0, 0, 0.25)',
       ...rest

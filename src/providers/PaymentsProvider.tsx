@@ -50,7 +50,6 @@ const PaymentsProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const {} = useApolloQuery<any>(GET_USER_PAYMENTS, {
     onCompleted: (data) => {
-      console.log(data);
       dispatch({
         type: 'SET_PAYMENTS',
         payload: { payments: data?.getUserPayments },

@@ -79,7 +79,7 @@ const OfferList = () => {
             width={'48px'}
             rounded={'full'}
             color={'orange-60'}
-            backgroundColor={'orange-100'}
+            backgroundColor={'white'}
             icon={'material-symbols-light:warning-rounded'}
           />
           <Heading

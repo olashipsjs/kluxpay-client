@@ -41,7 +41,7 @@ const linkVariants = csx({
   variants,
   defaultVariants: {
     rounded: 12,
-    fontSize: 14,
+    fontSize: 17,
     transition: '200',
     cursor: 'pointer',
     textAlign: 'center',
@@ -65,7 +65,7 @@ const Anchor = React.forwardRef((props: Link.Props, ref: Link.Ref) => {
       css={linkVariants({
         ...extractedVariants,
         _link,
-        _hover: { color: 'yellow-40', ..._hover },
+        _hover: { color: 'orange-40', ..._hover },
         _active,
       })}
       ref={ref}

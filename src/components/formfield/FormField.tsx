@@ -8,7 +8,7 @@ const Compound = React.forwardRef(
   (
     {
       name,
-      gap = 8,
+      gap = 6,
       children,
       width = 'full',
       flexDirection = 'column',
@@ -99,9 +99,10 @@ const Message = React.forwardRef(
   (
     {
       children,
-      fontSize = 14,
+      fontSize = 13,
       lineHeight = 'md',
       color = 'gray-30',
+      letterSpacing = 'xs',
       ...rest
     }: React.ComponentProps<typeof Text>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Text>>
@@ -118,8 +119,8 @@ const Message = React.forwardRef(
         {...rest}
         ref={ref}
         fontSize={fontSize}
-        letterSpacing={'xs'}
         lineHeight={lineHeight}
+        letterSpacing={letterSpacing}
         color={meta?.error && meta.touched ? 'red-60' : color}
       >
         {data}

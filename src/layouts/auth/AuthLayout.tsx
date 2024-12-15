@@ -32,9 +32,9 @@ const AuthLayout = () => {
               src={'https://alignui.com/images/logo/phoenix.svg'}
             />
           </Avatar>
-
           <Outlet />
         </Box>
+
         <Flex
           mt={40}
           gap={24}

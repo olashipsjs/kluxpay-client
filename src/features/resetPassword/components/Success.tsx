@@ -1,8 +1,8 @@
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Anchor from '@components/anchor/Anchor';
-import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
+import Text from '@components/base/text/Text';
 
 const Success = () => {
   return (
@@ -22,15 +22,27 @@ const Success = () => {
         lineHeight={'lg'}
         textAlign={'center'}
       >
-        Your password has been reset
+        Password changed
       </Heading>
+
+      <Text
+        mt={8}
+        as={'p'}
+        fontSize={17}
+      >
+        Ready to get back in? Log in now.
+      </Text>
 
       <Anchor
         mt={16}
         to={'/auth/'}
         display={'block'}
+        color={'orange-60'}
+        _hover={{
+          color: 'orange-40',
+        }}
       >
-        <Button>Sign in</Button>
+        Sign in
       </Anchor>
     </Flex>
   );

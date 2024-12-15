@@ -1,14 +1,14 @@
-import * as Yup from 'yup';
 import React from 'react';
+import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
+import useAsync from '@hooks/useAsync';
 import useStep from 'src/hooks/useStep';
+import Alert from '@components/alert/Alert';
 import Label from '@components/base/label/Label';
 import Button from '@components/base/button/Button';
-import { RESET_PASSWORD } from 'src/graphql/auth';
 import FormField from '@components/formfield/FormField';
 import TextField from '@components/base/textfield/TextField';
-import Alert from '@components/alert/Alert';
-import useApolloMutation from '@hooks/useApolloMutation';
+import useResetPassword from '../hooks/useResetPassword';
 
 const validationSchema = Yup.object().shape({
   newPassword: Yup.string()
@@ -24,22 +24,16 @@ const validationSchema = Yup.object().shape({
 });
 
 const ResetPassword = () => {
-  const { setData, next, data } = useStep<any>();
-  const [resetPassword, { loading, error }] = useApolloMutation(
-    RESET_PASSWORD,
-    { onCompleted: () => next(data) }
-  );
+  const { reset } = useResetPassword();
+  const { next, data } = useStep<any>();
+  const [async, { error, loading }] = useAsync(reset, {
+    onCompleted: (res: any) => next({ ...data, ...res }),
+  });
 
   const handleSubmit = async (values: typeof data) => {
-    setData(values);
-
-    await resetPassword({
-      variables: {
-        payload: {
-          email: values.email,
-          newPassword: values.newPassword,
-        },
-      },
+    await async({
+      email: values.email,
+      newPassword: values.newPassword,
     });
   };
 

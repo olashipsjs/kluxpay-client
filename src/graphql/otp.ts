@@ -11,9 +11,6 @@ export const GENERATE_OTP = gql`
 
 export const VERIFY_OTP = gql`
   mutation VerifyOtp($payload: VerifyOtpPayload!) {
-    verifyOtp(payload: $payload) {
-      code
-      expiresAt
-    }
+    verifyOtp(payload: $payload)
   }
 `;

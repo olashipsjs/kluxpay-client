@@ -5,20 +5,23 @@ import Section from '@components/base/section/Section';
 import Body from './components/Body';
 import OffersProvider from 'src/providers/OffersProvider';
 import PaymentsProvider from 'src/providers/PaymentsProvider';
+import AuthProvider from 'src/providers/AuthProvider';
 
 const AppLayout = () => {
   return (
-    <UserProvider>
-      <OffersProvider>
-        <PaymentsProvider>
-          <Section>
-            <SideBar />
-            <Body />
-            <BottomBar />
-          </Section>
-        </PaymentsProvider>
-      </OffersProvider>
-    </UserProvider>
+    <AuthProvider>
+      <UserProvider>
+        <OffersProvider>
+          <PaymentsProvider>
+            <Section backgroundColor={'gray-100'}>
+              <SideBar />
+              <Body />
+              <BottomBar />
+            </Section>
+          </PaymentsProvider>
+        </OffersProvider>
+      </UserProvider>
+    </AuthProvider>
   );
 };
 

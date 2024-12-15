@@ -10,7 +10,7 @@ const initialData = {
   lastName: '',
   password: '',
   firstName: '',
-  dateOfBirth: '',
+  dateOfBirth: '2000-06-28',
 };
 
 const RegisterFeature = () => {
@@ -42,7 +42,7 @@ const RegisterFeature = () => {
       />
 
       <Text
-        mt={20}
+        mt={48}
         as={'p'}
         fontSize={14}
         textAlign={'center'}
@@ -50,8 +50,12 @@ const RegisterFeature = () => {
         Already have an account?
         <Anchor
           ms={4}
-          fontSize={'inherit'}
           to={'/auth/'}
+          color={'orange-60'}
+          fontSize={'inherit'}
+          _hover={{
+            color: 'orange-40',
+          }}
         >
           Login
         </Anchor>

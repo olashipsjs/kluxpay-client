@@ -8,7 +8,7 @@ const ResetPasswordPage = () => {
       <Helmet>
         <title>Reset your password</title>
       </Helmet>
-      <ResetPasswordFeature />;
+      <ResetPasswordFeature />
     </React.Fragment>
   );
 };

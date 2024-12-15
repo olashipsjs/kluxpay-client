@@ -7,7 +7,8 @@ import { Form, Formik } from 'formik';
 import useStep from '@hooks/useStep';
 import * as Yup from 'yup';
 import Alert from '@components/alert/Alert';
-import useSendOTP from '@hooks/useSendOTP';
+import useSendOtp from '../hooks/useSendOtp';
+import useAsync from '@hooks/useAsync';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -16,23 +17,14 @@ const validationSchema = Yup.object().shape({
 });
 
 const Generate = () => {
-  const { data, next, setData } = useStep<any>();
-  const [sendOTP, { loading, error }] = useSendOTP({
-    onCompleted: (res) => next({ email: res.email, code: '', newPassword: '' }),
+  const { sendOtp } = useSendOtp();
+  const { data, next } = useStep<any>();
+  const [async, { loading, error }] = useAsync(sendOtp, {
+    onCompleted: (res: any) => next({ ...data, ...res }),
   });
 
   const handleSubmit = async (values: typeof data) => {
-    setData({ ...data, ...values });
-
-    await sendOTP(values.email, {
-      template: 'otp',
-      recipients: values.email,
-      subject: 'One time password',
-      data: {
-        title: 'One Time Password',
-        label: 'To reset your password',
-      },
-    });
+    await async({ email: values.email });
   };
 
   return (

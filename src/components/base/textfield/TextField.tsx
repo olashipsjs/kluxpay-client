@@ -14,6 +14,7 @@ import csx from '@utils/createVariant';
 import Password from './Password';
 import useFormField from '@hooks/useFormField';
 import extractProps from '@utils/extractProps';
+import effectsProps from '@props/effects';
 
 namespace TextField {
   export type Props = Polymorphic.PropsWithRef<
@@ -31,6 +32,7 @@ const variants = {
   ...borderProps,
   ...colorProps,
   ...layoutProps,
+  ...effectsProps,
 };
 
 const textFieldVariants = csx({
@@ -57,13 +59,14 @@ const Compound = React.forwardRef(
     const {
       as,
       id,
+      css,
       value,
-      onChange,
       type,
       onBlur,
-      css,
-      _placeholder,
+      onChange,
       _active,
+      disabled,
+      _placeholder,
       ...restProps
     } = extractedProps;
 
@@ -108,10 +111,12 @@ const Compound = React.forwardRef(
     return (
       <Component
         {...restProps}
+        disabled={disabled}
         id={field.name || id}
         type={type === 'number' ? 'text' : type}
         css={textFieldVariants({
           ...extractedVariants,
+          opacity: disabled ? '60' : extractedVariants.opacity,
           css,
           _placeholder: {
             fontSize: 14,

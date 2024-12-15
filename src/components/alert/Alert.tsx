@@ -4,6 +4,8 @@ import AlertProvider from 'src/providers/AlertProvider';
 import Iconify from '@components/base/iconify/Iconify';
 import Text from '@components/base/text/Text';
 import Anchor from '@components/anchor/Anchor';
+import Button from '@components/base/button/Button';
+import useAlert from '@hooks/useAlert';
 
 const Compound = React.forwardRef(
   (
@@ -17,6 +19,7 @@ const Compound = React.forwardRef(
       gap = 6,
       rounded = 6,
       alignItems = 'start',
+      flexDirection = 'row',
       backgroundColor = 'red-60',
       ...rest
     }: Omit<
@@ -43,6 +46,7 @@ const Compound = React.forwardRef(
                   gap={gap}
                   rounded={rounded}
                   alignItems={alignItems}
+                  flexDirection={flexDirection}
                   backgroundColor={backgroundColor}
                 >
                   {typeof children === 'function'
@@ -62,7 +66,7 @@ const Icon = React.forwardRef(
   (
     {
       color = 'white',
-      width = '2.5em',
+      width = '16px',
       icon = 'material-symbols-light:warning-rounded',
       ...rest
     }: Omit<React.ComponentProps<typeof Iconify>, 'icon'> & { icon?: string },
@@ -83,7 +87,7 @@ const Icon = React.forwardRef(
 const Message = React.forwardRef(
   (
     {
-      fontSize = 14,
+      fontSize = 13,
       color = 'white',
       lineHeight = 'lg',
       letterSpacing = 'xs',
@@ -125,15 +129,39 @@ const Action = React.forwardRef(
   }
 );
 
+const Dismiss = React.forwardRef(
+  (
+    { onClick, ...restProps }: React.ComponentProps<typeof Button>,
+    ref: React.ForwardedRef<React.ComponentRef<typeof Button>>
+  ) => {
+    const { setIsVisible } = useAlert();
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setIsVisible(false);
+      onClick && onClick(event);
+    };
+
+    return (
+      <Button
+        ref={ref}
+        onClick={handleClick}
+        {...restProps}
+      />
+    );
+  }
+);
+
 const Alert = Compound as typeof Compound & {
   Icon: typeof Icon;
   Action: typeof Action;
   Message: typeof Message;
+  Dismiss: typeof Dismiss;
 };
 
 Alert.Icon = Icon;
 Alert.Action = Action;
 Alert.Message = Message;
+Alert.Dismiss = Dismiss;
 Alert.displayName = 'Alert';
 
 export default Alert;

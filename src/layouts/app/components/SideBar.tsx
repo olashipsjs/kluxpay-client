@@ -52,6 +52,11 @@ const urls = {
   notifications: [
     {
       url: '/app/referral/',
+      label: 'Tasks',
+      icon: 'material-symbols-light:supervised-user-circle',
+    },
+    {
+      url: '/app/referral/',
       label: 'Earn $5',
       icon: 'material-symbols-light:supervised-user-circle',
     },
@@ -81,115 +86,128 @@ const urls = {
       icon: 'clarity:cog-solid-badged',
     },
   ],
-  action: [
-    {
-      url: '/',
-      label: 'Log out',
-      icon: 'material-symbols-light:power-settings-circle',
-    },
-  ],
 };
 
 const SideBar = () => {
   return (
     <Container
-      mx={'0px'}
+      p={0}
+      mx={0}
       top={'0px'}
       left={'0px'}
+      width={'400px'}
       height={'full'}
       position={'fixed'}
-      maxWidth={'400px'}
-      backgroundColor={'gray-100'}
       display={{ initial: 'hidden', md: 'block' }}
     >
       <Flex
-        px={4}
-        gap={2}
-        mt={24}
         width={'full'}
         height={'full'}
         style={{ flex: 1 }}
-        alignItems={'end'}
-        flexDirection={'column'}
       >
-        <Box width={'60%'}>
-          <Avatar>
-            <Avatar.Picture
-              alt={'logo'}
-              src={'https://alignui.com/images/logo/phoenix.svg'}
-            ></Avatar.Picture>
-          </Avatar>
-          <Divider my={12} />
+        <Flex
+          py={16}
+          width={'100%'}
+          alignItems={'end'}
+          flexDirection={'column'}
+        >
+          <Box width={'60%'}>
+            <Flex
+              py={6}
+              px={8}
+              mx={16}
+              rounded={12}
+              boxShadow={'ringGray90'}
+              backgroundColor={'white'}
+            >
+              <Avatar size={'24px'}>
+                <Avatar.Picture
+                  alt={'logo'}
+                  src={'https://alignui.com/images/logo/phoenix.svg'}
+                ></Avatar.Picture>
+              </Avatar>
+            </Flex>
 
-          {Object.keys(urls).map((key, index) => {
-            const groups = urls[key as keyof typeof urls];
+            <Divider
+              my={12}
+              backgroundColor={'gray-90'}
+            />
 
-            return (
-              <React.Fragment key={key}>
-                <Flex
-                  gap={'2px'}
-                  flexDirection={'column'}
-                >
-                  {groups.map((url) => {
-                    return (
-                      <Anchor
-                        px={8}
-                        py={6}
-                        gap={10}
-                        rounded={8}
-                        to={url.url}
-                        fontSize={13}
-                        width={'full'}
-                        border={'0px'}
-                        height={'auto'}
-                        key={url.label}
-                        color={'gray-50'}
-                        alignItems={'center'}
-                        fontWeight={'medium'}
-                        justifyContent={'start'}
-                        backgroundColor={'transparent'}
-                        _hover={{
-                          color: 'gray-10',
-                          backgroundColor: 'gray-95',
-                        }}
-                      >
-                        {({ isActive }) => {
-                          return (
-                            <React.Fragment>
-                              <Box
-                                display={'contents'}
-                                color={isActive ? 'gray-10' : 'inherit'}
-                                backgroundColor={
-                                  isActive ? 'gray-10' : 'inherit'
-                                }
-                              >
-                                <Iconify
-                                  width={'20px'}
-                                  icon={url.icon}
-                                />
+            {Object.keys(urls).map((key, index) => {
+              const groups = urls[key as keyof typeof urls];
 
-                                {url.label}
-                              </Box>
-                            </React.Fragment>
-                          );
-                        }}
-                      </Anchor>
-                    );
-                  })}
-                </Flex>
-                {index + 1 < Object.keys(urls).length ? (
-                  <Box
-                    my={6}
-                    height={'1px'}
-                    width={'full'}
-                    borderBottom={1}
-                    borderColor={'gray-95'}
-                  />
-                ) : null}
-              </React.Fragment>
-            );
-          })}
-        </Box>
+              return (
+                <React.Fragment key={key}>
+                  <Flex
+                    px={8}
+                    gap={'2px'}
+                    flexDirection={'column'}
+                  >
+                    {groups.map((url) => {
+                      return (
+                        <Anchor
+                          px={8}
+                          py={6}
+                          end
+                          gap={10}
+                          rounded={8}
+                          to={url.url}
+                          fontSize={16}
+                          width={'full'}
+                          border={'0px'}
+                          height={'auto'}
+                          key={url.label}
+                          color={'gray-50'}
+                          alignItems={'center'}
+                          justifyContent={'start'}
+                          backgroundColor={'transparent'}
+                          _hover={{
+                            color: 'gray-10',
+                            backgroundColor: 'gray-95',
+                          }}
+                        >
+                          {({ isActive }) => {
+                            return (
+                              <React.Fragment>
+                                <Box
+                                  display={'contents'}
+                                  color={isActive ? 'indigo-60' : 'inherit'}
+                                  backgroundColor={
+                                    isActive ? 'gray-10' : 'inherit'
+                                  }
+                                >
+                                  <Iconify
+                                    width={'20px'}
+                                    height={'20px'}
+                                    icon={url.icon}
+                                  />
+
+                                  {url.label}
+                                </Box>
+                              </React.Fragment>
+                            );
+                          }}
+                        </Anchor>
+                      );
+                    })}
+                  </Flex>
+                  {index + 1 < Object.keys(urls).length ? (
+                    <Divider
+                      my={8}
+                      backgroundColor={'gray-90'}
+                    />
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
+          </Box>
+        </Flex>
+
+        <Divider
+          width={'1px'}
+          height={'100%'}
+          backgroundColor={'gray-90'}
+        />
       </Flex>
     </Container>
   );
