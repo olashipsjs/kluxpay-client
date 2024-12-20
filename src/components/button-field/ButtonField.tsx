@@ -19,7 +19,7 @@ const ButtonField = React.forwardRef(
       value,
       onClick,
       children,
-      color = 'gray-50',
+      color = 'gray-40',
       borderColor = 'gray-95',
       backgroundColor = 'gray-95',
       ...rest
@@ -40,9 +40,9 @@ const ButtonField = React.forwardRef(
         py={py}
         ref={ref}
         onClick={handleSetValue}
-        color={isActive ? 'indigo-30' : color}
-        borderColor={isActive ? 'indigo-60' : borderColor}
-        backgroundColor={isActive ? 'indigo-100' : backgroundColor}
+        color={isActive ? 'white' : color}
+        borderColor={isActive ? 'gray-10' : borderColor}
+        backgroundColor={isActive ? 'gray-10' : backgroundColor}
         _hover={{
           backgroundColor: isActive ? '' : 'gray-90',
         }}

@@ -26,9 +26,9 @@ const RegisterFeature = () => {
         Trade your tokens faster
       </Heading>
       <Text
-        mt={12}
+        mt={6}
         as={'p'}
-        fontSize={17}
+        fontSize={16}
         textAlign={'center'}
         lineHeight={'md'}
         letterSpacing={'xs'}
@@ -50,7 +50,7 @@ const RegisterFeature = () => {
         Already have an account?
         <Anchor
           ms={4}
-          to={'/auth/'}
+          to={'/auth/login/'}
           color={'orange-60'}
           fontSize={'inherit'}
           _hover={{

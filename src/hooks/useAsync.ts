@@ -22,37 +22,36 @@ const useAsync = <T = any>(
     data: undefined,
   });
 
+  const { onCompleted } = options;
+
   const async = React.useCallback(
-    async (args?: any) => {
-      setState((prevState) => ({
-        ...prevState,
+    async (...args: any) => {
+      setState({
+        loading: true,
         data: undefined,
         error: undefined,
-        loading: true,
-      }));
+      });
       try {
-        const data = await fn(args);
-        setState((prevState) => ({
-          ...prevState,
+        const data = await fn(...args);
+        setState({
           data,
           loading: false,
           error: undefined,
-        }));
-        options.onCompleted?.(data);
+        });
+        onCompleted && onCompleted(data);
       } catch (error) {
         console.log({ error });
-        setState((prevState) => ({
-          ...prevState,
+        setState({
           loading: false,
           data: undefined,
           error: error as Error,
-        }));
+        });
       }
     },
-    [fn, options.onCompleted]
+    [fn, onCompleted]
   );
 
-  return [async, state] as const;
+  return [async, state];
 };
 
 export default useAsync;

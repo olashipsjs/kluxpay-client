@@ -8,6 +8,7 @@ import Types from '@ts_types/variants';
 import extractProps from '@utils/extractProps';
 import React from 'react';
 import csx from '@utils/createVariant';
+import gridProps from '@props/grid';
 
 namespace Heading {
   export type Props = Polymorphic.PropsWithRef<
@@ -21,6 +22,7 @@ const variants = {
   ...typographyProps,
   ...spaceProps,
   ...colorProps,
+  ...gridProps,
 };
 
 const headingVariants = csx({

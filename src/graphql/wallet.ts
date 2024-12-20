@@ -21,6 +21,12 @@ export const GET_USER_WALLETS = gql`
   }
 `;
 
+export const GET_BALANCE = gql`
+  query GetBalance {
+    getBalance
+  }
+`;
+
 export const GET_ASSET_BALANCE = gql`
   query GetAssetBalance($payload: GetAssetBalancePayload!) {
     getAssetBalance(payload: $payload)

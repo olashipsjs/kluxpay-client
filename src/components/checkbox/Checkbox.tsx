@@ -3,45 +3,85 @@ import Iconify from '@components/base/iconify/Iconify';
 import React from 'react';
 import useFormField from 'src/hooks/useFormField';
 
-const Checkbox = React.forwardRef(
+const Compound = React.forwardRef(
   (
     {
       p = 0,
-      rounded = 6,
-      size = '16px',
-      borderColor = 'gray-90',
-      backgroundColor = 'gray-95',
-      onClick,
-      ...rest
-    }: React.ComponentProps<typeof Button>,
+      _hover,
+      children,
+      rounded = 'none',
+      justifyContent = 'start',
+      borderColor = 'transparent',
+      backgroundColor = 'transparent',
+      ...restProps
+    }: Omit<React.ComponentProps<typeof Button>, 'children'> & {
+      children?:
+        | ((options: { isActive: boolean }) => React.ReactNode)
+        | React.ReactNode;
+    },
     ref: React.ForwardedRef<React.ComponentRef<typeof Button>>
   ) => {
     const { field, helper } = useFormField();
 
-    const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = () => {
       helper.setValue(!field.value);
-      onClick && onClick(event);
     };
+
+    const isActive = field.value === true;
 
     return (
       <Button
         p={p}
-        {...rest}
+        ref={ref}
+        rounded={rounded}
+        borderColor={borderColor}
+        justifyContent={justifyContent}
+        backgroundColor={backgroundColor}
+        {...restProps}
+        onClick={handleClick}
+        _hover={{ backgroundColor: 'transparent', ..._hover }}
+      >
+        {typeof children === 'function' ? children({ isActive }) : children}
+      </Button>
+    );
+  }
+);
+
+const Switch = React.forwardRef(
+  (
+    {
+      p = 0,
+      onClick,
+      rounded = 'full',
+      size = '16px',
+      borderColor = 'gray-80',
+      backgroundColor = 'transparent',
+      boxShadow = '0px .5px 1px 0px rgb(var(--gray-90))',
+      ...restProps
+    }: React.ComponentProps<typeof Button>,
+    ref: React.ForwardedRef<React.ComponentRef<typeof Button>>
+  ) => {
+    const { field } = useFormField();
+
+    return (
+      <Button
+        p={p}
+        {...restProps}
         ref={ref}
         size={size}
         rounded={rounded}
-        onClick={handleToggle}
+        boxShadow={boxShadow}
         color={field.value ? 'white' : 'gray-30'}
         borderColor={field.value ? 'indigo-60' : borderColor}
         backgroundColor={field.value ? 'indigo-60' : backgroundColor}
         _hover={{
-          borderColor: field.value ? 'indigo-70' : 'gray-90',
-          backgroundColor: field.value ? 'indigo-70' : 'gray-90',
+          borderColor: field.value ? 'indigo-70' : 'gray-80',
+          backgroundColor: field.value ? 'indigo-70' : 'gray-100',
         }}
       >
         {field.value === true ? (
           <Iconify
-            width={'1.5em'}
+            width={'20px'}
             icon={'material-symbols-light:check-rounded'}
           />
         ) : null}
@@ -49,5 +89,12 @@ const Checkbox = React.forwardRef(
     );
   }
 );
+
+const Checkbox = Compound as typeof Compound & {
+  Switch: typeof Switch;
+};
+
+Checkbox.Switch = Switch;
+Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;

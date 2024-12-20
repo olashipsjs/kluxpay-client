@@ -8,17 +8,21 @@ import AppLayout from '@layouts/app/AppLayout';
 import SettingsLayout from '@layouts/settings/SettingsLayout';
 import ProfileSettingsPage from '@pages/ProfileSettingsPage';
 import MyOffersPage from '@pages/MyOffersPage';
+import TradesPage from '@pages/TradesPage';
+import HomePage from '@pages/HomePage';
+import DashboardPage from '@pages/DashboardPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true },
+      { index: true, element: <HomePage /> },
       {
         path: 'auth',
         element: <AuthLayout />,
         children: [
+          { path: 'login', element: <LoginPage /> },
           { index: true, element: <LoginPage /> },
           { path: 'register', element: <RegisterPage /> },
           { path: 'reset-password', element: <ResetPasswordPage /> },
@@ -28,7 +32,9 @@ const router = createBrowserRouter([
         path: 'app',
         element: <AppLayout />,
         children: [
+          { index: true, element: <DashboardPage /> },
           { path: 'my-offers', element: <MyOffersPage /> },
+          { path: 'trades', element: <TradesPage /> },
           {
             path: 'settings',
             element: <SettingsLayout />,

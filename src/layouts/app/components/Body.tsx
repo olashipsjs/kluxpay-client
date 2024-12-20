@@ -12,8 +12,6 @@ import Alert from '@components/alert/Alert';
 import React from 'react';
 import VerifyAccount from './VerifyAccount';
 import Loader from '@components/base/button/Loader';
-import useApolloQuery from '@hooks/useApolloQuery';
-import { GET_USER } from '@graphql/user';
 import useAuth from '@hooks/useAuth';
 import Button from '@components/base/button/Button';
 
@@ -91,67 +89,52 @@ const VerificationBanner = React.memo(() => {
 });
 
 const Content = React.memo(() => {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const { auth } = useAuth();
 
-  const { error, loading, refetch } = useApolloQuery(GET_USER, {
-    onCompleted: (data: any) => {
-      if (data?.getUser) {
-        setUser({ type: 'SET_USER', payload: { user: data.getUser } });
-      }
-    },
-  });
-
   switch (true) {
-    case !auth.isLoggedIn:
+    case auth.accessToken === null:
       return (
-        <Flex
-          mx={'auto'}
-          height={'100vh'}
-          maxWidth={'400px'}
-          alignItems={'center'}
-          flexDirection={'column'}
-          justifyContent={'center'}
+        <Container
+          py={8}
+          px={20}
+          width={'full'}
+          maxWidth={'full'}
+          backgroundColor={'gray-10'}
         >
-          <Iconify
-            width={'40px'}
-            color={'orange-60'}
-            icon={'material-symbols-light:warning-rounded'}
-          />
-          <Heading
-            mt={12}
-            fontSize={21}
-          >
-            Session expired
-          </Heading>
-          <Text
-            as={'p'}
-            mt={8}
-            fontSize={16}
-            lineHeight={'lg'}
-            textAlign={'center'}
-          >
-            Your session has expired. Try signing in again to regain access.
-          </Text>
-          <Anchor
-            py={12}
-            px={16}
-            mt={24}
+          <Flex
+            gap={8}
+            mx={'auto'}
             width={'full'}
-            to={'/auth/'}
-            color={'white'}
-            backgroundColor={'indigo-60'}
-            _hover={{
-              color: 'white',
-              backgroundColor: 'indigo-70',
-            }}
+            alignItems={'center'}
           >
-            Login
-          </Anchor>
-        </Flex>
+            <Text
+              color={'white'}
+              lineHeight={'lg'}
+              css={{ flex: 1 }}
+              fontSize={{ initial: 13, sm: 14 }}
+            >
+              Session expired. Try signing in again to regain access.
+            </Text>
+            <Anchor
+              py={4}
+              px={16}
+              replace={true}
+              color={'white'}
+              to={'/auth/login/'}
+              backgroundColor={'indigo-60'}
+              _hover={{
+                color: 'white',
+                backgroundColor: 'indigo-70',
+              }}
+            >
+              Login
+            </Anchor>
+          </Flex>
+        </Container>
       );
 
-    case error !== undefined:
+    case user === null:
       return (
         <Flex
           mx={'auto'}
@@ -179,7 +162,7 @@ const Content = React.memo(() => {
             lineHeight={'lg'}
             textAlign={'center'}
           >
-            {error?.message}
+            Server error. Please try again later.
           </Text>
 
           <Button
@@ -188,7 +171,6 @@ const Content = React.memo(() => {
             mt={24}
             width={'full'}
             color={'white'}
-            onClick={() => refetch()}
             backgroundColor={'indigo-60'}
             _hover={{
               color: 'white',
@@ -200,7 +182,20 @@ const Content = React.memo(() => {
         </Flex>
       );
 
-    case loading:
+    case !!auth.accessToken || !!user:
+      return (
+        <Flex
+          pb={32}
+          px={{ initial: 16, sm: 32 }}
+          flexDirection={'column'}
+        >
+          <VerificationBanner />
+          <Header />
+          <Outlet />
+        </Flex>
+      );
+
+    default:
       return (
         <Flex
           height={'100vh'}
@@ -214,18 +209,6 @@ const Content = React.memo(() => {
           />
         </Flex>
       );
-
-    case !user:
-      return null;
-
-    default:
-      return (
-        <React.Fragment>
-          <VerificationBanner />
-          <Header />
-          <Outlet />
-        </React.Fragment>
-      );
   }
 });
 
@@ -234,8 +217,9 @@ const Body = () => {
     <Container
       px={0}
       width={'auto'}
+      maxWidth={'full'}
       minHeight={'screen'}
-      ms={{ initial: '0px', md: '400px' }}
+      ms={{ initial: '0px', md: '320px' }}
     >
       <Content />
     </Container>

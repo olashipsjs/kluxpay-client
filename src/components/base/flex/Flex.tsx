@@ -15,6 +15,7 @@ import sizeProps from '@props/size';
 import spaceProps from '@props/space';
 import backgroundProps from '@props/background';
 import extractProps from '@utils/extractProps';
+import gridProps from '@props/grid';
 
 namespace Flex {
   export type Props = Polymorphic.PropsWithRef<
@@ -35,6 +36,7 @@ const variants = {
   ...sizeProps,
   ...spaceProps,
   ...backgroundProps,
+  ...gridProps,
 };
 
 const flexVariants = csx({

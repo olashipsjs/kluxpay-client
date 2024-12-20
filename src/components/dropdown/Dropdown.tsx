@@ -1,13 +1,12 @@
 import Overlay from '@components/overlay/Overlay';
 import useOverlay from '@hooks/useOverlay';
 import React from 'react';
-import OverlayProvider from 'src/providers/OverlayProvider';
 
 type CompoundProps = Omit<
   React.ComponentProps<typeof Overlay>,
   keyof React.ComponentProps<typeof Overlay>
 > &
-  React.ComponentProps<typeof OverlayProvider>;
+  React.ComponentProps<typeof Overlay>;
 
 const Compound = React.forwardRef(
   (
@@ -48,7 +47,7 @@ const Content = React.forwardRef(
     }: React.ComponentProps<typeof Overlay.Content>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Overlay.Content>>
   ) => {
-    const { domRect } = useOverlay();
+    const { domRect, setIsOpen } = useOverlay();
 
     if (!domRect) return null;
 
@@ -57,6 +56,7 @@ const Content = React.forwardRef(
         <Overlay.Background
           backdropBlur={'none'}
           backgroundColor={'transparent'}
+          onClick={() => setIsOpen(false)}
         />
         <Overlay.Content
           ref={ref}
@@ -95,6 +95,7 @@ const Item = React.forwardRef(
       fontSize = 13,
       rounded = 'none',
       color = 'gray-30',
+      fontWeight = 'medium',
       justifyContent = 'start',
       borderColor = 'transparent',
       backgroundColor = 'transparent',
@@ -111,6 +112,7 @@ const Item = React.forwardRef(
         {...restProps}
         rounded={rounded}
         fontSize={fontSize}
+        fontWeight={fontWeight}
         borderColor={borderColor}
         justifyContent={justifyContent}
         backgroundColor={backgroundColor}

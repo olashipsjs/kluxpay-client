@@ -41,7 +41,7 @@ const Trigger = React.forwardRef(
   (
     {
       px = 10,
-      py = 6,
+      py = 8,
       onClick,
       children,
       gap = 8,
@@ -120,7 +120,13 @@ const Trigger = React.forwardRef(
 
 const Value = React.forwardRef(
   (
-    { children, fontSize = 14, ...rest }: React.ComponentProps<typeof Text>,
+    {
+      children,
+      fontSize = 14,
+      color = 'gray-10',
+      fontWeight = 'medium',
+      ...rest
+    }: React.ComponentProps<typeof Text>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Text>>
   ) => {
     const { field } = useFormField();
@@ -129,7 +135,9 @@ const Value = React.forwardRef(
       <Text
         ref={ref}
         {...rest}
+        color={color}
         fontSize={fontSize}
+        fontWeight={fontWeight}
       >
         {field.value ? (field.value as any) : children}
       </Text>
@@ -143,15 +151,20 @@ const Content = React.forwardRef(
       width,
       left,
       top,
-      rounded = 6,
+      p = 4,
+      gap = 2,
+      border = 1,
+      rounded = 12,
       height = 'fit',
       overflowY = 'scroll',
       position = 'absolute',
+      borderColor = 'gray-90',
+      boxShadow = '0px 2px 2px 0px rgb(var(--gray-80))',
       ...rest
     }: React.ComponentProps<typeof Overlay.Content>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Overlay.Content>>
   ) => {
-    const { domRect } = useOverlay();
+    const { domRect, setIsOpen } = useOverlay();
 
     if (!domRect) return null;
 
@@ -159,15 +172,21 @@ const Content = React.forwardRef(
       <Overlay.Panel>
         <Overlay.Background
           backdropBlur={'none'}
+          onClick={() => setIsOpen(false)}
           backgroundColor={'rgba(0, 0, 0, 0)'}
         />
         <Overlay.Content
           {...rest}
           ref={ref}
+          p={p}
+          gap={gap}
+          border={border}
           height={height}
           rounded={rounded}
           position={position}
           overflowY={overflowY}
+          boxShadow={boxShadow}
+          borderColor={borderColor}
           left={domRect.left + 'px' || left}
           width={domRect.width + 'px' || width}
           top={domRect.top + domRect.height + 8 + 'px' || top}
@@ -187,7 +206,7 @@ const Option = React.memo(
         py = 6,
         px = 12,
         gap = 8,
-        rounded = 0,
+        rounded = 8,
         color = 'gray-10',
         lineHeight = '1.5em',
         justifyContent = 'start',

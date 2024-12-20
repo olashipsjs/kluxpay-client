@@ -12,6 +12,7 @@ import Variants from '@ts_types/variants';
 import extractProps from '@utils/extractProps';
 import React from 'react';
 import csx from '@utils/createVariant';
+import backgroundProps from '@props/background';
 
 namespace Section {
   export type Props = Polymorphic.PropsWithRef<
@@ -29,6 +30,7 @@ const variants = {
   ...effectsProps,
   ...outlineProps,
   ...borderProps,
+  ...backgroundProps,
 };
 
 const sectionVariants = csx({

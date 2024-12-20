@@ -1,3 +1,5 @@
+import { GET_USER } from '@graphql/user';
+import useApolloQuery from '@hooks/useApolloQuery';
 import User from '@ts_types/user';
 import React from 'react';
 
@@ -9,6 +11,8 @@ export const UserContext = React.createContext<User.Context | undefined>(
 
 const reducer = (state: User.State, action: User.Action): User.State => {
   switch (action.type) {
+    case 'ERROR':
+      return { ...state, user: null };
     case 'SET_USER':
       return { ...state, user: action.payload.user };
     case 'UPDATE_USER':
@@ -24,6 +28,15 @@ const reducer = (state: User.State, action: User.Action): User.State => {
 type Props = React.PropsWithChildren;
 const UserProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+
+  useApolloQuery<any>(GET_USER, {
+    onCompleted: (data) => {
+      if (data?.getUser) {
+        dispatch({ type: 'SET_USER', payload: { user: data.getUser } });
+      }
+    },
+    onError: () => dispatch({ type: 'ERROR' }),
+  });
 
   const value = React.useMemo(
     () => ({

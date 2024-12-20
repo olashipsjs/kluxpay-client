@@ -13,7 +13,7 @@ const AppLayout = () => {
       <UserProvider>
         <OffersProvider>
           <PaymentsProvider>
-            <Section backgroundColor={'gray-100'}>
+            <Section backgroundColor={'gray-95'}>
               <SideBar />
               <Body />
               <BottomBar />

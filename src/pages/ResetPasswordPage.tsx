@@ -1,4 +1,4 @@
-import ResetPasswordFeature from '@features/resetPassword/Feature';
+import ResetPasswordFeature from '@features/reset-password/Feature';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 

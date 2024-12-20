@@ -8,19 +8,19 @@ const LoginFeature = () => {
   return (
     <React.Fragment>
       <Heading
-        textAlign={'center'}
         fontSize={24}
+        textAlign={'center'}
       >
-        Log in
+        Log In
       </Heading>
       <Text
-        mt={12}
+        mt={6}
         as={'p'}
-        fontSize={17}
+        fontSize={16}
         lineHeight={'lg'}
         textAlign={'center'}
       >
-        Please enter your details to login.
+        Enter your details to login.
       </Text>
       <FormBlock />
 

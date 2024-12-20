@@ -1,13 +1,13 @@
 namespace Auth {
   export type Type = {
-    isLoggedIn: boolean;
+    accessToken: string | undefined | null;
   };
 
   export type State = { auth: Type };
 
-  export type Action = {
-    type: 'SET_LOGGED_IN' | 'SET_LOGGED_OUT';
-  };
+  export type Action =
+    | { type: 'SET_LOGGED_IN'; payload: { accessToken: string } }
+    | { type: 'SET_LOGGED_OUT' };
 
   export type Context = {
     auth: State['auth'];

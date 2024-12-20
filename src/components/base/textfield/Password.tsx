@@ -41,7 +41,7 @@ const Password = React.forwardRef(
             }}
           >
             <Iconify
-              width={'2em'}
+              width={'20px'}
               icon={`material-symbols:lock-${isText ? '' : 'open-'}sharp`}
             />
           </Button>

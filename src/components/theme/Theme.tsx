@@ -26,7 +26,7 @@ const Theme = () => {
           fontSize: '62.5%',
           lineHeight: 'normal',
           color: 'rgb(var(--gray-40))',
-          fontFamily: 'Inter, sans-serif',
+          fontFamily: 'Geist, system-font, sans-serif',
         },
 
         '::-webkit-scrollbar': {

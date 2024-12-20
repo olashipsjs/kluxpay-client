@@ -11,6 +11,8 @@ import Types from '@ts_types/variants';
 import extractProps from '@utils/extractProps';
 import React from 'react';
 import csx from '@utils/createVariant';
+import colorProps from '@props/color';
+import effectsProps from '@props/effects';
 
 namespace Grid {
   export type Props = Polymorphic.PropsWithRef<
@@ -27,6 +29,8 @@ const variants = {
   ...borderProps,
   ...outlineProps,
   ...gridProps,
+  ...colorProps,
+  ...effectsProps,
 };
 
 const gridVariants = csx({

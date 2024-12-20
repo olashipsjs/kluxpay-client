@@ -11,13 +11,14 @@ namespace User {
   };
 
   export type State = {
-    user?: Type;
+    user: Type | undefined | null;
   };
 
   export type Action =
+    | { type: 'ERROR' }
+    | { type: 'VERIFY_EMAIL' }
     | { type: 'SET_USER'; payload: { user: Type } }
-    | { type: 'UPDATE_USER'; payload: { user: Type } }
-    | { type: 'VERIFY_EMAIL' };
+    | { type: 'UPDATE_USER'; payload: { user: Type } };
 
   export type Context = {
     setUser: React.Dispatch<Action>;

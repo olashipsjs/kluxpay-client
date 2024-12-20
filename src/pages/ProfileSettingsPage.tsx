@@ -1,4 +1,4 @@
-import ProfileSettingsFeature from '@features/profileSettings/Feature';
+import ProfileSettingsFeature from '@features/profile-settings/Feature';
 
 const ProfileSettingsPage = () => {
   return <ProfileSettingsFeature />;

@@ -9,12 +9,13 @@ namespace Offer {
     coinId: string;
     _id: string;
     type: 'buy' | 'sell';
+    isActive: boolean;
   };
 
-  export type State = { offers: Type[] };
+  export type State = { offers: null | undefined | Type[] };
 
   export type Action =
-    | { type: 'SET_OFFERS'; payload: { offers: Type[] } }
+    | { type: 'SET_OFFERS'; payload: { offers: State['offers'] } }
     | {
         type: 'ADD_OFFER';
         payload: { offer: Type };

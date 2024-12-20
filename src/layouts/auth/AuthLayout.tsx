@@ -1,6 +1,5 @@
 import Anchor from '@components/anchor/Anchor';
 import Avatar from '@components/avatar/Avatar';
-import Box from '@components/base/box/Box';
 import Container from '@components/base/container/Container';
 import Flex from '@components/base/flex/Flex';
 import Section from '@components/base/section/Section';
@@ -8,35 +7,34 @@ import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
   return (
-    <Section>
+    <Section backgroundColor={'gray-95'}>
       <Container
         py={24}
-        mt={{ initial: 16, sm: 80 }}
         maxWidth={{ initial: 'full', sm: '400px' }}
       >
-        <Box
-          border={1}
+        <Flex
           rounded={20}
-          minHeight={'540px'}
+          minHeight={'92vh'}
+          flexDirection={'column'}
           p={{ initial: 12, sm: 24 }}
-          borderColor={{ initial: 'transparent', sm: 'gray-90' }}
         >
-          <Avatar
-            mb={32}
-            rounded={'full'}
-            size={'40px'}
-            mx={'auto'}
-          >
-            <Avatar.Picture
-              alt={'logo'}
-              src={'https://alignui.com/images/logo/phoenix.svg'}
-            />
-          </Avatar>
+          <Anchor to={'/'}>
+            <Avatar
+              mb={24}
+              mx={'auto'}
+              size={'40px'}
+              rounded={'full'}
+            >
+              <Avatar.Picture
+                alt={'logo'}
+                src={'/logo.jpg'}
+              />
+            </Avatar>
+          </Anchor>
           <Outlet />
-        </Box>
+        </Flex>
 
         <Flex
-          mt={40}
           gap={24}
           justifyContent={'center'}
         >

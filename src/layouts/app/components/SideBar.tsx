@@ -6,28 +6,29 @@ import Anchor from '@components/anchor/Anchor';
 import Container from '@components/base/container/Container';
 import Avatar from '@components/avatar/Avatar';
 import Divider from '@components/divider/Divider';
+import Heading from '@components/base/heading/Heading';
 
 const urls = {
   assets: [
     {
       url: '/app/',
-      label: 'Home',
-      icon: 'material-symbols-light:home',
+      label: 'Dashboard',
+      icon: 'ph:house-fill',
     },
     {
       url: '/app/wallets/',
       label: 'Wallets',
-      icon: 'material-symbols-light:wallet',
+      icon: 'ph:cards-three-fill',
     },
     {
       url: '/app/my-offers/',
       label: 'My offers',
-      icon: 'material-symbols-light:book-4-spark-rounded',
+      icon: 'ph:seal-percent-fill',
     },
     {
       url: '/app/trades/',
       label: 'Trades',
-      icon: 'material-symbols-light:all-inbox-rounded',
+      icon: 'ph:arrows-counter-clockwise-fill',
     },
   ],
 
@@ -35,55 +36,38 @@ const urls = {
     {
       url: '/app/offers/',
       label: 'Marketplace',
-      icon: 'material-symbols-light:cards-star-rounded',
+      icon: 'ph:arrows-left-right-fill',
     },
     {
       url: '/app/assets/',
       label: 'Assets',
-      icon: 'material-symbols-light:bar-chart-rounded',
-    },
-    {
-      url: '/app/history/',
-      label: 'Transactions',
-      icon: 'material-symbols-light:deployed-code-history-sharp',
+      icon: 'ph:list-heart-fill',
     },
   ],
 
-  notifications: [
+  earn: [
     {
-      url: '/app/referral/',
-      label: 'Tasks',
-      icon: 'material-symbols-light:supervised-user-circle',
+      url: '/app/campaigns',
+      label: 'Campaigns',
+      icon: 'ph:calendar-dot-fill',
     },
     {
       url: '/app/referral/',
       label: 'Earn $5',
-      icon: 'material-symbols-light:supervised-user-circle',
+      icon: 'ph:share-fill',
     },
   ],
 
-  settings: [
-    {
-      url: '/app/profile/',
-      label: 'Profile',
-      icon: 'material-symbols-light:person',
-    },
-    {
-      url: '/app/payments/',
-      label: 'Payments',
-      icon: 'material-symbols-light:credit-card',
-    },
-  ],
   help: [
+    {
+      url: '/app/settings/',
+      label: 'Settings',
+      icon: 'ph:gear-fine-fill',
+    },
     {
       url: '/app/support/',
       label: 'Support',
-      icon: 'raphael:chat',
-    },
-    {
-      url: '/app/changelog/',
-      label: 'Changelog',
-      icon: 'clarity:cog-solid-badged',
+      icon: 'ph:chats-circle-fill',
     },
   ],
 };
@@ -91,124 +75,109 @@ const urls = {
 const SideBar = () => {
   return (
     <Container
-      p={0}
       mx={0}
+      py={20}
+      px={24}
       top={'0px'}
       left={'0px'}
-      width={'400px'}
+      width={'320px'}
       height={'full'}
       position={'fixed'}
+      backgroundColor={'white'}
       display={{ initial: 'hidden', md: 'block' }}
     >
       <Flex
-        width={'full'}
-        height={'full'}
-        style={{ flex: 1 }}
+        px={8}
+        gap={8}
+        rounded={12}
+        alignItems={'center'}
       >
-        <Flex
-          py={16}
-          width={'100%'}
-          alignItems={'end'}
-          flexDirection={'column'}
+        <Avatar size={'24px'}>
+          <Avatar.Picture
+            alt={'logo'}
+            src={'/logo.jpg'}
+          ></Avatar.Picture>
+        </Avatar>
+        <Heading
+          fontSize={16}
+          fontWeight={'regular'}
         >
-          <Box width={'60%'}>
-            <Flex
-              py={6}
-              px={8}
-              mx={16}
-              rounded={12}
-              boxShadow={'ringGray90'}
-              backgroundColor={'white'}
-            >
-              <Avatar size={'24px'}>
-                <Avatar.Picture
-                  alt={'logo'}
-                  src={'https://alignui.com/images/logo/phoenix.svg'}
-                ></Avatar.Picture>
-              </Avatar>
-            </Flex>
-
-            <Divider
-              my={12}
-              backgroundColor={'gray-90'}
-            />
-
-            {Object.keys(urls).map((key, index) => {
-              const groups = urls[key as keyof typeof urls];
-
-              return (
-                <React.Fragment key={key}>
-                  <Flex
-                    px={8}
-                    gap={'2px'}
-                    flexDirection={'column'}
-                  >
-                    {groups.map((url) => {
-                      return (
-                        <Anchor
-                          px={8}
-                          py={6}
-                          end
-                          gap={10}
-                          rounded={8}
-                          to={url.url}
-                          fontSize={16}
-                          width={'full'}
-                          border={'0px'}
-                          height={'auto'}
-                          key={url.label}
-                          color={'gray-50'}
-                          alignItems={'center'}
-                          justifyContent={'start'}
-                          backgroundColor={'transparent'}
-                          _hover={{
-                            color: 'gray-10',
-                            backgroundColor: 'gray-95',
-                          }}
-                        >
-                          {({ isActive }) => {
-                            return (
-                              <React.Fragment>
-                                <Box
-                                  display={'contents'}
-                                  color={isActive ? 'indigo-60' : 'inherit'}
-                                  backgroundColor={
-                                    isActive ? 'gray-10' : 'inherit'
-                                  }
-                                >
-                                  <Iconify
-                                    width={'20px'}
-                                    height={'20px'}
-                                    icon={url.icon}
-                                  />
-
-                                  {url.label}
-                                </Box>
-                              </React.Fragment>
-                            );
-                          }}
-                        </Anchor>
-                      );
-                    })}
-                  </Flex>
-                  {index + 1 < Object.keys(urls).length ? (
-                    <Divider
-                      my={8}
-                      backgroundColor={'gray-90'}
-                    />
-                  ) : null}
-                </React.Fragment>
-              );
-            })}
-          </Box>
-        </Flex>
-
-        <Divider
-          width={'1px'}
-          height={'100%'}
-          backgroundColor={'gray-90'}
-        />
+          KluxPay
+        </Heading>
       </Flex>
+
+      <Divider
+        my={12}
+        backgroundColor={'transparent'}
+      />
+
+      <Box>
+        {Object.keys(urls).map((key, index) => {
+          const groups = urls[key as keyof typeof urls];
+
+          return (
+            <React.Fragment key={key}>
+              <Flex
+                px={8}
+                gap={'2px'}
+                flexDirection={'column'}
+              >
+                {groups.map((url) => {
+                  return (
+                    <Anchor
+                      end
+                      px={8}
+                      py={8}
+                      gap={10}
+                      rounded={8}
+                      to={url.url}
+                      fontSize={14}
+                      width={'full'}
+                      border={'0px'}
+                      height={'auto'}
+                      key={url.label}
+                      color={'gray-50'}
+                      alignItems={'center'}
+                      justifyContent={'start'}
+                      backgroundColor={'transparent'}
+                      _hover={{
+                        color: 'gray-10',
+                        backgroundColor: 'gray-95',
+                      }}
+                    >
+                      {({ isActive }) => {
+                        return (
+                          <React.Fragment>
+                            <Box
+                              display={'contents'}
+                              color={isActive ? 'indigo-60' : 'inherit'}
+                              backgroundColor={isActive ? 'gray-10' : 'inherit'}
+                            >
+                              <Iconify
+                                width={'20px'}
+                                height={'20px'}
+                                icon={url.icon}
+                              />
+
+                              {url.label}
+                            </Box>
+                          </React.Fragment>
+                        );
+                      }}
+                    </Anchor>
+                  );
+                })}
+              </Flex>
+              {index + 1 < Object.keys(urls).length ? (
+                <Divider
+                  my={8}
+                  backgroundColor={'gray-90'}
+                />
+              ) : null}
+            </React.Fragment>
+          );
+        })}
+      </Box>
     </Container>
   );
 };

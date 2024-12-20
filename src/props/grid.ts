@@ -2,7 +2,7 @@ import Variants from 'src/types/variants';
 
 const gridProps = {
   gridColumn: {
-    properties: ['gridColumnEnd'],
+    properties: ['gridColumn'],
     isResponsive: true,
     values: {
       auto: 'auto',
@@ -22,7 +22,7 @@ const gridProps = {
   },
 
   gridRow: {
-    properties: ['gridColumnEnd'],
+    properties: ['gridRow'],
     isResponsive: true,
     values: {
       auto: 'auto',

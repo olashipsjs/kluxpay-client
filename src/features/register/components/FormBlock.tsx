@@ -56,7 +56,7 @@ const FormBlock = () => {
           return (
             <Form>
               <Grid
-                gap={12}
+                gap={8}
                 gridTemplateColumns={{ initial: '1fr', sm: '1fr 1fr' }}
               >
                 <FormField name={'firstName'}>

@@ -36,9 +36,9 @@ const textareaVariants = csx({
   variants,
 
   defaultVariants: {
-    py: 6,
+    py: 8,
     px: 10,
-    fontSize: 16,
+    fontSize: 14,
     width: 'full',
     resize: 'none',
     outline: 'none',
@@ -46,6 +46,7 @@ const textareaVariants = csx({
     color: 'gray-10',
     lineHeight: '1.5em',
     letterSpacing: 'xs',
+    fontWeight: 'medium',
     backgroundColor: 'transparent',
   },
 });
@@ -100,7 +101,8 @@ const Textarea = React.forwardRef(
           _active,
           _placeholder: {
             fontSize: 14,
-            color: 'gray-60',
+            color: 'gray-70',
+            fontWeight: 'regular',
             ..._placeholder,
           },
           _hover,

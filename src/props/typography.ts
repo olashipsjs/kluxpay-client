@@ -74,7 +74,7 @@ const typographyProps = {
     properties: ['letterSpacing'],
     isResponsive: true,
     values: {
-      xs: '0.005em',
+      xs: '-0.005em',
       sm: '0.0025em',
       md: -0.8,
       lg: -1,

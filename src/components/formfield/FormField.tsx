@@ -8,7 +8,7 @@ const Compound = React.forwardRef(
   (
     {
       name,
-      gap = 6,
+      gap = 8,
       children,
       width = 'full',
       flexDirection = 'column',
@@ -50,8 +50,10 @@ const Compound = React.forwardRef(
 const Sheet = React.forwardRef(
   (
     {
-      rounded = 6,
+      border = 1,
+      rounded = 12,
       overflow = 'hidden',
+      borderColor = 'gray-80',
       backgroundColor = 'white',
       css,
       ...rest
@@ -64,8 +66,10 @@ const Sheet = React.forwardRef(
       <Flex
         {...rest}
         ref={ref}
+        border={border}
         rounded={rounded}
         overflow={overflow}
+        borderColor={borderColor}
         backgroundColor={backgroundColor}
         css={{
           transition: 'all .2s ease',
@@ -74,7 +78,7 @@ const Sheet = React.forwardRef(
               ? '0px 0px 0px 1.25px rgb(var(--red-60))'
               : !meta!.error && meta!.touched
               ? '0px 0px 0px 1.25px rgb(var(--indigo-60))'
-              : '0px 0px 0px 1px rgb(var(--gray-90)), 0px 1.75px 1px 0px rgb(var(--gray-95))',
+              : '0px .5px 1px 0px rgb(var(--gray-90))',
         }}
       ></Flex>
     );

@@ -56,6 +56,12 @@
       "@assets/*": [
         "src/assets/*"
       ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@libs/*": [
+        "src/libs/*"
+      ],
     },
     /* Linting */
     "strict": true,

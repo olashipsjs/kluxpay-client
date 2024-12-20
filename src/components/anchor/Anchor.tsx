@@ -41,7 +41,7 @@ const linkVariants = csx({
   variants,
   defaultVariants: {
     rounded: 12,
-    fontSize: 17,
+    fontSize: 14,
     transition: '200',
     cursor: 'pointer',
     textAlign: 'center',

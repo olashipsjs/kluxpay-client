@@ -10,14 +10,14 @@ import useAlert from '@hooks/useAlert';
 const Compound = React.forwardRef(
   (
     {
-      px = 10,
-      py = 8,
+      px = 12,
+      py = 10,
       visible,
       timeout,
       onClose,
       children,
       gap = 6,
-      rounded = 6,
+      rounded = 12,
       alignItems = 'start',
       flexDirection = 'row',
       backgroundColor = 'red-60',
@@ -66,8 +66,8 @@ const Icon = React.forwardRef(
   (
     {
       color = 'white',
-      width = '16px',
-      icon = 'material-symbols-light:warning-rounded',
+      width = '20px',
+      icon = 'ph:cloud-warning-fill',
       ...rest
     }: Omit<React.ComponentProps<typeof Iconify>, 'icon'> & { icon?: string },
     ref: React.ForwardedRef<React.ComponentRef<typeof Iconify>>
@@ -87,7 +87,7 @@ const Icon = React.forwardRef(
 const Message = React.forwardRef(
   (
     {
-      fontSize = 13,
+      fontSize = 14,
       color = 'white',
       lineHeight = 'lg',
       letterSpacing = 'xs',

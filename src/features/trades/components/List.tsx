@@ -1,6 +1,5 @@
 import Avatar from '@components/avatar/Avatar';
 import Box from '@components/base/box/Box';
-import Button from '@components/base/button/Button';
 import Loader from '@components/base/button/Loader';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
@@ -52,44 +51,47 @@ const List = () => {
           </Heading>
         </Flex>
       );
-    case trades && trades.length === 0:
-      return (
-        <Flex
-          mt={32}
-          alignItems={'center'}
-          flexDirection={'column'}
-        >
-          <Iconify
-            width={'56px'}
-            icon={'material-symbols-light:group-remove-rounded'}
-          />
-          <Heading
-            mt={12}
-            fontSize={21}
-          >
-            No trade event recorded
-          </Heading>
-        </Flex>
-      );
+    // case trades && trades.length === 0:
+    //   return (
+    //     <Flex
+    //       mt={32}
+    //       alignItems={'center'}
+    //       flexDirection={'column'}
+    //     >
+    //       <Iconify
+    //         width={'56px'}
+    //         icon={'material-symbols-light:group-remove-rounded'}
+    //       />
+    //       <Heading
+    //         mt={12}
+    //         fontSize={21}
+    //       >
+    //         No trade event recorded
+    //       </Heading>
+    //     </Flex>
+    //   );
     default:
       return (
         <Box
           notLastChild={{
-            mb: 4,
+            borderBottom: 1,
+            borderBottomColor: 'gray-95',
           }}
         >
           {trades
-            ? trades.map((trade: any) => {
+            ? Array.from('abcdef').map((trade: any) => {
                 return (
                   <Anchor
-                    px={8}
-                    py={4}
+                    py={6}
+                    px={20}
+                    rounded={'none'}
                     key={trade._id}
                     color={'gray-50'}
                     display={'block'}
+                    backgroundColor={'white'}
                     to={`/app/trade/${trade._id}`}
                     _hover={{
-                      backgroundColor: 'gray-100',
+                      backgroundColor: 'gray-95',
                     }}
                   >
                     <Flex
@@ -99,53 +101,40 @@ const List = () => {
                     >
                       <Avatar
                         hasError
-                        size={'24px'}
+                        size={'28px'}
                         backgroundColor={'indigo-100'}
                       >
                         <Avatar.Fallback
                           color={'indigo-30'}
-                          textTransform={'uppercase'}
+                          textTransform={'capitalize'}
                         >
-                          {`${trade.offer.createdBy.firstName[0]}`}
+                          {`Je`}
                         </Avatar.Fallback>
                       </Avatar>
 
                       <Heading
                         as={'h3'}
                         fontSize={16}
-                        textAlign={'left'}
-                        letterSpacing={'xs'}
-                        textTransform={'capitalize'}
                         css={{ flex: 1 }}
+                        textAlign={'left'}
+                        fontWeight={'regular'}
                       >
-                        {`${trade.offer.createdBy.firstName} ${trade.offer.createdBy.lastName} — `}
+                        {`Jeremiah Samael want to buy `}
                         <Text
                           fontSize={16}
-                          color={'gray-60'}
-                          fontWeight={'regular'}
-                          textTransform={'capitalize'}
-                        >{`${trade.offer.type} ${trade.amount} ${trade.offer.coinId}`}</Text>
+                          color={'gray-10'}
+                          fontWeight={'medium'}
+                        >
+                          {`32 USDT`}
+                        </Text>
                       </Heading>
 
-                      <Button
-                        py={2}
-                        px={12}
-                        size={'fit'}
-                        rounded={'full'}
-                        color={'gray-60'}
-                        borderColor={'gray-95'}
-                        backgroundColor={'gray-95'}
-                        _hover={{
-                          color: 'white',
-                          backgroundColor: 'gray-80',
-                          borderColor: 'gray-80',
-                        }}
+                      <Text
+                        fontSize={13}
+                        fontWeight={'medium'}
                       >
-                        <Iconify
-                          width={'20px'}
-                          icon={'material-symbols-light:note-stack-rounded'}
-                        />
-                      </Button>
+                        4 days ago
+                      </Text>
                     </Flex>
                   </Anchor>
                 );

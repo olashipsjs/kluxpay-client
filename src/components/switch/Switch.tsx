@@ -10,31 +10,31 @@ const Switch = React.forwardRef(
     {
       value,
       onClick,
-      width = '32px',
-      height = '16px',
+      width = '28px',
+      height = '12px',
       rounded = 'full',
       color = 'white',
       overflow = 'clip',
       alignItems = 'center',
       justifyContent = 'start',
       borderColor = 'transparent',
-      backgroundColor = 'gray-90',
+      backgroundColor = 'gray-95',
       ...restProps
     }: Omit<React.ComponentProps<typeof Button>, 'value'> & { value: boolean },
     ref: React.ForwardedRef<React.ComponentRef<typeof Button>>
   ) => {
-    const { helper } = useFormField();
+    const { field, helper } = useFormField();
 
     const btnRef = React.useRef<HTMLButtonElement>(null!);
     const handleRef = React.useRef<HTMLDivElement>(null!);
 
     const handleSwitch = (event: React.MouseEvent<HTMLButtonElement>) => {
-      helper.setValue(!value);
+      helper.setValue(!field.value);
       onClick && onClick(event);
     };
 
     useGSAP(() => {
-      if (value === true) {
+      if (field.value === true) {
         gsap.to(btnRef.current, {
           duration: 0.1,
           ease: 'back.in(1.5)',
@@ -42,7 +42,7 @@ const Switch = React.forwardRef(
         });
 
         gsap.to(handleRef.current, {
-          x: 15,
+          x: 12,
           duration: 0.25,
           ease: 'elastic.out(1)',
         });
@@ -59,14 +59,16 @@ const Switch = React.forwardRef(
           ease: 'elastic.out(1)',
         });
       }
-    }, [value]);
+    }, [field.value]);
 
     return (
       <Button
-        py={8}
+        py={'1.5px'}
         px={'1px'}
         border={1}
-        _hover={{}}
+        _hover={{
+          backgroundColor: 'gray-95',
+        }}
         ref={(element) => {
           btnRef.current = element!;
           if (typeof ref === 'function') {
@@ -75,7 +77,7 @@ const Switch = React.forwardRef(
         }}
         width={width}
         color={color}
-        height={height}
+        height={'fit'}
         rounded={rounded}
         overflow={overflow}
         onClick={handleSwitch}
@@ -86,11 +88,11 @@ const Switch = React.forwardRef(
         {...restProps}
       >
         <Flex
+          size={height}
           ref={handleRef}
           rounded={'full'}
           backgroundColor={'currentColor'}
-          boxShadow={'0px 0px 4px 1px rgba(0, 0, 0, 0.1)'}
-          size={Number(height.toString().split('px')[0]) - 2 + 'px'}
+          boxShadow={'0px 10px 12px 0px inherit'}
         />
       </Button>
     );

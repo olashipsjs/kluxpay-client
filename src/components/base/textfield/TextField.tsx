@@ -39,14 +39,15 @@ const textFieldVariants = csx({
   variants,
 
   defaultVariants: {
-    py: 6,
+    py: 8,
     px: 10,
-    fontSize: 16,
+    fontSize: 14,
     width: 'full',
     outline: 'none',
     display: 'block',
     color: 'gray-10',
     letterSpacing: 'xs',
+    fontWeight: 'medium',
     lineHeight: '1.5em',
     backgroundColor: 'transparent',
   },
@@ -120,7 +121,8 @@ const Compound = React.forwardRef(
           css,
           _placeholder: {
             fontSize: 14,
-            color: 'gray-60',
+            color: 'gray-70',
+            fontWeight: 'regular',
             ..._placeholder,
           },
           _active,

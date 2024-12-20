@@ -42,7 +42,7 @@ namespace Image {
 const Image = React.forwardRef((props: Image.Props, ref: Image.Ref) => {
   const [extractedVariants, extractedProps] = extractProps(props, variants);
 
-  const { as, ...restProps } = extractedProps;
+  const { as, _hover, ...restProps } = extractedProps;
 
   const Component = as || 'img';
 
@@ -50,7 +50,7 @@ const Image = React.forwardRef((props: Image.Props, ref: Image.Ref) => {
     <Component
       ref={ref}
       {...restProps}
-      css={imageVariants(extractedVariants)}
+      css={imageVariants({ ...extractedVariants, _hover })}
     />
   );
 });

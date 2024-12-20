@@ -1,4 +1,3 @@
-import Box from '@components/base/box/Box';
 import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
 import { useGSAP } from '@gsap/react';
@@ -16,14 +15,14 @@ const Compound = React.forwardRef(
       element,
       ...rest
     }: Omit<
-      React.ComponentProps<typeof Box>,
+      React.ComponentProps<typeof Flex>,
       keyof React.ComponentProps<typeof OverlayProvider>
     > &
       React.ComponentProps<typeof OverlayProvider>,
-    ref: React.ForwardedRef<React.ComponentRef<typeof Box>>
+    ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>
   ) => {
     return (
-      <Box
+      <Flex
         ref={ref}
         {...rest}
       >
@@ -32,7 +31,7 @@ const Compound = React.forwardRef(
           element={element}
           children={children}
         />
-      </Box>
+      </Flex>
     );
   }
 );
@@ -114,9 +113,9 @@ const Background = React.forwardRef(
       zIndex = '9',
       width = '100%',
       height = '100%',
-      backdropBlur = 'sm',
+      backdropBlur = 'lg',
       position = 'absolute',
-      backgroundColor = 'rgba(0, 0, 0, 0.25)',
+      backgroundColor = 'rgba(var(--gray-10), 0.15)',
       ...rest
     }: React.ComponentProps<typeof Flex>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>
@@ -147,7 +146,7 @@ const Background = React.forwardRef(
 const Content = React.forwardRef(
   (
     {
-      rounded = 12,
+      rounded = 20,
       zIndex = '999',
       width = 'full',
       maxWidth = '720px',
@@ -155,7 +154,7 @@ const Content = React.forwardRef(
       position = 'relative',
       flexDirection = 'column',
       backgroundColor = 'white',
-      boxShadow = '0px 0px 0px 1px rgb(var(--gray-95)), 0px 2px 2px 0px rgba(0, 0, 0, 0.15)',
+      boxShadow = '0px 0px 0px 1px rgb(var(--gray-95)), 0px 2px 4px 1px rgba(var(--gray-90), 0.15)',
       ...rest
     }: React.ComponentProps<typeof Flex>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>

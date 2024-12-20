@@ -5,21 +5,24 @@ import Auth from '@ts_types/auth';
 import React from 'react';
 
 const initialState: Auth.State = {
-  auth: { isLoggedIn: false },
+  auth: { accessToken: undefined },
 };
 
 export const AuthContext = React.createContext<Auth.Context | undefined>(
   undefined
 );
 
-const reducer = (state: Auth.State, action: Auth.Action) => {
+const reducer = (state: Auth.State, action: Auth.Action): Auth.State => {
   switch (action.type) {
     case 'SET_LOGGED_IN':
-      return { ...state, auth: { ...state.auth, isLoggedIn: true } };
+      return {
+        ...state,
+        auth: { accessToken: action.payload.accessToken },
+      };
     case 'SET_LOGGED_OUT':
-      return { ...state, auth: { ...state.auth, isLoggedIn: false } };
+      return { ...state, auth: { accessToken: null } };
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${(action as any).type}`);
   }
 };
 
@@ -28,33 +31,40 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
 
   const { item, save } = useLocalStorage('kp_access_token');
 
-  const { startPolling, loading } = useApolloQuery<any>(REFRESH_ACCESS_TOKEN, {
-    onCompleted: (data) => {
-      if (data?.refreshAccessToken) {
-        dispatch({ type: 'SET_LOGGED_IN' });
-        save(data.refreshAccessToken.accessToken);
-      }
-    },
-    onError: () => {
-      dispatch({ type: 'SET_LOGGED_OUT' });
-    },
-
+  const { refetch } = useApolloQuery<any>(REFRESH_ACCESS_TOKEN, {
+    onError: () => dispatch({ type: 'SET_LOGGED_OUT' }),
     variables: { payload: { accessToken: item || '' } },
   });
 
-  const poll = React.useCallback(() => {
-    if (item) startPolling(5 * 60 * 1000);
-  }, [item, startPolling]);
+  const refetchQuery = React.useCallback(async () => {
+    try {
+      const { data } = await refetch({
+        payload: { accessToken: item || '' },
+      });
+
+      if (data?.refreshAccessToken) {
+        dispatch({
+          type: 'SET_LOGGED_IN',
+          payload: data.refreshAccessToken.accessToken,
+        });
+        save(data.refreshAccessToken.accessToken);
+      }
+
+      return data;
+    } catch (error) {}
+  }, [item, dispatch, save]);
 
   React.useEffect(() => {
-    poll();
-  }, [poll]);
+    const DURATION = 5 * 60 * 1000; // 15 minutes
+
+    const intervals = setInterval(refetchQuery, DURATION);
+
+    return () => clearInterval(intervals);
+  }, [refetchQuery]);
 
   const value = React.useMemo(() => {
     return { auth: state.auth, setAuth: dispatch };
   }, [state.auth]);
-
-  if (loading) return null;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

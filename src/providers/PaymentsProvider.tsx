@@ -2,6 +2,7 @@ import { GET_USER_PAYMENTS } from '@graphql/payment';
 import useApolloQuery from '@hooks/useApolloQuery';
 import Payment from '@ts_types/types';
 import React from 'react';
+
 const initialState: Payment.State = { payments: [] };
 
 export const PaymentsContext = React.createContext<Payment.Context | undefined>(
@@ -11,6 +12,8 @@ export const PaymentsContext = React.createContext<Payment.Context | undefined>(
 const reducer = (state: Payment.State, action: Payment.Action) => {
   switch (action.type) {
     case 'SET_PAYMENTS':
+      console.log({ payments: action.payload.payments });
+
       return {
         ...state,
         payments: [...state.payments, ...action.payload.payments],
@@ -30,14 +33,14 @@ const reducer = (state: Payment.State, action: Payment.Action) => {
         return offer;
       });
 
-      return { ...state, payments: [...state.payments, ...updatedPayments] };
+      return { ...state, payments: updatedPayments };
 
     case 'DELETE_PAYMENT':
       const deletedPayments = state.payments.filter(
         (offer) => offer._id !== action.payload.paymentId
       );
 
-      return { ...state, payments: [...state.payments, ...deletedPayments] };
+      return { ...state, payments: deletedPayments };
 
     default:
       return state;
@@ -48,7 +51,8 @@ type Props = React.PropsWithChildren;
 
 const PaymentsProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const {} = useApolloQuery<any>(GET_USER_PAYMENTS, {
+
+  useApolloQuery<any>(GET_USER_PAYMENTS, {
     onCompleted: (data) => {
       dispatch({
         type: 'SET_PAYMENTS',
@@ -57,10 +61,12 @@ const PaymentsProvider = ({ children }: Props) => {
     },
   });
 
+  const value = React.useMemo<Payment.Context>(() => {
+    return { payments: state.payments, setPayments: dispatch };
+  }, [state.payments, dispatch]);
+
   return (
-    <PaymentsContext.Provider
-      value={{ payments: state.payments, setPayments: dispatch }}
-    >
+    <PaymentsContext.Provider value={value}>
       {children}
     </PaymentsContext.Provider>
   );

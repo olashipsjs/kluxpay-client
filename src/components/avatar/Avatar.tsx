@@ -77,7 +77,7 @@ const Fallback = React.forwardRef(
     {
       fontSize = 12,
       color = 'gray-10',
-      fontWeight = 'semibold',
+      fontWeight = 'medium',
       textTransform = 'uppercase',
       ...rest
     }: React.ComponentProps<typeof Text>,

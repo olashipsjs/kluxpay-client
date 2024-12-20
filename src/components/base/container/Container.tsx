@@ -12,6 +12,7 @@ import Types from '@ts_types/variants';
 import extractProps from '@utils/extractProps';
 import React from 'react';
 import createVariant from '@utils/createVariant';
+import backgroundProps from '@props/background';
 
 namespace Container {
   export type Props = Polymorphic.PropsWithRef<
@@ -29,6 +30,7 @@ const variants = {
   ...borderProps,
   ...outlineProps,
   ...colorProps,
+  ...backgroundProps,
 };
 
 const containerProps = createVariant({
