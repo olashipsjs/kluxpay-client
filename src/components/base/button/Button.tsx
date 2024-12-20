@@ -52,6 +52,7 @@ const buttonProps = csx({
     cursor: 'pointer',
     textAlign: 'center',
     letterSpacing: 'xs',
+    fontWeight: 'medium',
     alignItems: 'center',
     display: 'inlineFlex',
     justifyContent: 'center',
