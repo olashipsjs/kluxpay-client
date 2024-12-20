@@ -16,8 +16,8 @@ const client = new ApolloClient({
   link: authLink.concat(
     new HttpLink({
       credentials: 'include',
-      uri: 'http://localhost:5500/api/graphql',
-      // uri: import.meta.env.VITE_APOLLO_SERVER_URI!,
+      // uri: 'http://localhost:5500/api/graphql',
+      uri: import.meta.env.VITE_APOLLO_SERVER_URI!,
     })
   ),
   cache: new InMemoryCache(),
