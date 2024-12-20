@@ -7,6 +7,7 @@ import Container from '@components/base/container/Container';
 import Avatar from '@components/avatar/Avatar';
 import Divider from '@components/divider/Divider';
 import Heading from '@components/base/heading/Heading';
+import Button from '@components/base/button/Button';
 
 const urls = {
   assets: [
@@ -77,10 +78,10 @@ const SideBar = () => {
     <Container
       mx={0}
       py={20}
-      px={24}
+      px={20}
       top={'0px'}
       left={'0px'}
-      width={'320px'}
+      width={'280px'}
       height={'full'}
       position={'fixed'}
       backgroundColor={'white'}
@@ -126,42 +127,44 @@ const SideBar = () => {
                   return (
                     <Anchor
                       end
-                      px={8}
-                      py={8}
-                      gap={10}
+                      p={0}
                       rounded={8}
                       to={url.url}
-                      fontSize={14}
+                      fontSize={13}
                       width={'full'}
                       border={'0px'}
                       height={'auto'}
                       key={url.label}
-                      color={'gray-50'}
+                      color={'gray-60'}
+                      fontWeight={'medium'}
                       alignItems={'center'}
                       justifyContent={'start'}
                       backgroundColor={'transparent'}
-                      _hover={{
-                        color: 'gray-10',
-                        backgroundColor: 'gray-95',
-                      }}
+                      _hover={{}}
                     >
                       {({ isActive }) => {
                         return (
-                          <React.Fragment>
-                            <Box
-                              display={'contents'}
-                              color={isActive ? 'indigo-60' : 'inherit'}
-                              backgroundColor={isActive ? 'gray-10' : 'inherit'}
-                            >
-                              <Iconify
-                                width={'20px'}
-                                height={'20px'}
-                                icon={url.icon}
-                              />
+                          <Button
+                            py={8}
+                            px={8}
+                            gap={12}
+                            justifyContent={'start'}
+                            borderColor={'transparent'}
+                            backgroundColor={
+                              isActive ? 'gray-90' : 'transparent'
+                            }
+                            color={isActive ? 'gray-10' : 'gray-60'}
+                            _hover={{
+                              backgroundColor: 'gray-95',
+                            }}
+                          >
+                            <Iconify
+                              width={'18px'}
+                              icon={url.icon}
+                            />
 
-                              {url.label}
-                            </Box>
-                          </React.Fragment>
+                            {url.label}
+                          </Button>
                         );
                       }}
                     </Anchor>

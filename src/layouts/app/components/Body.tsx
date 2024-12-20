@@ -8,12 +8,11 @@ import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
 import Anchor from '@components/anchor/Anchor';
 import Overlay from '@components/overlay/Overlay';
-import Alert from '@components/alert/Alert';
 import React from 'react';
-import VerifyAccount from './VerifyAccount';
 import Loader from '@components/base/button/Loader';
 import useAuth from '@hooks/useAuth';
 import Button from '@components/base/button/Button';
+import VerifyEmailFeature from '@features/shared/modals/verify-email/Feature';
 
 const VerificationBanner = React.memo(() => {
   const { user } = useUser();
@@ -21,70 +20,42 @@ const VerificationBanner = React.memo(() => {
   if (user?.isEmailVerified) return null;
 
   return (
-    <Overlay
-      p={8}
-      justifyContent={'center'}
-    >
-      {({ setIsOpen }) => {
-        return (
-          <React.Fragment>
-            <Alert
-              px={12}
-              py={6}
-              gap={6}
-              visible
-              timeout={0}
-              alignItems={'center'}
-              justifyContent={'between'}
-              backgroundColor={'indigo-60'}
-            >
-              <Heading
-                fontSize={13}
-                color={'white'}
-                css={{ flex: 1 }}
-              >
-                Unlock full access
-                <Iconify
-                  mx={8}
-                  width={'4px'}
-                  css={{ verticalAlign: 'middle' }}
-                  icon={'material-symbols-light:circle'}
-                />
-                <Anchor
-                  to={''}
-                  color={'white'}
-                  fontSize={'inherit'}
-                  fontWeight={'regular'}
-                  _hover={{
-                    opacity: 90,
-                    color: 'white',
-                    textDecoration: 'underline',
-                  }}
-                  onClick={() => setIsOpen(true)}
-                >
-                  Verify your account
-                  <Iconify
-                    ms={6}
-                    width={'24px'}
-                    icon={'material-symbols-light:line-end-arrow-notch'}
-                  />
-                </Anchor>
-              </Heading>
-              <Alert.Dismiss
-                p={0}
-                width={'fit'}
-              >
-                <Iconify
-                  width={'16px'}
-                  icon={'material-symbols-light:close'}
-                />
-              </Alert.Dismiss>
-            </Alert>
-            <VerifyAccount />
-          </React.Fragment>
-        );
-      }}
-    </Overlay>
+    <Container maxWidth={'fit'}>
+      <Overlay
+        py={8}
+        px={12}
+        rounded={12}
+        alignItems={'center'}
+        justifyContent={'center'}
+        backgroundColor={'orange-60'}
+      >
+        <Heading
+          fontSize={14}
+          color={'white'}
+        >
+          Unlock full access by verifying your email address.
+          <Overlay.Trigger
+            px={8}
+            py={4}
+            ms={6}
+            rounded={12}
+            width={'fit'}
+            color={'orange-60'}
+            borderColor={'transparent'}
+            backgroundColor={'white'}
+            _hover={{
+              opacity: 90,
+              color: 'orange-70',
+              backgroundColor: 'white',
+            }}
+          >
+            Verify now
+          </Overlay.Trigger>
+        </Heading>
+
+        <VerifyEmailFeature />
+      </Overlay>
+    </Container>
   );
 });
 
@@ -189,8 +160,8 @@ const Content = React.memo(() => {
           px={{ initial: 16, sm: 32 }}
           flexDirection={'column'}
         >
-          <VerificationBanner />
           <Header />
+          <VerificationBanner />
           <Outlet />
         </Flex>
       );
