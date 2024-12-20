@@ -190,7 +190,7 @@ const Body = () => {
       width={'auto'}
       maxWidth={'full'}
       minHeight={'screen'}
-      ms={{ initial: '0px', md: '320px' }}
+      ms={{ initial: '0px', md: '280px' }}
     >
       <Content />
     </Container>
