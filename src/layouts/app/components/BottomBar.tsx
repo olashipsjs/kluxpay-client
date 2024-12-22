@@ -64,7 +64,7 @@ const BottomBar = () => {
                   width={'16%'}
                   height={'auto'}
                   border={'none'}
-                  fontSize={'.9rem'}
+                  fontSize={'1rem'}
                   fontWeight={'medium'}
                   flexDirection={'column'}
                   backgroundColor={'transparent'}
@@ -72,7 +72,7 @@ const BottomBar = () => {
                   _hover={{ color: isActive ? '' : 'gray-10' }}
                 >
                   <Iconify
-                    width={'20px'}
+                    width={'24px'}
                     icon={item.icon}
                   />
                   {item.label}
