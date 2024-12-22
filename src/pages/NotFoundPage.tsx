@@ -6,11 +6,7 @@ const NotFoundPage = () => {
   return (
     <React.Fragment>
       <Helmet>
-        <title>Page Not Found - KluxPay</title>
-        <meta
-          name='description'
-          content='Page not found on KluxPay'
-        />
+        <title>Missing resource</title>
       </Helmet>
       <NotFoundFeature />
     </React.Fragment>

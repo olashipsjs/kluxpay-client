@@ -14,8 +14,8 @@ const NotFoundFeature = () => {
       <Container
         mx={'0'}
         pt={64}
-        ps={64}
         maxWidth={'480px'}
+        px={{ initial: 16, sm: 64 }}
       >
         <Box>
           <Heading color={'white'}>Something went wrong</Heading>
