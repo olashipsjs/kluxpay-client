@@ -95,7 +95,10 @@ const Settings = () => {
                   mt={12}
                   gap={8}
                 >
-                  <FormField name={'priceMargin'}>
+                  <FormField
+                    width={'40%'}
+                    name={'priceMargin'}
+                  >
                     <Label>Margin</Label>
                     <FormField.Sheet>
                       <TextField
@@ -120,7 +123,10 @@ const Settings = () => {
                       }}
                     </CoinPrice>
                   </FormField>
-                  <FormField name={'amount'}>
+                  <FormField
+                    width={'60%'}
+                    name={'amount'}
+                  >
                     <Label>Total quantity</Label>
                     <FormField.Sheet>
                       <TextField
