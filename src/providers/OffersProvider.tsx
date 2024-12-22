@@ -41,6 +41,16 @@ const reducer = (state: Offer.State, action: Offer.Action): Offer.State => {
 
       return { ...state, offers: deletedOffers };
 
+    case 'ACTIVATE_OFFER':
+      const activatedOffers = state.offers?.map((offer) => {
+        if (offer._id === action.payload.offerId) {
+          return { ...offer, isActive: true };
+        }
+        return offer;
+      });
+
+      return { ...state, offers: activatedOffers };
+
     default:
       return state;
   }
@@ -71,7 +81,7 @@ const OffersProvider = ({ children }: Props) => {
       offers: state.offers,
       setOffers: dispatch,
     };
-  }, [state.offers]);
+  }, [state.offers, dispatch]);
 
   return (
     <OffersContext.Provider value={value}>{children}</OffersContext.Provider>

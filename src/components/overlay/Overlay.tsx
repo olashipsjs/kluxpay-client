@@ -87,7 +87,7 @@ const Panel = React.forwardRef(
 
     return createPortal(
       <Flex
-        p={8}
+        p={p}
         ref={ref}
         top={top}
         left={left}

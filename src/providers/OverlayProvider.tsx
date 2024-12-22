@@ -22,13 +22,15 @@ const OverlayProvider = ({
   children,
   open = false,
 }: OverlayProviderProps) => {
-  const { domRect } = useDomRect(element, { debounceTime: 150 });
+  const { domRect } = useDomRect(element, { debounceTime: 50 });
   const [isOpen, setIsOpen] = React.useState(open);
 
   const value = { isOpen, setIsOpen, domRect };
 
   if (isOpen) {
-    document.body.style.overflow = 'clip';
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
   }
 
   return (

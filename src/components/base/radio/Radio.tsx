@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../button/Button';
 import useFormField from '@hooks/useFormField';
 import Box from '../box/Box';
+import Flex from '../flex/Flex';
 
 const Compound = React.forwardRef(
   (
@@ -32,8 +33,6 @@ const Compound = React.forwardRef(
 
     const isActive = field.value === value;
 
-    console.log({ val: field.value });
-
     const handleClick = () => helper.setValue(value);
 
     return (
@@ -53,10 +52,7 @@ const Compound = React.forwardRef(
         ref={ref}
         {...restProps}
       >
-        {' '}
-        {typeof children === 'function'
-          ? children({ isActive })
-          : children}{' '}
+        {typeof children === 'function' ? children({ isActive }) : children}
       </Button>
     );
   }
@@ -65,25 +61,29 @@ const Compound = React.forwardRef(
 const Switch = React.forwardRef(
   (
     {
-      p = 0,
+      border = 1,
       size = '20px',
       rounded = 'full',
+      alignItems = 'center',
       borderColor = 'gray-80',
+      justifyContent = 'center',
       backgroundColor = 'transparent',
-      boxShadow = '0px .5px 1px 0px rgb(var(--gray-90))',
+      boxShadow = '0px .75px 1px 0px rgb(var(--gray-80))',
       ...restProps
-    }: React.ComponentProps<typeof Button>,
-    ref: React.ForwardedRef<React.ComponentRef<typeof Button>>
+    }: React.ComponentProps<typeof Flex>,
+    ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>
   ) => {
     return (
-      <Button
-        p={0}
+      <Flex
         ref={ref}
         size={size}
         {...restProps}
+        border={border}
         rounded={'full'}
         boxShadow={boxShadow}
+        alignItems={alignItems}
         borderColor={borderColor}
+        justifyContent={justifyContent}
         backgroundColor={backgroundColor}
       >
         <Box
@@ -91,7 +91,7 @@ const Switch = React.forwardRef(
           rounded={'full'}
           backgroundColor={'currentColor'}
         />
-      </Button>
+      </Flex>
     );
   }
 );

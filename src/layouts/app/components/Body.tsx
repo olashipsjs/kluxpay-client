@@ -1,9 +1,7 @@
 import Container from '@components/base/container/Container';
 import useUser from '@hooks/useUser';
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
 import Flex from '@components/base/flex/Flex';
-import Iconify from '@components/base/iconify/Iconify';
 import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
 import Anchor from '@components/anchor/Anchor';
@@ -11,8 +9,10 @@ import Overlay from '@components/overlay/Overlay';
 import React from 'react';
 import Loader from '@components/base/button/Loader';
 import useAuth from '@hooks/useAuth';
-import Button from '@components/base/button/Button';
 import VerifyEmailFeature from '@features/shared/modals/verify-email/Feature';
+import Header from './Header';
+import Section from '@components/base/section/Section';
+import SideBar from './SideBar';
 
 const VerificationBanner = React.memo(() => {
   const { user } = useUser();
@@ -59,131 +59,65 @@ const VerificationBanner = React.memo(() => {
   );
 });
 
-const Content = React.memo(() => {
-  const { user } = useUser();
-  const { auth } = useAuth();
-
-  switch (true) {
-    case auth.accessToken === null:
-      return (
-        <Container
-          py={8}
-          px={20}
-          width={'full'}
-          maxWidth={'full'}
-          backgroundColor={'gray-10'}
+const Banner = ({ message }: { message: string }) => {
+  return (
+    <Container
+      py={8}
+      px={20}
+      width={'full'}
+      maxWidth={'full'}
+      backgroundColor={'gray-10'}
+    >
+      <Flex
+        gap={8}
+        mx={'auto'}
+        width={'full'}
+        alignItems={'center'}
+      >
+        <Text
+          color={'white'}
+          lineHeight={'lg'}
+          css={{ flex: 1 }}
+          fontSize={{ initial: 13, sm: 14 }}
         >
-          <Flex
-            gap={8}
-            mx={'auto'}
-            width={'full'}
-            alignItems={'center'}
-          >
-            <Text
-              color={'white'}
-              lineHeight={'lg'}
-              css={{ flex: 1 }}
-              fontSize={{ initial: 13, sm: 14 }}
-            >
-              Session expired. Try signing in again to regain access.
-            </Text>
-            <Anchor
-              py={4}
-              px={16}
-              replace={true}
-              color={'white'}
-              to={'/auth/login/'}
-              backgroundColor={'indigo-60'}
-              _hover={{
-                color: 'white',
-                backgroundColor: 'indigo-70',
-              }}
-            >
-              Login
-            </Anchor>
-          </Flex>
-        </Container>
-      );
-
-    case user === null:
-      return (
-        <Flex
-          mx={'auto'}
-          height={'100vh'}
-          maxWidth={'400px'}
-          alignItems={'center'}
-          flexDirection={'column'}
-          justifyContent={'center'}
+          {message}
+        </Text>
+        <Anchor
+          py={4}
+          px={16}
+          replace={true}
+          color={'white'}
+          to={'/auth/login/'}
+          backgroundColor={'indigo-60'}
+          _hover={{
+            color: 'white',
+            backgroundColor: 'indigo-70',
+          }}
         >
-          <Iconify
-            width={'40px'}
-            color={'orange-60'}
-            icon={'material-symbols-light:warning-rounded'}
-          />
-          <Heading
-            mt={20}
-            fontSize={21}
-          >
-            Server error
-          </Heading>
-          <Text
-            mt={8}
-            as={'p'}
-            fontSize={16}
-            lineHeight={'lg'}
-            textAlign={'center'}
-          >
-            Server error. Please try again later.
-          </Text>
+          Login
+        </Anchor>
+      </Flex>
+    </Container>
+  );
+};
 
-          <Button
-            py={12}
-            px={16}
-            mt={24}
-            width={'full'}
-            color={'white'}
-            backgroundColor={'indigo-60'}
-            _hover={{
-              color: 'white',
-              backgroundColor: 'indigo-70',
-            }}
-          >
-            Login
-          </Button>
-        </Flex>
-      );
+const Loading = () => {
+  return (
+    <Flex
+      minHeight={'screen'}
+      alignItems={'center'}
+      justifyContent={'center'}
+    >
+      <Loader
+        visible
+        width={'20px'}
+        color={'gray-10'}
+      />
+    </Flex>
+  );
+};
 
-    case !!auth.accessToken || !!user:
-      return (
-        <Flex
-          pb={32}
-          px={{ initial: 16, sm: 32 }}
-          flexDirection={'column'}
-        >
-          <Header />
-          <VerificationBanner />
-          <Outlet />
-        </Flex>
-      );
-
-    default:
-      return (
-        <Flex
-          height={'100vh'}
-          alignItems={'center'}
-          justifyContent={'center'}
-        >
-          <Loader
-            visible
-            width={'20px'}
-            color={'indigo-60'}
-          />
-        </Flex>
-      );
-  }
-});
-
-const Body = () => {
+const Content = () => {
   return (
     <Container
       px={0}
@@ -192,8 +126,42 @@ const Body = () => {
       minHeight={'screen'}
       ms={{ initial: '0px', md: '280px' }}
     >
-      <Content />
+      <Flex
+        pb={32}
+        flexDirection={'column'}
+        px={{ initial: 16, sm: 24 }}
+      >
+        <VerificationBanner />
+        <Outlet />
+      </Flex>
     </Container>
+  );
+};
+
+const Body = () => {
+  const { user } = useUser();
+  const { auth } = useAuth();
+
+  if (auth.accessToken === null) {
+    return <Banner message={'Session expired. Try signing in again.'} />;
+  }
+
+  if (user === null) {
+    return <Banner message={'Unable to load resource. Try again later.'} />;
+  }
+
+  if (!auth.accessToken && !user) {
+    return <Loading />;
+  }
+
+  return (
+    <React.Fragment>
+      <Header />
+      <Section backgroundColor={'gray-95'}>
+        <SideBar />
+        <Content />;
+      </Section>
+    </React.Fragment>
   );
 };
 

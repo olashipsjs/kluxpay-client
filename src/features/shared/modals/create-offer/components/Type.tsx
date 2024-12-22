@@ -4,13 +4,11 @@ import Flex from '@components/base/flex/Flex';
 import FormField from '@components/formfield/FormField';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
-import Overlay from '@components/overlay/Overlay';
 import Text from '@components/base/text/Text';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import useStep from 'src/hooks/useStep';
 import * as Yup from 'yup';
-import Divider from '@components/divider/Divider';
 import Label from '@components/base/label/Label';
 import Radio from '@components/base/radio/Radio';
 
@@ -24,13 +22,13 @@ const types = [
   {
     title: 'I want to sell',
     value: 'sell',
-    icon: 'material-symbols-light:leaderboard-rounded',
+    icon: 'fluent:people-money-24-filled',
     label: 'Offer will be listed to buyers.',
   },
   {
     title: 'I want to buy',
     value: 'buy',
-    icon: 'material-symbols-light:payments-rounded',
+    icon: 'fluent:person-money-24-filled',
     label: 'Offer will be listed to sellers.',
   },
 ];
@@ -69,7 +67,10 @@ const Type = () => {
             >
               {types.map((type) => {
                 return (
-                  <Radio value={type.value}>
+                  <Radio
+                    key={type.value}
+                    value={type.value}
+                  >
                     {({ isActive }) => {
                       return (
                         <React.Fragment>
@@ -107,6 +108,7 @@ const Type = () => {
                           </Box>
 
                           <Iconify
+                            color={'gray-60'}
                             width={'24px'}
                             icon={type.icon}
                           />
@@ -120,25 +122,11 @@ const Type = () => {
             <FormField.Message />
           </FormField>
 
-          <Divider
-            my={20}
-            backgroundColor={'gray-90'}
-          />
-
           <Flex
+            mt={24}
             px={20}
             gap={8}
           >
-            <Overlay.Trigger
-              color={'gray-30'}
-              borderColor={'gray-90'}
-              backgroundColor={'transparent'}
-              _hover={{
-                backgroundColor: 'gray-100',
-              }}
-            >
-              Cancel
-            </Overlay.Trigger>
             <Button type='submit'>Settings</Button>
           </Flex>
         </Form>

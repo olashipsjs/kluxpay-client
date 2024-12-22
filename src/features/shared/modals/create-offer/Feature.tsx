@@ -11,18 +11,24 @@ import { GET_OFFER } from '@graphql/offer';
 import coins from 'src/constants/coins';
 import Divider from '@components/divider/Divider';
 import Header from './components/Header';
+import { useSearchParams } from 'react-router-dom';
+import useUser from '@hooks/useUser';
 
-const CreateOfferFeature = ({ offerId }: { offerId?: string }) => {
+const CreateOfferFeature = () => {
+  const { user } = useUser();
+  const [searchParams] = useSearchParams();
+  const ID = searchParams.get('id');
+
   const { data } = useApolloQuery(GET_OFFER, {
-    variables: { id: offerId },
+    variables: { id: ID },
   });
 
   const offer = data?.getOffer;
 
   const initialData = {
     type: offer ? offer.type : '',
-    fiat: offer ? offer.fiat : 'ngn',
     notes: offer ? offer.notes : '',
+    fiat: offer ? offer.fiat : user?.currency,
     coinId: offer ? offer.coinId : coins[0].id,
     amount: offer ? offer.amount : '',
     timeout: offer ? offer.timeout : 15,
@@ -53,7 +59,7 @@ const CreateOfferFeature = ({ offerId }: { offerId?: string }) => {
                 <Type />,
                 <Settings />,
                 <Payment />,
-                <Summary offerId={offerId} />,
+                <Summary />,
                 <Success />,
               ]}
             />

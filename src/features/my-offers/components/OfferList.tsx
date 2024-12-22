@@ -1,6 +1,5 @@
 import useOffers from '@hooks/useOffers';
 import Loader from '@components/base/button/Loader';
-import Container from '@components/base/container/Container';
 import Flex from '@components/base/flex/Flex';
 import Iconify from '@components/base/iconify/Iconify';
 import Heading from '@components/base/heading/Heading';
@@ -85,25 +84,25 @@ const OfferList = () => {
   if (offers?.length === 0) return <EmptyState />;
 
   return (
-    <Container px={0}>
-      <Grid
-        gap={6}
-        gridTemplateColumns={{
-          initial: '1fr',
-          sm: '1fr 1fr',
-          md: '1fr 1fr 1fr',
-        }}
-      >
-        {offers?.map((offer) => {
-          return (
-            <Item
-              offer={offer}
-              key={offer._id}
-            />
-          );
-        })}
-      </Grid>
-    </Container>
+    <Grid
+      gap={6}
+      gridTemplateColumns={{
+        initial: '1fr',
+        sm: '1fr 1fr',
+        md: '1fr 1fr 1fr',
+      }}
+    >
+      {offers && offers.length > 0
+        ? offers.map((offer) => {
+            return (
+              <Item
+                offer={offer}
+                key={offer._id}
+              />
+            );
+          })
+        : null}
+    </Grid>
   );
 };
 

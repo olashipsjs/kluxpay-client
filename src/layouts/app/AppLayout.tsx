@@ -1,25 +1,23 @@
-import UserProvider from 'src/providers/UserProvider';
-import SideBar from './components/SideBar';
 import BottomBar from './components/BottomBar';
-import Section from '@components/base/section/Section';
-import Body from './components/Body';
+import AuthProvider from 'src/providers/AuthProvider';
+import UserProvider from 'src/providers/UserProvider';
 import OffersProvider from 'src/providers/OffersProvider';
 import PaymentsProvider from 'src/providers/PaymentsProvider';
-import AuthProvider from 'src/providers/AuthProvider';
+import Body from './components/Body';
+import WalletProvider from 'src/providers/WalletProvider';
 
 const AppLayout = () => {
   return (
     <AuthProvider>
       <UserProvider>
-        <OffersProvider>
-          <PaymentsProvider>
-            <Section backgroundColor={'gray-95'}>
-              <SideBar />
+        <WalletProvider>
+          <OffersProvider>
+            <PaymentsProvider>
               <Body />
               <BottomBar />
-            </Section>
-          </PaymentsProvider>
-        </OffersProvider>
+            </PaymentsProvider>
+          </OffersProvider>
+        </WalletProvider>
       </UserProvider>
     </AuthProvider>
   );

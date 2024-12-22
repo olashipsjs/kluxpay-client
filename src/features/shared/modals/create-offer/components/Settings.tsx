@@ -19,6 +19,8 @@ import CoinPrice from '@components/shared/CoinPrice';
 import marginPrice from '@utils/marginPrice';
 import AssetBalance from '@components/shared/AssetBalance';
 import coins from '@constants/coins';
+import formatDecimal from '@utils/formatDecimal';
+import currencySymbol from '@utils/currencySymbol';
 
 const Settings = () => {
   const { data, next, previous } = useStep<any>();
@@ -52,13 +54,13 @@ const Settings = () => {
 
           return (
             <Form>
-              <Flex
+              <Box
                 px={20}
-                gap={8}
+                notLastChild={{ mb: 12 }}
               >
                 <SelectCoin name={'coinId'} />
                 <SelectFiat name={'fiat'} />
-              </Flex>
+              </Box>
 
               <Divider
                 my={20}
@@ -109,13 +111,10 @@ const Settings = () => {
                       {({ price }) => {
                         return (
                           <FormField.Message>
-                            {`${marginPrice(
+                            {`${currencySymbol(values.fiat)} ${marginPrice(
                               price,
                               Number(values.priceMargin)
-                            )}`}{' '}
-                            <Text
-                              textTransform={'uppercase'}
-                            >{`${values.fiat}`}</Text>
+                            )}`}
                           </FormField.Message>
                         );
                       }}
@@ -133,10 +132,9 @@ const Settings = () => {
                       {({ balance }) => {
                         return (
                           <FormField.Message>
-                            {`${balance}`}{' '}
-                            <Text
-                              textTransform={'uppercase'}
-                            >{`${selectedCoin.symbol}`}</Text>
+                            {`Balance: ${formatDecimal(
+                              balance
+                            )} ${selectedCoin.symbol.toUpperCase()}`}
                           </FormField.Message>
                         );
                       }}

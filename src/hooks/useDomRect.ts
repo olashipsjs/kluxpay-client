@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const useDomRect = <T extends HTMLElement>(
   element?: React.MutableRefObject<T>,
@@ -13,7 +13,7 @@ const useDomRect = <T extends HTMLElement>(
     }
   }, [element]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!element?.current) return;
 
     const target = element.current;
@@ -30,15 +30,17 @@ const useDomRect = <T extends HTMLElement>(
     const mutationObserver = new MutationObserver(debouncedUpdate);
 
     resizeObserver.observe(target);
-    resizeObserver.observe(document.querySelector('body')!);
+    if (document.body) {
+      resizeObserver.observe(document.body);
+    }
     mutationObserver.observe(target, {
       attributes: true,
       childList: true,
-      subtree: false,
+      subtree: true,
     });
 
     // initial update
-    debouncedUpdate();
+    updateDomRect();
 
     if (debug) {
       console.log('useDomRect: Observers attached', { element, domRect });

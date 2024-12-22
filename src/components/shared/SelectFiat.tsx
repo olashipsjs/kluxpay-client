@@ -1,51 +1,82 @@
-import Iconify from '@components/base/iconify/Iconify';
+import Image from '@components/base/image/Image';
 import Label from '@components/base/label/Label';
+import Text from '@components/base/text/Text';
 import FormField from '@components/formfield/FormField';
 import Select from '@components/select/Select';
-import useGetCurrencies from '@hooks/useGetCurrencies';
+import currencies from '@constants/currencies';
+import React from 'react';
 
 type Props = {
   name: string;
 };
 
 const SelectFiat = ({ name }: Props) => {
-  const { currencies } = useGetCurrencies();
-
   return (
     <FormField name={name}>
-      <Label>Fiat</Label>
-      <FormField.Sheet>
-        <Select>
-          <Select.Trigger
-            color={'gray-30'}
-            textTransform={'uppercase'}
-          >
-            <Select.Value />
-          </Select.Trigger>
-          <Select.Content height={'200px'}>
-            {currencies
-              ? currencies.map((currency: string) => {
-                  return (
-                    <Select.Option
-                      fontSize={13}
-                      key={currency}
-                      value={currency}
-                      textTransform={'uppercase'}
-                    >
-                      <Iconify
-                        width={'16px'}
-                        color={'gray-50'}
-                        icon={'ph:tag-fill'}
-                      />
-                      {currency}
-                    </Select.Option>
-                  );
-                })
-              : null}
-          </Select.Content>
-        </Select>
-      </FormField.Sheet>
-      <FormField.Message />
+      {({ field }) => {
+        const selectedCurrency = currencies.find(
+          (currency) => currency.name === field.value
+        )!;
+
+        return (
+          <React.Fragment>
+            <Label>Fiat</Label>
+            <FormField.Sheet>
+              <Select>
+                <Select.Trigger>
+                  <Image
+                    size={'20px'}
+                    src={selectedCurrency.image}
+                    alt={selectedCurrency.country}
+                  />
+                  <Select.Value
+                    textAlign={'left'}
+                    css={{ flex: 1 }}
+                  >
+                    {selectedCurrency.country}
+                  </Select.Value>
+                  <Select.Value
+                    color={'gray-60'}
+                    fontWeight={'regular'}
+                  >
+                    {selectedCurrency.symbol}
+                  </Select.Value>
+                </Select.Trigger>
+                <Select.Content maxHeight={'200px'}>
+                  {currencies.map((currency, index) => {
+                    return (
+                      <Select.Option
+                        key={index}
+                        textAlign={'left'}
+                        value={currency.name}
+                      >
+                        <Image
+                          size={'20px'}
+                          src={currency.image}
+                          alt={currency.name}
+                        />
+                        <Text
+                          css={{ flex: 1 }}
+                          textAlign={'left'}
+                        >
+                          {currency.country}
+                        </Text>
+                        <Text
+                          color={'gray-60'}
+                          fontWeight={'regular'}
+                        >
+                          {currency.symbol}
+                        </Text>
+                      </Select.Option>
+                    );
+                  })}
+                </Select.Content>
+              </Select>
+            </FormField.Sheet>
+            <FormField.Message />
+          </React.Fragment>
+        );
+      }}
     </FormField>
   );
 };

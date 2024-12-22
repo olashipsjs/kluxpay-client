@@ -8,10 +8,6 @@ const usePayments = () => {
     throw new Error('No context provider provided');
   }
 
-  // const { payments, setPayments } = context;
-
-  // const setter = React.useCallback(setPayments, [payments]);
-
   return context;
 };
 

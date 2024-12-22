@@ -25,7 +25,7 @@ const EmptyState = () => {
     >
       <Iconify
         width={'32px'}
-        color={'orange-60'}
+        color={'gray-60'}
         icon={'ph:cards-three-fill'}
       />
       <Heading

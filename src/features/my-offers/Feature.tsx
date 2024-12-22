@@ -14,6 +14,7 @@ const MyOffersFeature = () => {
         px={0}
         mt={20}
         mb={16}
+        maxWidth={'full'}
       >
         <Flex
           alignItems={'center'}
@@ -46,7 +47,12 @@ const MyOffersFeature = () => {
         </Flex>
       </Container>
 
-      <OfferList />
+      <Container
+        px={0}
+        maxWidth={'full'}
+      >
+        <OfferList />
+      </Container>
     </React.Fragment>
   );
 };

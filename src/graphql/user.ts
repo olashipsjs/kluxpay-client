@@ -24,6 +24,7 @@ export const GET_USER = gql`
       referralCode
       isLocked
       isOnline
+      currency
     }
   }
 `;
@@ -35,6 +36,7 @@ export const UPDATE_USER = gql`
       firstName
       lastName
       dateOfBirth
+      currency
     }
   }
 `;

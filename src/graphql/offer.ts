@@ -5,6 +5,7 @@ export const CREATE_OFFER = gql`
     createOffer(payload: $payload) {
       _id
       fiat
+      type
       coinId
       amount
       timeout
@@ -22,6 +23,8 @@ export const CREATE_OFFER = gql`
 export const UPDATE_OFFER = gql`
   mutation UpdateOffer($id: ID!, $payload: UpdateOfferPayload!) {
     updateOffer(id: $id, payload: $payload) {
+      _id
+      type
       fiat
       coinId
       amount
@@ -78,6 +81,7 @@ export const GET_OFFER = gql`
       payment {
         _id
         method
+        bankName
         bankAccountName
         bankAccountNumber
         details
@@ -93,6 +97,7 @@ export const GET_OFFER = gql`
 export const GET_OFFERS = gql`
   query GetOffers($payload: GetOffersPayload!) {
     getOffers(payload: $payload) {
+      type
       page
       limit
       total
@@ -121,6 +126,66 @@ export const GET_OFFERS = gql`
           firstName
           lastName
         }
+      }
+    }
+  }
+`;
+
+export const DELETE_OFFER = gql`
+  mutation DeleteOffer($id: ID!) {
+    deleteOffer(id: $id) {
+      _id
+      type
+      fiat
+      coinId
+      amount
+      timeout
+      minLimit
+      maxLimit
+      isActive
+      notes
+      priceMargin
+      payment {
+        _id
+        method
+        bankAccountName
+        bankAccountNumber
+        details
+      }
+      createdBy {
+        _id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const ACTIVATE_OFFER = gql`
+  mutation ActivateOffer($id: ID!) {
+    activateOffer(id: $id) {
+      _id
+      type
+      fiat
+      coinId
+      amount
+      timeout
+      minLimit
+      maxLimit
+      isActive
+      notes
+      priceMargin
+      payment {
+        _id
+        method
+        bankAccountName
+        bankAccountNumber
+        details
+      }
+      createdBy {
+        _id
+        firstName
+        lastName
       }
     }
   }

@@ -24,25 +24,28 @@ const Password = React.forwardRef(
         />
         <FormField.Slot
           pe={4}
-          color={'gray-60'}
           alignItems={'center'}
         >
           <Button
             p={4}
             size={'28px'}
             rounded={'full'}
-            color={'gray-40'}
+            color={'gray-60'}
             borderColor={'transparent'}
             backgroundColor={'transparent'}
             onClick={() => setIsText(!isText)}
             _hover={{
-              color: 'gray-30',
+              color: 'gray-10',
               backgroundColor: 'gray-95',
             }}
           >
             <Iconify
               width={'20px'}
-              icon={`material-symbols:lock-${isText ? '' : 'open-'}sharp`}
+              icon={`${
+                isText
+                  ? 'fluent:lock-closed-24-regular'
+                  : 'fluent:lock-open-24-regular'
+              }`}
             />
           </Button>
         </FormField.Slot>

@@ -21,7 +21,19 @@ export const VERIFY_EMAIL = gql`
 `;
 
 export const REFRESH_ACCESS_TOKEN = gql`
-  query RefreshAccessToken($payload: RefreshAccessTokenPayload!) {
-    refreshAccessToken(payload: $payload)
+  query RefreshAccessToken {
+    refreshAccessToken
+  }
+`;
+
+export const CHANGE_EMAIL = gql`
+  mutation ChangeEmail($payload: ChangeEmailPayload!) {
+    changeEmail(payload: $payload)
+  }
+`;
+
+export const CHANGE_PASSWORD = gql`
+  mutation ChangePassword($payload: ChangePasswordPayload!) {
+    changePassword(payload: $payload)
   }
 `;

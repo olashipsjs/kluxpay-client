@@ -6,22 +6,21 @@ import TextField from '@components/base/textfield/TextField';
 import FormField from '@components/formfield/FormField';
 import { UPDATE_USER } from '@graphql/user';
 import useApolloMutation from '@hooks/useApolloMutation';
-import useOverlay from '@hooks/useOverlay';
 import useUser from '@hooks/useUser';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
-  dateOfBirth: Yup.string().required('Enter value'),
+  dateOfBirth: Yup.string().required('Enter your date of birth'),
 });
 
-const UpdateDob = () => {
+const DateOfBirth = () => {
   const { user, setUser } = useUser();
-  const { setIsOpen } = useOverlay();
   const [updateUser, { loading, error }] = useApolloMutation(UPDATE_USER, {
     onCompleted: (data) => {
-      setUser({ type: 'UPDATE_USER', payload: { user: data?.updateUser } });
-      setIsOpen(false);
+      if (data?.updateUser) {
+        setUser({ type: 'UPDATE_USER', payload: { user: data.updateUser } });
+      }
     },
   });
 
@@ -31,9 +30,7 @@ const UpdateDob = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     await updateUser({
-      variables: {
-        payload: values,
-      },
+      variables: { payload: values },
     });
   };
 
@@ -43,33 +40,36 @@ const UpdateDob = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
-      {() => {
+      {({ values }) => {
         return (
           <Form>
             <FormField name={'dateOfBirth'}>
-              <Label>Date of birth</Label>
-              <FormField.Sheet>
+              <FormField.Sheet
+                ps={12}
+                alignItems={'center'}
+              >
+                <Label>Date of Birth</Label>
                 <TextField
+                  css={{ flex: 1 }}
                   type={'date'}
-                  placeholder='e.g John'
                 />
               </FormField.Sheet>
               <FormField.Message />
             </FormField>
 
             <Button
-              mt={20}
+              py={6}
+              mt={12}
+              fontSize={13}
+              width={'fit'}
               type={'submit'}
-              disabled={loading}
+              disabled={values.dateOfBirth === user?.dateOfBirth || loading}
             >
               <Loader visible={loading} />
-              Update
+              Change
             </Button>
 
-            <Alert
-              mt={20}
-              visible={error !== undefined}
-            >
+            <Alert visible={error !== undefined}>
               <Alert.Icon />
               <Alert.Message css={{ flex: 1 }}>{error?.message}</Alert.Message>
             </Alert>
@@ -80,4 +80,4 @@ const UpdateDob = () => {
   );
 };
 
-export default UpdateDob;
+export default DateOfBirth;

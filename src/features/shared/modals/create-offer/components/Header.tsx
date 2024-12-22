@@ -1,52 +1,39 @@
-import Box from '@components/base/box/Box';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
-import useStep from '@hooks/useStep';
+import Overlay from '@components/overlay/Overlay';
 
 const Header = () => {
-  const { step } = useStep();
-  const percentage = ((step + 1) / 4) * 100;
-
   return (
     <Flex
-      py={12}
-      px={12}
       gap={8}
+      py={12}
+      px={20}
       alignItems={'center'}
     >
-      <Iconify
-        width={'24px'}
-        icon={'ph:hand-deposit-fill'}
-      />
       <Heading
         as={'h2'}
-        fontSize={16}
+        fontSize={21}
         lineHeight={'md'}
-        fontWeight={'regular'}
         css={{ flex: 1 }}
       >
         Post offer
       </Heading>
 
-      <Flex
-        width={'40px'}
-        height={'4px'}
-        rounded={'full'}
-        overflow={'clip'}
-        alignItems={'center'}
-        position={'relative'}
+      <Overlay.Trigger
+        py={2}
+        px={12}
+        width={'fit'}
+        color={'gray-60'}
+        borderColor={'transparent'}
         backgroundColor={'gray-90'}
+        _hover={{ color: 'gray-10', backgroundColor: 'gray-80' }}
       >
-        <Box
-          height={'4px'}
-          width={`${percentage}%`}
-          backgroundColor={'gray-10'}
-          css={{
-            transition: 'width 0.3s ease',
-          }}
+        <Iconify
+          width={16}
+          icon={'fluent:arrow-minimize-24-regular'}
         />
-      </Flex>
+      </Overlay.Trigger>
     </Flex>
   );
 };

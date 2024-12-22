@@ -66,7 +66,7 @@ const typographyProps = {
       sm: '1.1',
       md: '1.25',
       lg: '1.35',
-      xl: '1.45',
+      xl: '1.75em',
     },
   },
 

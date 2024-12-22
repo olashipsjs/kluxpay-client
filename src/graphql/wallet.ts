@@ -11,12 +11,13 @@ export const CREATE_WALLET = gql`
 `;
 
 export const GET_USER_WALLETS = gql`
-  query UserWallets {
-    userWallets {
+  query GetUserWallets {
+    getUserWallets {
       _id
       privateKey
       publicKey
       platform
+      balance
     }
   }
 `;

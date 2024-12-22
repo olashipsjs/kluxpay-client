@@ -4,26 +4,30 @@ import Button from '@components/base/button/Button';
 import Iconify from '@components/base/iconify/Iconify';
 
 const menu = [
-  { label: 'Home', icon: 'material-symbols-light:home', url: '/app/' },
   {
-    label: 'Assets',
-    url: '/app/assets/',
-    icon: 'material-symbols-light:bar-chart-rounded',
+    url: '/app/',
+    label: 'Home',
+    icon: 'fluent:building-retail-more-24-regular',
+  },
+  {
+    label: 'Wallets',
+    url: '/app/wallets/',
+    icon: 'fluent:layer-diagonal-24-regular',
   },
   {
     label: 'Trade',
     url: '/app/offers/',
-    icon: 'material-symbols-light:candlestick-chart-rounded',
+    icon: 'fluent:arrow-repeat-1-24-regular',
   },
   {
     label: 'Offers',
     url: '/app/my-offers/',
-    icon: 'material-symbols-light:modeling-sharp',
+    icon: 'fluent:layer-diagonal-person-24-regular',
   },
   {
     label: 'More',
-    url: '/app/more/',
-    icon: 'material-symbols-light:featured-play-list',
+    url: '/app/settings/',
+    icon: 'fluent:options-24-regular',
   },
 ];
 
@@ -35,41 +39,46 @@ const BottomBar = () => {
       borderTop={1}
       position={'fixed'}
       backdropBlur={'md'}
-      borderColor={'gray-95'}
+      borderTopColor={'gray-90'}
       style={{ bottom: '0px' }}
       justifyContent={'center'}
-      backgroundColor={'rgba(var(--white), 0.9)'}
+      backgroundColor={'rgba(var(--white), 0.7)'}
       display={{ initial: 'flex', md: 'hidden' }}
     >
       {menu.map((item) => {
         return (
           <Anchor
+            end
             key={item.label}
             to={item.url}
             display={'contents'}
           >
-            <Button
-              py={6}
-              px={12}
-              gap={4}
-              width={'23%'}
-              height={'auto'}
-              color={'gray-50'}
-              fontSize={'1.15rem'}
-              fontWeight={'medium'}
-              flexDirection={'column'}
-              borderColor={'transparent'}
-              backgroundColor={'transparent'}
-              _hover={{
-                color: 'gray-10',
-              }}
-            >
-              <Iconify
-                width={'2.2em'}
-                icon={item.icon}
-              />
-              {item.label}
-            </Button>
+            {({ isActive }) => {
+              return (
+                <Button
+                  pt={8}
+                  pb={12}
+                  px={12}
+                  gap={8}
+                  rounded={0}
+                  width={'16%'}
+                  height={'auto'}
+                  border={'none'}
+                  fontSize={'.9rem'}
+                  fontWeight={'medium'}
+                  flexDirection={'column'}
+                  backgroundColor={'transparent'}
+                  color={isActive ? 'indigo-60' : 'gray-60'}
+                  _hover={{ color: isActive ? '' : 'gray-10' }}
+                >
+                  <Iconify
+                    width={'20px'}
+                    icon={item.icon}
+                  />
+                  {item.label}
+                </Button>
+              );
+            }}
           </Anchor>
         );
       })}

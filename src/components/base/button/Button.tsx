@@ -41,7 +41,7 @@ const buttonProps = csx({
   variants: variants,
   defaultVariants: {
     width: 'full',
-    py: 10,
+    py: 8,
     px: 12,
     gap: 4,
     border: 1,

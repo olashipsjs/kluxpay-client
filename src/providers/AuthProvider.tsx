@@ -36,7 +36,7 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
     variables: { payload: { accessToken: item || '' } },
   });
 
-  const refetchQuery = React.useCallback(async () => {
+  const refetchCallback = React.useCallback(async () => {
     try {
       const { data } = await refetch({
         payload: { accessToken: item || '' },
@@ -57,10 +57,10 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
   React.useEffect(() => {
     const DURATION = 5 * 60 * 1000; // 15 minutes
 
-    const intervals = setInterval(refetchQuery, DURATION);
+    const intervals = setInterval(refetchCallback, DURATION);
 
     return () => clearInterval(intervals);
-  }, [refetchQuery]);
+  }, [refetchCallback]);
 
   const value = React.useMemo(() => {
     return { auth: state.auth, setAuth: dispatch };

@@ -16,16 +16,16 @@ const Success = () => {
         <Iconify
           width={'4em'}
           color={'green-60'}
-          icon={'material-symbols-light:public'}
+          icon={'fluent:arrow-sync-checkmark-24-filled'}
         />
 
         <Heading
-          mt={20}
+          mt={16}
           as={'h3'}
           fontSize={21}
           lineHeight={'md'}
         >
-          Your offer is now public i.e visible to all other traders.
+          Great job! Your offer has been updated
         </Heading>
 
         <Text
@@ -85,13 +85,7 @@ const Success = () => {
           </Text>
         </Box>
 
-        <Overlay.Trigger
-          mt={24}
-          py={6}
-          width={'fit'}
-        >
-          See offers
-        </Overlay.Trigger>
+        <Overlay.Trigger mt={24}>Okay I understand</Overlay.Trigger>
       </Flex>
     </React.Fragment>
   );

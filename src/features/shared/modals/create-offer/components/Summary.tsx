@@ -7,10 +7,6 @@ import Text from '@components/base/text/Text';
 import Heading from '@components/base/heading/Heading';
 import Button from '@components/base/button/Button';
 import { Form, Formik } from 'formik';
-import FormField from '@components/formfield/FormField';
-import Checkbox from '@components/checkbox/Checkbox';
-import Anchor from '@components/anchor/Anchor';
-import * as Yup from 'yup';
 import Alert from '@components/alert/Alert';
 import useApolloMutation from '@hooks/useApolloMutation';
 import { CREATE_OFFER, UPDATE_OFFER } from '@graphql/offer';
@@ -18,13 +14,7 @@ import Image from '@components/base/image/Image';
 import useOffers from '@hooks/useOffers';
 import toNumber from '@utils/toNumber';
 import CoinPrice from '@components/shared/CoinPrice';
-
-const validationSchema = Yup.object().shape({
-  consent: Yup.boolean().oneOf(
-    [true],
-    'To post an offer you must agree to our Terms of Service.'
-  ),
-});
+import { useSearchParams } from 'react-router-dom';
 
 type ListProps = {
   label: string;
@@ -39,10 +29,10 @@ const List = ({ label, value }: ListProps) => {
       alignItems={'center'}
       justifyContent={'between'}
     >
-      <Text fontSize={12}>{label}</Text>
+      <Text fontSize={13}>{label}</Text>
       <Heading
         as={'h3'}
-        fontSize={12}
+        fontSize={13}
         letterSpacing={'xs'}
       >
         {value}
@@ -51,22 +41,29 @@ const List = ({ label, value }: ListProps) => {
   );
 };
 
-const Summary = ({ offerId }: { offerId?: string }) => {
+const Summary = () => {
+  const [searchParams] = useSearchParams();
   const { setOffers } = useOffers();
   const { data, next } = useStep<any>();
 
+  const ID = searchParams.get('id');
+
   const [addOffer, { loading, error }] = useApolloMutation(
-    offerId ? UPDATE_OFFER : CREATE_OFFER,
+    ID ? UPDATE_OFFER : CREATE_OFFER,
     {
       onCompleted: (data) => {
-        if (offerId) {
+        if (ID) {
           setOffers({
             type: 'UPDATE_OFFER',
             payload: { offer: data?.updateOffer },
           });
+        } else {
+          setOffers({
+            type: 'ADD_OFFER',
+            payload: { offer: data?.createOffer },
+          });
         }
 
-        setOffers({ type: 'ADD_OFFER', payload: { offer: data?.createOffer } });
         next(data);
       },
     }
@@ -74,27 +71,27 @@ const Summary = ({ offerId }: { offerId?: string }) => {
 
   const selectedCoin = coins.find((c) => c.id === data.coinId);
 
-  const handleSubmit = async () => {
-    const variables = offerId
+  const handleSubmit = async (values: typeof data) => {
+    const variables = ID
       ? {
-          id: offerId,
+          id: ID,
           payload: {
-            ...data,
-            amount: toNumber(data.amount),
-            timeout: Number(data.timeout),
-            minLimit: toNumber(data.minLimit),
-            maxLimit: toNumber(data.maxLimit),
-            priceMargin: parseFloat(data.priceMargin),
+            ...values,
+            timeout: Number(values.timeout),
+            amount: toNumber(String(values.amount)),
+            minLimit: toNumber(String(values.minLimit)),
+            maxLimit: toNumber(String(values.maxLimit)),
+            priceMargin: toNumber(String(values.priceMargin)),
           },
         }
       : {
           payload: {
-            ...data,
-            amount: toNumber(data.amount),
-            timeout: Number(data.timeout),
-            minLimit: toNumber(data.minLimit),
-            maxLimit: toNumber(data.maxLimit),
-            priceMargin: parseFloat(data.priceMargin),
+            ...values,
+            timeout: Number(values.timeout),
+            amount: toNumber(values.amount),
+            minLimit: toNumber(values.minLimit),
+            maxLimit: toNumber(values.maxLimit),
+            priceMargin: toNumber(values.priceMargin),
           },
         };
 
@@ -104,19 +101,18 @@ const Summary = ({ offerId }: { offerId?: string }) => {
   return (
     <React.Fragment>
       <Flex
+        px={20}
+        gap={12}
         alignItems={'center'}
-        flexDirection={'column'}
       >
         <Image
-          size={'32px'}
+          size={'24px'}
           src={selectedCoin!.image}
           alt={`${selectedCoin!.symbol}}`}
         />
         <Heading
-          mb={8}
-          mt={12}
-          fontSize={17}
-          textAlign={'center'}
+          fontSize={16}
+          css={{ flex: 1 }}
           textTransform={'capitalize'}
         >
           {data.type}{' '}
@@ -128,10 +124,10 @@ const Summary = ({ offerId }: { offerId?: string }) => {
         >
           {({ price }) => {
             return (
-              <Text
-                fontSize={14}
+              <Heading
+                fontSize={16}
                 textTransform={'uppercase'}
-              >{`${price} ${data.fiat}`}</Text>
+              >{`${price} ${data.fiat}`}</Heading>
             );
           }}
         </CoinPrice>
@@ -169,32 +165,10 @@ const Summary = ({ offerId }: { offerId?: string }) => {
       </Box>
 
       <Formik
+        initialValues={data}
         onSubmit={handleSubmit}
-        initialValues={{ consent: false }}
-        validationSchema={validationSchema}
       >
         <Form>
-          <FormField
-            mt={12}
-            px={20}
-            name={'consent'}
-            flexDirection={'row'}
-          >
-            <Checkbox>
-              {() => {
-                return (
-                  <React.Fragment>
-                    <Checkbox.Switch />
-                    <FormField.Message>
-                      I have read and agreed to the{' '}
-                      <Anchor to={'/'}>Terms</Anchor>
-                    </FormField.Message>
-                  </React.Fragment>
-                );
-              }}
-            </Checkbox>
-          </FormField>
-
           <Alert
             mt={20}
             rounded={0}
@@ -213,7 +187,7 @@ const Summary = ({ offerId }: { offerId?: string }) => {
               disabled={loading}
             >
               <Button.Loader visible={loading} />
-              {offerId ? 'Update offer' : 'Post offer'}
+              {ID ? 'Update' : 'Post'}
             </Button>
           </Box>
         </Form>

@@ -9,12 +9,13 @@ import Divider from '@components/divider/Divider';
 import CoinPrice from '@components/shared/CoinPrice';
 import coins from '@constants/coins';
 import marginPrice from '@utils/marginPrice';
-import { Form, Formik } from 'formik';
-import Switch from '@components/switch/Switch';
-import FormField from '@components/formfield/FormField';
 import Overlay from '@components/overlay/Overlay';
 import Iconify from '@components/base/iconify/Iconify';
-import OpenTradeFeature from '@features/shared/modals/open-trade/Feature';
+import MangeOfferFeature from '@features/shared/modals/manage-offer/Feature';
+import Anchor from '@components/anchor/Anchor';
+import React from 'react';
+import currencySymbol from '@utils/currencySymbol';
+import formatDecimal from '@utils/formatDecimal';
 
 type Props = { offer: Offer.Type };
 
@@ -46,11 +47,11 @@ const Item = ({ offer }: Props) => {
         <Avatar
           p={8}
           border={1}
-          rounded={8}
+          rounded={12}
           size={'40px'}
-          borderColor={'gray-95'}
+          borderColor={'gray-90'}
           backgroundColor={'white'}
-          boxShadow={'0px .25px 1px 0px rgb(var(--gray-80))'}
+          boxShadow={'0px .75px 1px 0px rgb(var(--gray-80))'}
         >
           <Avatar.Picture src={activeCoin.image} />
         </Avatar>
@@ -60,8 +61,8 @@ const Item = ({ offer }: Props) => {
             fontSize={14}
             textAlign={'left'}
             fontWeight={'semibold'}
-            textTransform={'uppercase'}
-          >{`${activeCoin.symbol}`}</Heading>
+            textTransform={'capitalize'}
+          >{`${offer.type} ${activeCoin.symbol.toUpperCase()}`}</Heading>
           <Text
             mt={2}
             as={'p'}
@@ -72,50 +73,44 @@ const Item = ({ offer }: Props) => {
           >{`${offer.payment.method}`}</Text>
         </Box>
 
-        <Formik
-          onSubmit={() => null!}
-          initialValues={{ isActive: false }}
-        >
-          <Form>
-            <FormField
-              name={'isActive'}
-              alignItems={'center'}
-              flexDirection={'row'}
-            >
-              <Switch value={offer.isActive} />
-
-              <Overlay>
-                <Overlay.Trigger
-                  px={8}
+        <Overlay>
+          {({ setIsOpen }) => {
+            return (
+              <React.Fragment>
+                <Anchor
+                  px={12}
                   py={2}
                   borderColor={'transparent'}
-                  backgroundColor={'gray-80'}
+                  backgroundColor={'gray-90'}
+                  onClick={() => setIsOpen(true)}
+                  to={`/app/my-offers/?id=${offer._id}`}
                   _hover={{
-                    backgroundColor: 'gray-90',
+                    color: 'gray-10',
+                    backgroundColor: 'gray-80',
                   }}
                 >
                   <Iconify
                     width={'16px'}
                     icon={'ph:sliders-horizontal-fill'}
                   />
-                </Overlay.Trigger>
-                <OpenTradeFeature />
-              </Overlay>
-            </FormField>
-          </Form>
-        </Formik>
+                </Anchor>
+                <MangeOfferFeature />
+              </React.Fragment>
+            );
+          }}
+        </Overlay>
       </Flex>
 
       <Divider backgroundColor={'gray-90'} />
 
       <Box p={12}>
         <Flex justifyContent={'between'}>
-          <Text fontSize={13}>{`${
+          <Text fontSize={13}>{`${currencySymbol(offer.fiat)} ${formatDecimal(
             offer.minLimit
-          } ${offer.fiat.toUpperCase()}`}</Text>
-          <Text fontSize={13}>{`${
+          )} `}</Text>
+          <Text fontSize={13}>{`${currencySymbol(offer.fiat)} ${formatDecimal(
             offer.maxLimit
-          } ${offer.fiat.toUpperCase()}`}</Text>
+          )}`}</Text>
         </Flex>
 
         <Divider my={6} />
@@ -152,12 +147,12 @@ const Item = ({ offer }: Props) => {
               {({ price }) => {
                 return (
                   <Heading fontSize={21}>
-                    {`${marginPrice(price, offer.priceMargin)} `}
                     <Text
                       fontSize={12}
                       color={'gray-60'}
                       css={{ verticalAlign: 'middle' }}
-                    >{` ${offer.fiat.toUpperCase()}`}</Text>
+                    >{`${currencySymbol(offer.fiat)} `}</Text>
+                    {`${marginPrice(price, offer.priceMargin)} `}
                   </Heading>
                 );
               }}

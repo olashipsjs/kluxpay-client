@@ -8,9 +8,7 @@ const useOffers = () => {
     throw new Error('No context provider provided');
   }
 
-  const setter = React.useCallback(context.setOffers, [context.offers]);
-
-  return { offers: context.offers, setOffers: setter };
+  return context;
 };
 
 export default useOffers;

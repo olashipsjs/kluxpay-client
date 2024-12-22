@@ -139,7 +139,7 @@ const Value = React.forwardRef(
         fontSize={fontSize}
         fontWeight={fontWeight}
       >
-        {field.value ? (field.value as any) : children}
+        {!children ? (field.value as any) : children}
       </Text>
     );
   }
@@ -159,7 +159,7 @@ const Content = React.forwardRef(
       overflowY = 'scroll',
       position = 'absolute',
       borderColor = 'gray-90',
-      boxShadow = '0px 2px 2px 0px rgb(var(--gray-80))',
+      boxShadow = '0px .75px 0px 0px rgb(var(--gray-80))',
       ...rest
     }: React.ComponentProps<typeof Overlay.Content>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Overlay.Content>>
@@ -203,9 +203,9 @@ const Option = React.memo(
         name,
         value,
         onClick,
-        py = 6,
-        px = 12,
-        gap = 8,
+        py = 4,
+        px = 8,
+        gap = 12,
         rounded = 8,
         color = 'gray-10',
         lineHeight = '1.5em',
@@ -241,11 +241,11 @@ const Option = React.memo(
           borderColor={borderColor}
           onClick={handleValueChange}
           justifyContent={justifyContent}
-          color={isSelectedOption ? 'indigo-20' : color}
-          backgroundColor={isSelectedOption ? 'indigo-100' : backgroundColor}
+          color={isSelectedOption ? 'gray-10' : color}
+          backgroundColor={isSelectedOption ? 'gray-95' : backgroundColor}
           _hover={{
             color: 'gray-10',
-            backgroundColor: 'indigo-100',
+            backgroundColor: 'gray-95',
           }}
         />
       );

@@ -1,3 +1,4 @@
+import currencies from '@constants/currencies';
 import React from 'react';
 
 namespace User {
@@ -8,6 +9,7 @@ namespace User {
     email: string;
     isEmailVerified: boolean;
     dateOfBirth: string;
+    currency: (typeof currencies)[number]['name'];
   };
 
   export type State = {

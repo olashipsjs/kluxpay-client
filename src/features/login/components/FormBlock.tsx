@@ -14,10 +14,7 @@ import useAsync from '@hooks/useAsync';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Email is required')
-    .matches(
-      /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/g,
-      'Invalid email address format'
-    ),
+    .email('Invalid email address format'),
 
   password: Yup.string()
     .required('Password is required')

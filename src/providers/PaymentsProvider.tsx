@@ -12,11 +12,9 @@ export const PaymentsContext = React.createContext<Payment.Context | undefined>(
 const reducer = (state: Payment.State, action: Payment.Action) => {
   switch (action.type) {
     case 'SET_PAYMENTS':
-      console.log({ payments: action.payload.payments });
-
       return {
         ...state,
-        payments: [...state.payments, ...action.payload.payments],
+        payments: action.payload.payments,
       };
 
     case 'ADD_PAYMENT':
@@ -26,11 +24,11 @@ const reducer = (state: Payment.State, action: Payment.Action) => {
       };
 
     case 'UPDATE_PAYMENT':
-      const updatedPayments = state.payments.map((offer) => {
-        if (offer._id === action.payload.payment._id) {
-          return { ...offer, ...action.payload.payment };
+      const updatedPayments = state.payments.map((payment) => {
+        if (payment._id === action.payload.payment._id) {
+          return { ...payment, ...action.payload.payment };
         }
-        return offer;
+        return payment;
       });
 
       return { ...state, payments: updatedPayments };

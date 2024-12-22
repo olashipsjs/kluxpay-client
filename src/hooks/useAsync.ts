@@ -9,6 +9,7 @@ type State<T> = {
 type Fn<T> = (...args: any[]) => Promise<T>;
 
 type Options<T> = {
+  onError?: (error: Error) => void;
   onCompleted?: (data: T) => void;
 };
 
@@ -22,7 +23,7 @@ const useAsync = <T = any>(
     data: undefined,
   });
 
-  const { onCompleted } = options;
+  const { onCompleted, onError } = options;
 
   const async = React.useCallback(
     async (...args: any) => {
@@ -41,6 +42,7 @@ const useAsync = <T = any>(
         onCompleted && onCompleted(data);
       } catch (error) {
         console.log({ error });
+        onError && onError(error as Error);
         setState({
           loading: false,
           data: undefined,

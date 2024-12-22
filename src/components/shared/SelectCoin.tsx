@@ -23,11 +23,10 @@ const SelectCoin = ({ name }: Props) => {
               <Select defaultValue={coins[0].id}>
                 <Select.Trigger
                   color={'gray-10'}
-                  fontWeight={'medium'}
                   textTransform={'uppercase'}
                 >
                   <Image
-                    size={'18px'}
+                    size={'20px'}
                     src={selectedOption?.image}
                   />
                   <Text
@@ -43,6 +42,7 @@ const SelectCoin = ({ name }: Props) => {
                       <Select.Option
                         key={coin.id}
                         value={coin.id}
+                        textTransform={'capitalize'}
                       >
                         <Image
                           size={'20px'}

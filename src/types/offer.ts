@@ -27,6 +27,10 @@ namespace Offer {
     | {
         type: 'DELETE_OFFER';
         payload: { offerId: string };
+      }
+    | {
+        type: 'ACTIVATE_OFFER';
+        payload: { offerId: string };
       };
 
   export type Context = {
