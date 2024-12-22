@@ -13,7 +13,7 @@ const Router = () => {
     { path: '/payments/', main: 'payments' },
     { path: '/profile/', main: <ProfileSettingsFeature /> },
     { path: '/security/', main: <SecuritySettingsFeature /> },
-    { path: '/', exact: true, main: 'settings' },
+    { path: '/', exact: true, main: null },
     { path: '/general/', exact: true, main: <GeneralSettingsFeature /> },
     { path: '/authentication/', main: <AuthenticationSettingsFeature /> },
   ];

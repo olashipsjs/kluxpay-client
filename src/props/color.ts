@@ -166,6 +166,7 @@ const colorProps = {
   },
 
   borderRightColor: {
+    isResponsive: true,
     properties: ['borderRightColor'],
     values: VALUES,
   },

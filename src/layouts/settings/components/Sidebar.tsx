@@ -43,10 +43,10 @@ const Sidebar = () => {
   return (
     <Section
       width={'fit'}
-      borderRight={1}
       height={'full'}
-      position={'fixed'}
-      borderRightColor={'gray-90'}
+      borderRight={1}
+      position={{ sm: 'fixed' }}
+      borderRightColor={{ initial: 'transparent', sm: 'gray-90' }}
       display={{ initial: isIndex ? 'block' : 'hidden', sm: 'block' }}
     >
       <Container
@@ -54,7 +54,7 @@ const Sidebar = () => {
         ps={0}
         py={20}
         pe={{ initial: 0, sm: 20 }}
-        width={{ initial: '100vw', sm: '240px' }}
+        width={{ initial: '100%', sm: '240px' }}
       >
         <Heading>Settings</Heading>
 

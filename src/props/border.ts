@@ -15,6 +15,7 @@ const borderProps = {
   },
 
   borderRight: {
+    isResponsive: true,
     properties: ['borderRight'],
     values: {
       none: 'none',

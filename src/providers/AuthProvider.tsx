@@ -32,7 +32,10 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const { item, save } = useLocalStorage('kp_access_token');
 
   const { refetch } = useApolloQuery<any>(REFRESH_ACCESS_TOKEN, {
-    onError: () => dispatch({ type: 'SET_LOGGED_OUT' }),
+    onError: (error) => {
+      console.log(error);
+      dispatch({ type: 'SET_LOGGED_OUT' });
+    },
     variables: { payload: { accessToken: item || '' } },
   });
 
@@ -64,7 +67,7 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
 
   const value = React.useMemo(() => {
     return { auth: state.auth, setAuth: dispatch };
-  }, [state.auth]);
+  }, [state.auth, dispatch]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
