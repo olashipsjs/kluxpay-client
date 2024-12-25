@@ -11,7 +11,7 @@ import useUser from '@hooks/useUser';
 const Header = () => {
   const { user } = useUser();
 
-  if (user === null) return null;
+  if (!user) return null;
 
   return (
     <Section
@@ -19,6 +19,7 @@ const Header = () => {
       top={'0px'}
       position={'sticky'}
       backgroundColor={'white'}
+      display={{ md: 'hidden' }}
     >
       <Container
         maxWidth={'full'}
@@ -47,7 +48,7 @@ const Header = () => {
                 color={'white'}
                 textTransform={'capitalize'}
               >
-                {user?.firstName.substring(0, 2)}
+                {user?.firstName?.substring(0, 2)}
               </Avatar.Fallback>
             </Avatar>
             <Heading

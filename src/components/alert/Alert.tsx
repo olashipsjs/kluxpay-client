@@ -11,7 +11,7 @@ const Compound = React.forwardRef(
   (
     {
       px = 12,
-      py = 10,
+      py = 8,
       visible,
       timeout,
       onClose,

@@ -5,6 +5,10 @@ import OffersProvider from 'src/providers/OffersProvider';
 import PaymentsProvider from 'src/providers/PaymentsProvider';
 import Body from './components/Body';
 import WalletProvider from 'src/providers/WalletProvider';
+import SideBar from './components/SideBar';
+import Banner from './components/Banner';
+import VerificationBanner from './components/VerificationBanner';
+import Header from './components/Header';
 
 const AppLayout = () => {
   return (
@@ -13,6 +17,10 @@ const AppLayout = () => {
         <WalletProvider>
           <OffersProvider>
             <PaymentsProvider>
+              <Banner />
+              <VerificationBanner />
+              <Header />
+              <SideBar />
               <Body />
               <BottomBar />
             </PaymentsProvider>

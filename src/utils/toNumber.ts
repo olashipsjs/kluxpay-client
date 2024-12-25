@@ -5,7 +5,7 @@
  * @returns {number} The resulting number after conversion
  */
 
-const toNumber = (str: string) => {
+const toNumber = (str: string = '0') => {
   if (typeof str !== 'string') {
     throw new TypeError('Input must be a string');
   }

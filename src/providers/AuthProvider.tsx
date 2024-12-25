@@ -46,10 +46,13 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
       });
 
       if (data?.refreshAccessToken) {
+        const ACCESS_TOKEN = data.refreshAccessToken?.accessToken;
+
         dispatch({
           type: 'SET_LOGGED_IN',
-          payload: data.refreshAccessToken.accessToken,
+          payload: { accessToken: ACCESS_TOKEN },
         });
+
         save(data.refreshAccessToken.accessToken);
       }
 
@@ -58,6 +61,8 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
   }, [item, dispatch, save]);
 
   React.useEffect(() => {
+    refetchCallback();
+
     const DURATION = 5 * 60 * 1000; // 15 minutes
 
     const intervals = setInterval(refetchCallback, DURATION);

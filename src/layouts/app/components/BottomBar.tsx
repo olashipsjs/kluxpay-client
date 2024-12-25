@@ -61,7 +61,7 @@ const BottomBar = () => {
                   px={12}
                   gap={8}
                   rounded={0}
-                  width={'16%'}
+                  width={'16.5%'}
                   height={'auto'}
                   border={'none'}
                   fontSize={'1rem'}

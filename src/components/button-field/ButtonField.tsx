@@ -15,10 +15,10 @@ type Props = Omit<React.ComponentProps<typeof Button>, keyof OmitProps> &
 const ButtonField = React.forwardRef(
   (
     {
-      py = 8,
       value,
       onClick,
       children,
+      fontSize = 13,
       color = 'gray-40',
       borderColor = 'gray-95',
       backgroundColor = 'gray-95',
@@ -37,8 +37,8 @@ const ButtonField = React.forwardRef(
 
     return (
       <Button
-        py={py}
         ref={ref}
+        fontSize={fontSize}
         onClick={handleSetValue}
         color={isActive ? 'white' : color}
         borderColor={isActive ? 'gray-10' : borderColor}

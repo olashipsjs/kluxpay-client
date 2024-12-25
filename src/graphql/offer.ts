@@ -95,13 +95,11 @@ export const GET_OFFER = gql`
 `;
 
 export const GET_OFFERS = gql`
-  query GetOffers($payload: GetOffersPayload!) {
+  query GetOffers($payload: GetOffersPayload) {
     getOffers(payload: $payload) {
-      type
       page
       limit
       total
-      assets
       offers {
         _id
         type

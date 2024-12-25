@@ -19,7 +19,7 @@ const useRegister = (options?: { onCompleted?: (data: any) => void }) => {
   const [generateOtp] = useApolloMutation(GENERATE_OTP);
   const [createWallet] = useApolloMutation(CREATE_WALLET);
 
-  const register = async (payload: Payload) => {
+  const mutation = async (payload: Payload) => {
     const { email, firstName, lastName, password, dateOfBirth } = payload;
 
     try {
@@ -39,7 +39,7 @@ const useRegister = (options?: { onCompleted?: (data: any) => void }) => {
 
       const [walletResponse, otpResponse, mailResponse] = await Promise.all([
         await createWallet({
-          variables: { payload: { email } },
+          variables: { payload: { email, networks: 'ethereum' } },
         }),
 
         await generateOtp({ variables: { payload: { email } } }),
@@ -92,7 +92,7 @@ const useRegister = (options?: { onCompleted?: (data: any) => void }) => {
     }
   };
 
-  return { register };
+  return { mutation };
 };
 
 export default useRegister;

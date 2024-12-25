@@ -3,14 +3,14 @@ import useGetCoinPrice from '@hooks/useGetCoinPrice';
 import Loader from '@components/base/button/Loader';
 
 type Props = {
-  fiat: string;
+  fiat?: string;
   coinId: string;
   children?:
     | ((options: { price: number }) => React.ReactNode)
     | React.ReactNode;
 };
 
-const CoinPrice = React.memo(({ fiat, coinId, children }: Props) => {
+const CoinPrice = React.memo(({ fiat = 'usd', coinId, children }: Props) => {
   const { price, isLoading, error } = useGetCoinPrice(coinId, fiat);
 
   switch (true) {

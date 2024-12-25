@@ -45,7 +45,7 @@ const SelectCoin = ({ name }: Props) => {
                         textTransform={'capitalize'}
                       >
                         <Image
-                          size={'20px'}
+                          size={'24px'}
                           rounded={'full'}
                           src={coin.image}
                         />

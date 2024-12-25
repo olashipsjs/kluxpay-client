@@ -120,8 +120,7 @@ const Compound = React.forwardRef(
           opacity: disabled ? '60' : extractedVariants.opacity,
           css,
           _placeholder: {
-            fontSize: 14,
-            color: 'gray-70',
+            color: 'gray-60',
             fontWeight: 'regular',
             ..._placeholder,
           },

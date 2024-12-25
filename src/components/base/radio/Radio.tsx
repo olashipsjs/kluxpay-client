@@ -62,13 +62,14 @@ const Switch = React.forwardRef(
   (
     {
       border = 1,
-      size = '20px',
+      size = '16px',
       rounded = 'full',
       alignItems = 'center',
+      color = 'transparent',
       borderColor = 'gray-80',
       justifyContent = 'center',
       backgroundColor = 'transparent',
-      boxShadow = '0px .75px 1px 0px rgb(var(--gray-80))',
+      boxShadow = '0px .5px .5px 0px rgb(var(--gray-80))',
       ...restProps
     }: React.ComponentProps<typeof Flex>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>
@@ -77,6 +78,7 @@ const Switch = React.forwardRef(
       <Flex
         ref={ref}
         size={size}
+        color={color}
         {...restProps}
         border={border}
         rounded={'full'}
@@ -89,7 +91,7 @@ const Switch = React.forwardRef(
         <Box
           size={'8px'}
           rounded={'full'}
-          backgroundColor={'currentColor'}
+          backgroundColor={color}
         />
       </Flex>
     );

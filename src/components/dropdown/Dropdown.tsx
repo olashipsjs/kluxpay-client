@@ -67,7 +67,7 @@ const Content = React.forwardRef(
           right={right || domRect.right + 'px'}
           width={width || domRect.width + 'px'}
           left={domRect.left + Number(left || 0) + 'px'}
-        ></Overlay.Content>
+        />
       </Overlay.Panel>
     );
   }

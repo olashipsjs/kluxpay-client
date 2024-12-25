@@ -47,8 +47,8 @@ const Item = ({ offer }: Props) => {
         <Avatar
           p={8}
           border={1}
-          rounded={12}
           size={'40px'}
+          rounded={'full'}
           borderColor={'gray-90'}
           backgroundColor={'white'}
           boxShadow={'0px .75px 1px 0px rgb(var(--gray-80))'}
@@ -56,7 +56,10 @@ const Item = ({ offer }: Props) => {
           <Avatar.Picture src={activeCoin.image} />
         </Avatar>
 
-        <Box css={{ flex: 1 }}>
+        <Box
+          py={2}
+          css={{ flex: 1 }}
+        >
           <Heading
             fontSize={14}
             textAlign={'left'}
@@ -64,7 +67,7 @@ const Item = ({ offer }: Props) => {
             textTransform={'capitalize'}
           >{`${offer.type} ${activeCoin.symbol.toUpperCase()}`}</Heading>
           <Text
-            mt={2}
+            mt={8}
             as={'p'}
             fontSize={13}
             color={'gray-40'}
@@ -113,7 +116,7 @@ const Item = ({ offer }: Props) => {
           )}`}</Text>
         </Flex>
 
-        <Divider my={6} />
+        <Divider my={12} />
 
         <Flex justifyContent={'between'}>
           <Box>
@@ -123,7 +126,10 @@ const Item = ({ offer }: Props) => {
             >
               Amount
             </Heading>
-            <Heading fontSize={21}>
+            <Heading
+              mt={8}
+              fontSize={21}
+            >
               {`${offer.amount} `}
               <Text
                 fontSize={12}
@@ -146,7 +152,10 @@ const Item = ({ offer }: Props) => {
             >
               {({ price }) => {
                 return (
-                  <Heading fontSize={21}>
+                  <Heading
+                    mt={8}
+                    fontSize={21}
+                  >
                     <Text
                       fontSize={12}
                       color={'gray-60'}

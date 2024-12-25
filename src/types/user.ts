@@ -17,10 +17,9 @@ namespace User {
   };
 
   export type Action =
-    | { type: 'ERROR' }
     | { type: 'VERIFY_EMAIL' }
-    | { type: 'SET_USER'; payload: { user: Type } }
-    | { type: 'UPDATE_USER'; payload: { user: Type } };
+    | { type: 'SET_USER'; payload: { user: State['user'] } }
+    | { type: 'UPDATE_USER'; payload: { user: Partial<Type> } };
 
   export type Context = {
     setUser: React.Dispatch<Action>;

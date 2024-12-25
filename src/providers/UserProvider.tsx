@@ -11,15 +11,12 @@ export const UserContext = React.createContext<User.Context | undefined>(
 
 const reducer = (state: User.State, action: User.Action): User.State => {
   switch (action.type) {
-    case 'ERROR':
-      return { ...state, user: null };
     case 'SET_USER':
       return { ...state, user: action.payload.user };
     case 'UPDATE_USER':
-      return { ...state, user: { ...state.user, ...action.payload.user } };
+      return { ...state, user: { ...state.user!, ...action.payload.user } };
     case 'VERIFY_EMAIL':
       return { ...state, user: { ...state.user!, isEmailVerified: true } };
-
     default:
       return state;
   }
@@ -35,7 +32,7 @@ const UserProvider = ({ children }: Props) => {
         dispatch({ type: 'SET_USER', payload: { user: data.getUser } });
       }
     },
-    onError: () => dispatch({ type: 'ERROR' }),
+    onError: () => dispatch({ type: 'SET_USER', payload: { user: null } }),
   });
 
   const value = React.useMemo(

@@ -177,6 +177,7 @@ const colorProps = {
   },
 
   backgroundColor: {
+    isResponsive: true,
     properties: ['backgroundColor'],
     values: VALUES,
   },

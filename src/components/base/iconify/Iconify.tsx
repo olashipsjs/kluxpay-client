@@ -10,12 +10,14 @@ import Variants from '@ts_types/variants';
 import extractProps from '@utils/extractProps';
 import Polymorphic from '@ts_types/polymorhic';
 import createVariant from 'src/utils/createVariant';
+import effectsProps from '@props/effects';
 
 const variants = {
   ...spaceProps,
   ...borderProps,
   ...layoutProps,
   ...colorProps,
+  ...effectsProps,
 };
 
 const iconifyVariants = createVariant({

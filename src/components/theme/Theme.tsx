@@ -13,6 +13,16 @@ const Theme = () => {
           border: '0px solid',
         },
 
+        '.pulse': {
+          opacity: 0.5,
+          animation: 'pulse 1s infinite',
+        },
+
+        '@keyframes pulse': {
+          '50%': { opacity: 0.5 },
+          '100%': { opacity: 1 },
+        },
+
         body: {
           minHeight: '100vh',
         },

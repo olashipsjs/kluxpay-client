@@ -10,27 +10,27 @@ import { useLocation } from 'react-router-dom';
 const routes = [
   {
     label: 'General',
-    to: '/app/settings/general/',
+    to: 'general',
     icon: 'fluent:wrench-settings-24-regular',
   },
   {
     label: 'Profile',
-    to: '/app/settings/profile/',
+    to: 'profile',
     icon: 'fluent:person-head-hint-24-regular',
   },
   {
     label: 'Security',
-    to: '/app/settings/security/',
+    to: 'security',
     icon: 'fluent:shield-keyhole-24-regular',
   },
   {
     label: 'Authentication',
-    to: '/app/settings/authentication/',
+    to: 'authentication',
     icon: 'fluent:key-multiple-24-regular',
   },
   {
     label: 'Payments',
-    to: '/app/settings/payments/',
+    to: 'payments',
     icon: 'fluent:card-ui-24-regular',
   },
 ];
@@ -51,9 +51,7 @@ const Sidebar = () => {
     >
       <Container
         mx={0}
-        ps={0}
         py={20}
-        pe={{ initial: 0, sm: 20 }}
         width={{ initial: '100%', sm: '240px' }}
       >
         <Heading>Settings</Heading>
@@ -67,10 +65,9 @@ const Sidebar = () => {
           {routes.map((route, index) => {
             return (
               <Anchor
-                end
                 key={index}
-                to={route.to}
                 width={'full'}
+                to={`/app/settings/${route.to}/`}
               >
                 {({ isActive }) => {
                   return (

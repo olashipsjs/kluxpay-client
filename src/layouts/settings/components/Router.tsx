@@ -10,12 +10,12 @@ const Router = () => {
   const location = useLocation();
 
   const routes = [
-    { path: '/payments/', main: 'payments' },
-    { path: '/profile/', main: <ProfileSettingsFeature /> },
-    { path: '/security/', main: <SecuritySettingsFeature /> },
     { path: '/', exact: true, main: null },
-    { path: '/general/', exact: true, main: <GeneralSettingsFeature /> },
-    { path: '/authentication/', main: <AuthenticationSettingsFeature /> },
+    { path: 'payments', main: 'payments' },
+    { path: 'profile', main: <ProfileSettingsFeature /> },
+    { path: 'security', main: <SecuritySettingsFeature /> },
+    { path: 'general', exact: true, main: <GeneralSettingsFeature /> },
+    { path: 'authentication', main: <AuthenticationSettingsFeature /> },
   ];
 
   const isIndex = location.pathname === `/app/settings/`;

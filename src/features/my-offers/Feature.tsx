@@ -6,15 +6,15 @@ import Heading from '@components/base/heading/Heading';
 import Container from '@components/base/container/Container';
 import CreateOfferFeature from '@features/shared/modals/create-offer/Feature';
 import Iconify from '@components/base/iconify/Iconify';
+import Divider from '@components/divider/Divider';
 
 const MyOffersFeature = () => {
   return (
     <React.Fragment>
       <Container
-        px={0}
-        mt={20}
+        pt={20}
         mb={16}
-        maxWidth={'full'}
+        maxWidth={'1120px'}
       >
         <Flex
           alignItems={'center'}
@@ -45,12 +45,12 @@ const MyOffersFeature = () => {
             <CreateOfferFeature />
           </Overlay>
         </Flex>
-      </Container>
 
-      <Container
-        px={0}
-        maxWidth={'full'}
-      >
+        <Divider
+          my={12}
+          backgroundColor={'transparent'}
+        />
+
         <OfferList />
       </Container>
     </React.Fragment>

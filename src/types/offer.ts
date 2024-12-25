@@ -1,3 +1,5 @@
+import User from './user';
+
 namespace Offer {
   export type Type = {
     amount: number;
@@ -10,6 +12,7 @@ namespace Offer {
     _id: string;
     type: 'buy' | 'sell';
     isActive: boolean;
+    createdBy?: User.Type;
   };
 
   export type State = { offers: null | undefined | Type[] };

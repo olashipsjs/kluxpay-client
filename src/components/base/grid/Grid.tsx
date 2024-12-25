@@ -13,6 +13,7 @@ import React from 'react';
 import csx from '@utils/createVariant';
 import colorProps from '@props/color';
 import effectsProps from '@props/effects';
+import placementProps from '@props/placement';
 
 namespace Grid {
   export type Props = Polymorphic.PropsWithRef<
@@ -31,6 +32,7 @@ const variants = {
   ...gridProps,
   ...colorProps,
   ...effectsProps,
+  ...placementProps,
 };
 
 const gridVariants = csx({

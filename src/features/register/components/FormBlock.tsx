@@ -35,9 +35,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormBlock = () => {
-  const { register } = useRegister();
+  const { mutation } = useRegister();
   const { data, next } = useStep<any>();
-  const [async, { loading, error }] = useAsync(register, {
+  const [async, { loading, error }] = useAsync(mutation, {
     onCompleted: (res: typeof data) => next(res),
   });
 

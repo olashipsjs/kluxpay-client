@@ -21,8 +21,10 @@ import AssetBalance from '@components/shared/AssetBalance';
 import coins from '@constants/coins';
 import formatDecimal from '@utils/formatDecimal';
 import currencySymbol from '@utils/currencySymbol';
+import useWallet from '@hooks/useWallet';
 
 const Settings = () => {
+  const { wallet } = useWallet();
   const { data, next, previous } = useStep<any>();
 
   const validationSchema = Yup.object().shape({
@@ -134,7 +136,10 @@ const Settings = () => {
                         placeholder={'Enter an amount'}
                       />
                     </FormField.Sheet>
-                    <AssetBalance coinId={values.coinId}>
+                    <AssetBalance
+                      walletId={wallet?._id || ''}
+                      contractAddress={selectedCoin.contractAddress}
+                    >
                       {({ balance }) => {
                         return (
                           <FormField.Message>

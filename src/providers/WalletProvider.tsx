@@ -20,8 +20,8 @@ const reducer = (state: Wallet.State, action: Wallet.Action): Wallet.State => {
       return {
         ...state,
         wallets: state.wallets
-          ? [...state.wallets, action.payload.wallet]
-          : [action.payload.wallet],
+          ? [...state.wallets, ...action.payload.wallets]
+          : action.payload.wallets,
       };
 
     case 'UPDATE_WALLET':
@@ -44,6 +44,12 @@ const reducer = (state: Wallet.State, action: Wallet.Action): Wallet.State => {
 
       return { ...state, wallets: filteredWallets };
 
+    case 'SET_CURRENT_WALLET':
+      const wallet = state.wallets?.find(
+        (w) => w._id === action.payload.walletId
+      );
+      return { ...state, wallet };
+
     default:
       return state;
   }
@@ -52,11 +58,17 @@ const reducer = (state: Wallet.State, action: Wallet.Action): Wallet.State => {
 const WalletProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   useApolloQuery(GET_USER_WALLETS, {
+    pollInterval: 60000,
     onCompleted: (data: any) => {
       if (data?.getUserWallets) {
         dispatch({
           type: 'SET_WALLETS',
           payload: { wallets: data.getUserWallets },
+        });
+
+        dispatch({
+          type: 'SET_CURRENT_WALLET',
+          payload: { walletId: data.getUserWallets[0]._id },
         });
       }
     },
@@ -66,7 +78,11 @@ const WalletProvider = ({ children }: React.PropsWithChildren) => {
   });
 
   const value = React.useMemo(() => {
-    return { wallets: state.wallets, setWallets: dispatch };
+    return {
+      wallets: state.wallets,
+      wallet: state.wallet,
+      setWallets: dispatch,
+    };
   }, [state.wallets, dispatch]);
 
   return (

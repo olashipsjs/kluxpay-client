@@ -42,6 +42,7 @@ const linkVariants = csx({
   defaultVariants: {
     rounded: 12,
     fontSize: 14,
+    lineHeight: '1',
     transition: '200',
     cursor: 'pointer',
     textAlign: 'center',
@@ -57,7 +58,13 @@ const linkVariants = csx({
 const Anchor = React.forwardRef((props: Link.Props, ref: Link.Ref) => {
   const [extractedVariants, extractedProps] = extractProps(props, variants);
 
-  const { as = 'a', _link, _hover, _active, ...restProps } = extractedProps;
+  const {
+    as = 'a',
+    _link,
+    _hover = { color: 'orange-10' },
+    _active,
+    ...restProps
+  } = extractedProps;
 
   return (
     <NavLink
@@ -65,7 +72,7 @@ const Anchor = React.forwardRef((props: Link.Props, ref: Link.Ref) => {
       css={linkVariants({
         ...extractedVariants,
         _link,
-        _hover: { color: 'orange-40', ..._hover },
+        _hover,
         _active,
       })}
       ref={ref}
