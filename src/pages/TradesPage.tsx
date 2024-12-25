@@ -1,4 +1,3 @@
-import TradesFeature from '@features/trades/Feature';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -8,7 +7,6 @@ const TradesPage = () => {
       <Helmet>
         <title>Your trades</title>
       </Helmet>
-      <TradesFeature />
     </React.Fragment>
   );
 };

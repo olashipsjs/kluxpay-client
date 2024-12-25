@@ -5,7 +5,7 @@ import Button from '@components/base/button/Button';
 import Iconify from '@components/base/iconify/Iconify';
 
 const MessageBar = () => {
-  const handleSubmit = (values: any) => {};
+  const handleSubmit = () => {};
 
   return (
     <Formik

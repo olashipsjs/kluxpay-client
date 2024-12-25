@@ -9,15 +9,10 @@ import formatDecimal from '@utils/formatDecimal';
 import toNumber from '@utils/toNumber';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { useParams, useSearchParams } from 'react-router-dom';
 
 const Amount = () => {
   const { user } = useUser();
   const { data, next } = useStep<any>();
-  const [searchParams] = useSearchParams();
-  const { token } = useParams<{ token: string }>();
-
-  const NETWORK_NAME = searchParams.get('network');
 
   const validationSchema = Yup.object().shape({
     amount: Yup.string().required('Enter an amount'),

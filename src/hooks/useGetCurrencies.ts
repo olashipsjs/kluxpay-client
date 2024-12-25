@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import env from 'src/constants/env';
 import client from 'src/lib/queryClient';
 
 const useGetCurrencies = () => {
@@ -7,7 +6,7 @@ const useGetCurrencies = () => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      'x-cg-demo-api-ke': env.COINGECKO_API_KEY,
+      'x-cg-demo-api-ke': import.meta.env.VITE_COINGECKO_API_KEY,
     },
   };
 
