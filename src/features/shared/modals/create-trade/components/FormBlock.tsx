@@ -27,14 +27,14 @@ const FormBlock = () => {
         return (
           <Form>
             <FormField name={'amount'}>
-              <Label> Amount</Label>
-              <FormField.Sheet>
-                <TextField
-                  type={'number'}
-                  placeholder={'Enter an amount'}
-                />
-              </FormField.Sheet>
-              <FormField.Message />
+              <Label textAlign={'center'}> Amount</Label>
+              <TextField
+                fontSize={24}
+                type={'number'}
+                textAlign={'center'}
+                placeholder={'Enter an amount'}
+              />
+              <FormField.Message textAlign={'center'} />
             </FormField>
 
             <Button

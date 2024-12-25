@@ -30,7 +30,7 @@ const Router = () => {
         py={24}
         mx={0}
         maxWidth={'400px'}
-        px={{ initial: 0, sm: 24 }}
+        px={{ initial: 12, sm: 24 }}
       >
         <Routes>
           {routes.map((route, index) => {

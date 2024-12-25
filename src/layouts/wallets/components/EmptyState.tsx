@@ -9,6 +9,7 @@ const EmptyState = () => {
     <Container
       pt={40}
       maxWidth={'480px'}
+      display={{ initial: 'hidden', md: 'block' }}
     >
       <Flex
         alignItems={'center'}

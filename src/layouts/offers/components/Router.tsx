@@ -2,9 +2,10 @@ import Box from '@components/base/box/Box';
 import { Route, Routes } from 'react-router-dom';
 import Container from '@components/base/container/Container';
 import OfferFeature from '@features/offer/Feature';
+import EmptyState from './EmptyState';
 
 const routes = [
-  { path: '/', exact: false, main: 'hello' },
+  { path: '/', exact: false, main: <EmptyState /> },
   { path: '/offers/:offerId', exact: false, main: <OfferFeature /> },
 ];
 
@@ -12,7 +13,7 @@ const Router = () => {
   return (
     <Box
       width={'auto'}
-      ms={{ initial: 0, sm: '400px' }}
+      ms={{ initial: 0, md: '400px' }}
     >
       <Container
         px={0}

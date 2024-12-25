@@ -8,6 +8,7 @@ import Button from '@components/base/button/Button';
 import useUser from '@hooks/useUser';
 import Avatar from '@components/avatar/Avatar';
 import Heading from '@components/base/heading/Heading';
+import useAuth from '@hooks/useAuth';
 
 const routes = [
   {
@@ -99,8 +100,9 @@ const routes = [
 
 const SideBar = () => {
   const { user } = useUser();
+  const { auth } = useAuth();
 
-  if (user) {
+  if (user && auth.accessToken) {
     return (
       <Container
         p={0}

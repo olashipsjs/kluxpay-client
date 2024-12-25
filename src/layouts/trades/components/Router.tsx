@@ -2,9 +2,10 @@ import Box from '@components/base/box/Box';
 import Container from '@components/base/container/Container';
 import TradeFeature from '@features/trade/Feature';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import EmptyState from './EmptyState';
 
 const routes = [
-  { path: '/', exact: false, main: null },
+  { path: '/', exact: false, main: <EmptyState /> },
   { path: '/:id', exact: false, main: <TradeFeature /> },
 ];
 

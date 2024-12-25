@@ -68,7 +68,7 @@ const OfferFeature = () => {
           return (
             <React.Fragment>
               <Heading
-                mt={20}
+                pt={32}
                 textTransform={'capitalize'}
               >{`${offer.type} ${
                 offer.amount

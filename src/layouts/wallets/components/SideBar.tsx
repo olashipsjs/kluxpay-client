@@ -17,6 +17,7 @@ import useUser from '@hooks/useUser';
 import useWallet from '@hooks/useWallet';
 import currencySymbol from '@utils/currencySymbol';
 import formatDecimal from '@utils/formatDecimal';
+import { useLocation } from 'react-router-dom';
 
 const List = () => {
   const { user } = useUser();
@@ -208,14 +209,18 @@ const List = () => {
 };
 
 const SideBar = () => {
+  const { pathname } = useLocation();
+
+  const isParentRoute = pathname === '/app/wallets/';
+
   return (
     <Box
-      width={'400px'}
       borderRight={1}
       minHeight={'full'}
-      position={'fixed'}
+      width={{ md: '400px' }}
+      position={{ md: 'fixed' }}
       borderRightColor={'gray-80'}
-      display={{ initial: 'hidden', md: 'block' }}
+      display={{ initial: isParentRoute ? 'block' : 'hidden', md: 'block' }}
     >
       <Flex
         py={12}

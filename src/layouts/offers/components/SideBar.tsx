@@ -4,10 +4,10 @@ import Box from '@components/base/box/Box';
 import Container from '@components/base/container/Container';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
-import Iconify from '@components/base/iconify/Iconify';
+// import Iconify from '@components/base/iconify/Iconify';
 import Text from '@components/base/text/Text';
 import Divider from '@components/divider/Divider';
-import Dropdown from '@components/dropdown/Dropdown';
+// import Dropdown from '@components/dropdown/Dropdown';
 import CoinPrice from '@components/shared/CoinPrice';
 import coins from '@constants/coins';
 import { GET_OFFERS } from '@graphql/offer';
@@ -160,8 +160,9 @@ const List = () => {
                 <Heading
                   fontSize={14}
                   lineHeight={'1'}
+                  textTransform={'capitalize'}
                 >
-                  Sell {`${offer.amount} ${COIN.symbol.toUpperCase()}`}
+                  {`${offer.type} ${offer.amount} ${COIN.symbol.toUpperCase()}`}
                 </Heading>
                 <CoinPrice
                   fiat={offer.fiat}
@@ -210,10 +211,14 @@ const List = () => {
 };
 
 const SideBar = () => {
+  const { pathname } = useLocation();
+
+  const isParentRoute = pathname === '/app/';
+
   return (
     <React.Fragment>
-      <Dropdown
-        mt={32}
+      {/* <Dropdown
+        pt={32}
         px={12}
         display={{ initial: 'flex', md: 'hidden' }}
       >
@@ -264,16 +269,16 @@ const SideBar = () => {
           </Flex>
           <Filters />
         </Dropdown.Content>
-      </Dropdown>
+      </Dropdown> */}
 
       <Box
         p={12}
-        width={'400px'}
         borderRight={1}
-        position={'fixed'}
         minHeight={'screen'}
+        position={{ md: 'fixed' }}
         borderRightColor={'gray-80'}
-        display={{ initial: 'hidden', md: 'block' }}
+        width={{ initial: 'full', md: '400px' }}
+        display={{ initial: isParentRoute ? 'block' : 'hidden', md: 'block' }}
       >
         <Heading>Market</Heading>
         <Filters />

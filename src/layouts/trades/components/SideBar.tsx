@@ -121,10 +121,10 @@ const SideBar = () => {
     <Box
       py={12}
       borderRight={1}
-      position={'fixed'}
       minHeight={'full'}
       borderColor={'gray-80'}
-      width={{ initial: 'full', md: '360px' }}
+      width={{ md: '360px' }}
+      position={{ md: 'fixed' }}
       display={{ initial: isParentRoute ? 'block' : 'hidden', md: 'block' }}
     >
       <Box px={12}>
