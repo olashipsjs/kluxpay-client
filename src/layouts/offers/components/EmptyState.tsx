@@ -9,6 +9,7 @@ const EmptyState = () => {
       pt={32}
       alignItems={'center'}
       flexDirection={'column'}
+      display={{ initial: 'hidden', md: 'flex' }}
     >
       <Iconify
         width={40}

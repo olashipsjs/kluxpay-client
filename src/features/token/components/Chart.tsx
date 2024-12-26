@@ -96,6 +96,7 @@ const Chart = () => {
 
                         const day = date.toLocaleDateString('default', {
                           day: '2-digit',
+                          month: 'short',
                         });
 
                         switch (currentTab) {

@@ -83,7 +83,7 @@ const WalletProvider = ({ children }: React.PropsWithChildren) => {
       wallet: state.wallet,
       setWallets: dispatch,
     };
-  }, [state.wallets, dispatch]);
+  }, [state.wallets, state.wallet, dispatch]);
 
   return (
     <WalletContext.Provider value={value}>{children}</WalletContext.Provider>

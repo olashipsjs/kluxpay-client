@@ -13,6 +13,19 @@ export const CREATE_PAYMENT = gql`
   }
 `;
 
+export const UPDATE_PAYMENT = gql`
+  mutation UpdatePayment($id: ID!, $payload: UpdatePaymentPayload!) {
+    updatePayment(id: $id, payload: $payload) {
+      _id
+      method
+      bankName
+      bankAccountName
+      bankAccountNumber
+      details
+    }
+  }
+`;
+
 export const GET_USER_PAYMENTS = gql`
   query GetUserPayments {
     getUserPayments {

@@ -61,6 +61,12 @@ export const GET_BALANCE = gql`
   }
 `;
 
+export const SEND_TOKEN = gql`
+  mutation SendToken($payload: SendTokenPayload!) {
+    sendToken(payload: $payload)
+  }
+`;
+
 export const GET_ASSET_BALANCE = gql`
   query GetAssetBalance($payload: GetAssetBalancePayload!) {
     getAssetBalance(payload: $payload)

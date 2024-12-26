@@ -7,39 +7,6 @@ export const CREATE_TRADE = gql`
       rate
       amount
       offer {
-        minLimit
-        maxLimit
-        createdBy {
-          _id
-          firstName
-          lastName
-        }
-        payment {
-          _id
-          method
-          details
-          bankAccountName
-          bankAccountNumber
-        }
-      }
-      createdBy {
-        _id
-        firstName
-        lastName
-      }
-    }
-  }
-`;
-
-export const GET_USER_TRADES = gql`
-  query GetUserTrades {
-    getUserTrades {
-      _id
-      rate
-      amount
-      offer {
-        _id
-        fiat
         type
         coinId
         minLimit
@@ -56,6 +23,53 @@ export const GET_USER_TRADES = gql`
           bankAccountName
           bankAccountNumber
         }
+      }
+      wallet {
+        _id
+        publicKey
+      }
+      createdBy {
+        _id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const GET_USER_TRADES = gql`
+  query GetUserTrades {
+    getUserTrades {
+      _id
+      rate
+      amount
+      createdAt
+      updatedAt
+      offer {
+        _id
+        fiat
+        type
+        coinId
+        notes
+        minLimit
+        maxLimit
+        createdBy {
+          _id
+          firstName
+          lastName
+        }
+        payment {
+          _id
+          method
+          details
+          bankName
+          bankAccountName
+          bankAccountNumber
+        }
+      }
+      wallet {
+        _id
+        publicKey
       }
       createdBy {
         _id

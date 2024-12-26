@@ -44,8 +44,6 @@ const Trigger = React.forwardRef(
     const { isOpen, setIsOpen } = useOverlay();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-
       if (isOpen) {
         setIsOpen(false);
       } else {

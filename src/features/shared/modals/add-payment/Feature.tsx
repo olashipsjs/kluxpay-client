@@ -6,16 +6,22 @@ import Overlay from '@components/overlay/Overlay';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Divider from '@components/divider/Divider';
+import usePayments from '@hooks/usePayments';
 
-const initialData = {
-  method: paymentMethods[0].name,
-  bankName: '',
-  bankAccountNumber: '',
-  bankAccountName: '',
-  details: '',
-};
+const AddPaymentFeature = ({ id }: { id?: string }) => {
+  const { payments } = usePayments();
+  const index = payments.findIndex((p) => p._id === id);
 
-const AddPaymentFeature = () => {
+  const payment = payments[index];
+
+  const initialData = {
+    method: paymentMethods[0].name,
+    bankName: payment?.bankName || '',
+    bankAccountNumber: payment?.bankAccountNumber || '',
+    bankAccountName: payment?.bankAccountName || '',
+    details: payment?.details || '',
+  };
+
   return (
     <Overlay.Panel justifyContent={{ initial: 'end', sm: 'center' }}>
       <Overlay.Background />
@@ -57,7 +63,7 @@ const AddPaymentFeature = () => {
           p={20}
           initialData={initialData}
         >
-          <Step.Screen screens={[<FormBlock />, <Success />]} />
+          <Step.Screen screens={[<FormBlock id={id} />, <Success />]} />
         </Step>
       </Overlay.Content>
     </Overlay.Panel>

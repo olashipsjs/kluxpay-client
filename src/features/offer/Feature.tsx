@@ -70,7 +70,7 @@ const OfferFeature = () => {
               <Heading
                 pt={32}
                 textTransform={'capitalize'}
-              >{`${offer.type} ${
+              >{`${offer.type}ing ${
                 offer.amount
               } ${COIN.symbol.toUpperCase()}`}</Heading>
 

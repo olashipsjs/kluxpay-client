@@ -1,25 +1,59 @@
 import Box from '@components/base/box/Box';
 import MessageBar from './components/MessageBar';
-import React from 'react';
+import Chats from './components/Chats';
+import Header from './components/Header';
+import Banner from './components/Banner';
+import useTrades from '@hooks/useTrades';
+import Flex from '@components/base/flex/Flex';
+import Iconify from '@components/base/iconify/Iconify';
+import Heading from '@components/base/heading/Heading';
 
 const TradeFeature = () => {
-  return (
-    <React.Fragment>
-      <Box></Box>
-      <Box>hello world</Box>
+  const { trade } = useTrades();
+
+  if (trade) {
+    return (
       <Box
-        p={12}
-        borderTop={1}
-        bottom={'0px'}
-        width={'900px'}
-        position={'fixed'}
-        backdropBlur={'md'}
-        borderTopColor={'gray-90'}
-        backgroundColor={'rgba(var(--white), 0.9)'}
+        minHeight={'screen'}
+        backgroundColor={'white'}
       >
-        <MessageBar />
+        <Header />
+        <Banner />
+        <Chats />
+        <Box
+          borderTop={1}
+          position={'fixed'}
+          backdropBlur={'lg'}
+          borderTopColor={'gray-90'}
+          bottom={{ initial: '60px', md: '0px' }}
+          backgroundColor={'rgba(var(--white), 0.5)'}
+          width={{ initial: 'full', md: 'calc(100vw - 636px)' }}
+        >
+          <MessageBar />
+        </Box>
       </Box>
-    </React.Fragment>
+    );
+  }
+
+  return (
+    <Flex
+      pt={40}
+      alignItems={'center'}
+      flexDirection={'column'}
+    >
+      <Iconify
+        width={32}
+        color={'gray-60'}
+        icon={'fluent:people-search-24-regular'}
+      />
+
+      <Heading
+        mt={12}
+        fontSize={19}
+      >
+        We could not locate the trade.
+      </Heading>
+    </Flex>
   );
 };
 

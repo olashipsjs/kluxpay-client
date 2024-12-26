@@ -12,6 +12,7 @@ import CoinPrice from '@components/shared/CoinPrice';
 import coins from '@constants/coins';
 import { GET_OFFERS } from '@graphql/offer';
 import useApolloQuery from '@hooks/useApolloQuery';
+import useOffers from '@hooks/useOffers';
 import Offer from '@ts_types/offer';
 import currencySymbol from '@utils/currencySymbol';
 import formatDecimal from '@utils/formatDecimal';
@@ -20,8 +21,8 @@ import React from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 const typeTabs = [
-  { label: 'Sell', value: 'sell' },
-  { label: 'Buy', value: 'buy' },
+  { label: 'Sell', value: 'buy' },
+  { label: 'Buy', value: 'sell' },
 ];
 
 const Filters = () => {
@@ -73,6 +74,7 @@ const Filters = () => {
 };
 
 const List = () => {
+  const { setOffers } = useOffers();
   const { search } = useLocation();
   const [searchParams] = useSearchParams();
 
@@ -111,6 +113,10 @@ const List = () => {
       borderColor={'gray-90'}
       backgroundColor={'white'}
       boxShadow={'0px .5px 0px 0px rgba(var(--gray-80))'}
+      notLastChild={{
+        borderBottom: 1,
+        borderBottomColor: 'gray-90',
+      }}
     >
       <Flex
         px={12}
@@ -131,6 +137,12 @@ const List = () => {
             key={offer._id}
             rounded={'none'}
             textAlign={'left'}
+            onClick={() =>
+              setOffers({
+                type: 'SET_CURRENT_OFFER',
+                payload: { offer: offer },
+              })
+            }
             justifyContent={'start'}
             to={`/app/offers/${offer._id}/${search}`}
             _hover={{ backgroundColor: 'gray-100' }}
@@ -139,16 +151,12 @@ const List = () => {
               hasError
               backgroundColor={'gray-95'}
             >
-              <Avatar.Picture
-                src={
-                  'https://hr-template.alignui.com/images/avatar/illustration/emma.png'
-                }
-              />
               <Avatar.Fallback
+                fontSize={14}
                 textTransform={'capitalize'}
               >{`${offer?.createdBy?.firstName?.substring(
                 0,
-                2
+                1
               )}`}</Avatar.Fallback>
             </Avatar>
 
@@ -162,7 +170,9 @@ const List = () => {
                   lineHeight={'1'}
                   textTransform={'capitalize'}
                 >
-                  {`${offer.type} ${offer.amount} ${COIN.symbol.toUpperCase()}`}
+                  {`${offer.type}ing ${
+                    offer.amount
+                  } ${COIN.symbol.toUpperCase()}`}
                 </Heading>
                 <CoinPrice
                   fiat={offer.fiat}
@@ -173,6 +183,8 @@ const List = () => {
                       <Text
                         fontSize={13}
                         lineHeight={'1'}
+                        color={'gray-10'}
+                        fontWeight={'semibold'}
                       >
                         {`${currencySymbol(offer.fiat)}${marginPrice(
                           price,

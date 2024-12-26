@@ -6,9 +6,8 @@ import Container from '@components/base/container/Container';
 import Divider from '@components/divider/Divider';
 import Button from '@components/base/button/Button';
 import useUser from '@hooks/useUser';
-import Avatar from '@components/avatar/Avatar';
-import Heading from '@components/base/heading/Heading';
 import useAuth from '@hooks/useAuth';
+import Options from './Options';
 
 const routes = [
   {
@@ -117,25 +116,9 @@ const SideBar = () => {
       >
         <Flex>
           <Box>
-            <Flex
-              px={12}
-              pt={16}
-              gap={8}
-            >
-              <Avatar backgroundColor={'gray-95'}>
-                <Avatar.Picture
-                  src={
-                    'https://finance-template.alignui.com/images/avatar/illustration/arthur.png'
-                  }
-                  alt={user.firstName}
-                />
-              </Avatar>
-
-              <Heading
-                fontSize={16}
-                textTransform={'capitalize'}
-              >{`${user.firstName} ${user.lastName}`}</Heading>
-            </Flex>
+            <Box p={12}>
+              <Options />
+            </Box>
 
             <Box
               px={8}

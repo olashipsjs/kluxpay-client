@@ -5,6 +5,7 @@ namespace Payment {
     _id: string;
     method: string;
     details: string;
+    bankName: string;
     bankAccountName: string;
     bankAccountNumber: string;
     createdBy: User.Type;

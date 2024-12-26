@@ -3,32 +3,55 @@ import FormField from '@components/formfield/FormField';
 import TextField from '@components/base/textfield/TextField';
 import Button from '@components/base/button/Button';
 import Iconify from '@components/base/iconify/Iconify';
+import useSocket from '@hooks/useSocket';
+import { useParams } from 'react-router-dom';
+import useUser from '@hooks/useUser';
 
 const MessageBar = () => {
-  const handleSubmit = () => {};
+  const { user } = useUser();
+  const { id } = useParams<{ id: string }>();
+
+  const [sendMessage] = useSocket(id || '');
+
+  const handleSubmit = (values: any, { resetForm }: any) => {
+    sendMessage({
+      tradeId: id || '',
+      text: values.text,
+      userId: user?._id || '',
+    });
+
+    resetForm();
+  };
 
   return (
     <Formik
       onSubmit={handleSubmit}
-      initialValues={{ message: '' }}
+      initialValues={{ text: '' }}
     >
       <Form>
-        <FormField name={'message'}>
+        <FormField
+          p={12}
+          name={'text'}
+        >
           <FormField.Sheet
             pe={'3px'}
             rounded={'full'}
             alignItems={'center'}
             backgroundColor={'gray-100'}
           >
-            <TextField placeholder='Type a message...' />
+            <TextField
+              fontSize={16}
+              placeholder='Type a message...'
+            />
             <Button
               p={4}
               size={'32px'}
+              type={'submit'}
               rounded={'full'}
             >
               <Iconify
-                width={20}
-                icon={'fluent:arrow-hook-up-right-24-filled'}
+                width={24}
+                icon={'fluent:chat-multiple-24-filled'}
               />
             </Button>
           </FormField.Sheet>

@@ -5,6 +5,7 @@ import FormBlock from './components/FormBlock';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Success from './components/Success';
+import useWallet from '@hooks/useWallet';
 
 type Props = {
   rate: number;
@@ -12,11 +13,13 @@ type Props = {
 
 const CreateTradeFeature = ({ rate }: Props) => {
   const { offerId } = useParams<{ offerId: string }>();
+  const { wallet } = useWallet();
 
   const initialData = {
     rate,
     amount: '',
     offer: offerId,
+    wallet: wallet?._id || '',
   };
 
   return (

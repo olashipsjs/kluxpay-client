@@ -68,7 +68,7 @@ const Header = () => {
   return (
     <Container
       px={0}
-      mt={24}
+      pt={24}
       maxWidth={'480px'}
     >
       <Box display={{ initial: 'block', md: 'hidden' }}>

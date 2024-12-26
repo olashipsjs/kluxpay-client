@@ -16,7 +16,7 @@ const menu = [
   },
   {
     label: 'Trade',
-    url: '/app/offers/',
+    url: '/app/trades/',
     icon: 'fluent:arrow-repeat-1-24-regular',
   },
   {

@@ -9,25 +9,36 @@ import SideBar from './components/SideBar';
 import Banner from './components/Banner';
 import VerificationBanner from './components/VerificationBanner';
 import Header from './components/Header';
+import TradesProvider from 'src/providers/TradesProvider';
+import { Helmet } from 'react-helmet-async';
+import React from 'react';
 
 const AppLayout = () => {
   return (
-    <AuthProvider>
-      <UserProvider>
-        <WalletProvider>
-          <OffersProvider>
-            <PaymentsProvider>
-              <Banner />
-              <VerificationBanner />
-              <Header />
-              <SideBar />
-              <Body />
-              <BottomBar />
-            </PaymentsProvider>
-          </OffersProvider>
-        </WalletProvider>
-      </UserProvider>
-    </AuthProvider>
+    <React.Fragment>
+      <Helmet>
+        <title>Kluxpay - app</title>
+      </Helmet>
+
+      <AuthProvider>
+        <UserProvider>
+          <WalletProvider>
+            <OffersProvider>
+              <TradesProvider>
+                <PaymentsProvider>
+                  <Banner />
+                  <VerificationBanner />
+                  <Header />
+                  <SideBar />
+                  <Body />
+                  <BottomBar />
+                </PaymentsProvider>
+              </TradesProvider>
+            </OffersProvider>
+          </WalletProvider>
+        </UserProvider>
+      </AuthProvider>
+    </React.Fragment>
   );
 };
 

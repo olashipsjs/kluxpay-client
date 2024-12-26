@@ -5,22 +5,18 @@ import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
 import Divider from '@components/divider/Divider';
-import Tabs from '@components/tabs/Tabs';
-import { GET_USER_TRADES } from '@graphql/trade';
-import useApolloQuery from '@hooks/useApolloQuery';
-import React from 'react';
+import coins from '@constants/coins';
+import useTrades from '@hooks/useTrades';
+import useUser from '@hooks/useUser';
+import currencySymbol from '@utils/currencySymbol';
+import formatDecimal from '@utils/formatDecimal';
 import { useLocation } from 'react-router-dom';
 
 const List = () => {
-  const { data, error } = useApolloQuery(GET_USER_TRADES);
+  const { user } = useUser();
+  const { trades, setTrades } = useTrades();
 
-  if (error) {
-    return <Heading fontSize={16}>Unable to fetch user trades</Heading>;
-  }
-
-  if (!data || !data?.getUserTrades) return null;
-
-  const trades = data.getUserTrades;
+  if (!trades) return null;
 
   return (
     <Box
@@ -31,6 +27,10 @@ const List = () => {
       borderColor={'gray-90'}
       backgroundColor={'white'}
       boxShadow={'0px .5px 0px 0px rgba(var(--gray-80))'}
+      notLastChild={{
+        borderBottom: 1,
+        borderBottomColor: 'gray-95',
+      }}
     >
       <Flex
         py={8}
@@ -43,6 +43,13 @@ const List = () => {
       </Flex>
 
       {trades?.map((trade: any) => {
+        const PARTNER =
+          user?._id === trade.createdBy?._id
+            ? trade.offer?.createdBy
+            : trade.createdBy;
+
+        const COIN = coins.find((coin) => coin.id === trade.offer?.coinId)!;
+
         return (
           <Anchor
             py={10}
@@ -53,6 +60,9 @@ const List = () => {
             key={trade._id}
             textAlign={'left'}
             justifyContent={'start'}
+            onClick={() =>
+              setTrades({ type: 'SET_CURRENT_TRADE', payload: { trade } })
+            }
             to={`/app/trades/${trade._id}`}
             _hover={{ backgroundColor: 'gray-100' }}
           >
@@ -77,25 +87,37 @@ const List = () => {
                 justifyContent={'between'}
               >
                 <Heading
-                  lineHeight={'1'}
                   fontSize={14}
+                  lineHeight={'1'}
+                  textTransform={'capitalize'}
                 >
-                  Alan Hunt
+                  {`${PARTNER?.firstName} ${PARTNER?.lastName}`}
                 </Heading>
                 <Text
+                  fontSize={13}
                   lineHeight={'1'}
-                  fontSize={12}
+                  color={'gray-10'}
+                  fontWeight={'semibold'}
                 >
-                  8:21 AM
+                  {`${currencySymbol(trade?.offer?.fiat)}${formatDecimal(
+                    trade.rate
+                  )}`}
                 </Text>
               </Flex>
 
-              <Box mt={4}>
+              <Box mt={6}>
                 <Text
+                  fontSize={13}
                   lineHeight={'1'}
-                  fontSize={12}
+                  textTransform={'capitalize'}
                 >
-                  Buy 20 USDT
+                  {`${
+                    user?._id === trade.createdBy?._id
+                      ? trade.offer.type
+                      : trade.offer.type === 'sell'
+                      ? 'buying'
+                      : 'selling'
+                  } ${trade?.amount} ${COIN?.symbol?.toUpperCase()}`}
                 </Text>
               </Box>
             </Box>
@@ -106,10 +128,10 @@ const List = () => {
   );
 };
 
-const typeTabs = [
-  { label: 'Sell', value: 'sell' },
-  { label: 'Buy', value: 'buy' },
-];
+// const typeTabs = [
+//   { label: 'Sell', value: 'sell' },
+//   { label: 'Buy', value: 'buy' },
+// ];
 
 const SideBar = () => {
   const location = useLocation();
@@ -136,7 +158,7 @@ const SideBar = () => {
         backgroundColor={'transparent'}
       />
 
-      <Tabs
+      {/* <Tabs
         px={12}
         flexDirection={'column'}
         defaultTab={typeTabs[0].value}
@@ -176,13 +198,15 @@ const SideBar = () => {
               <Tabs.Panel
                 mt={24}
                 value={tab}
-              >
-                <List />
-              </Tabs.Panel>
+              ></Tabs.Panel>
             </React.Fragment>
           );
         }}
-      </Tabs>
+      </Tabs> */}
+
+      <Box p={12}>
+        <List />
+      </Box>
     </Box>
   );
 };

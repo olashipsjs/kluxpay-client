@@ -1,12 +1,11 @@
 import Anchor from '@components/anchor/Anchor';
-import Avatar from '@components/avatar/Avatar';
 import Container from '@components/base/container/Container';
 import Flex from '@components/base/flex/Flex';
-import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Section from '@components/base/section/Section';
 import Divider from '@components/divider/Divider';
 import useUser from '@hooks/useUser';
+import Options from './Options';
 
 const Header = () => {
   const { user } = useUser();
@@ -26,38 +25,11 @@ const Header = () => {
         px={{ initial: 12, sm: 16 }}
       >
         <Flex
-          height={'56px'}
+          height={'48px'}
           alignItems={'center'}
           justifyContent={'between'}
         >
-          <Flex
-            gap={8}
-            alignItems={'center'}
-          >
-            <Avatar
-              size={'32px'}
-              backgroundColor={'indigo-95'}
-            >
-              <Avatar.Picture
-                src={
-                  'https://finance-template.alignui.com/images/avatar/illustration/arthur.png'
-                }
-              />
-              <Avatar.Fallback
-                fontSize={17}
-                color={'white'}
-                textTransform={'capitalize'}
-              >
-                {user?.firstName?.substring(0, 2)}
-              </Avatar.Fallback>
-            </Avatar>
-            <Heading
-              fontSize={16}
-              textTransform={'capitalize'}
-            >
-              {`${user?.firstName} ${user?.lastName}`}
-            </Heading>
-          </Flex>
+          <Options />
 
           <Flex gap={12}>
             <Anchor
@@ -67,7 +39,7 @@ const Header = () => {
               fontSize={13}
               color={'white'}
               fontWeight={'medium'}
-              to={'/app/marketplace'}
+              to={'/app/'}
               borderColor={'transparent'}
               backgroundColor={'indigo-60'}
               _hover={{

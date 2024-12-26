@@ -5,13 +5,14 @@ import GeneralSettingsFeature from '@features/settings/general/Feature';
 import ProfileSettingsFeature from '@features/settings/profile/Feature';
 import SecuritySettingsFeature from '@features/settings/security/Feature';
 import AuthenticationSettingsFeature from '@features/settings/authentication/Feature';
+import PaymentSettingsFeature from '@features/settings/payment/Feature';
 
 const Router = () => {
   const location = useLocation();
 
   const routes = [
     { path: '/', exact: true, main: null },
-    { path: 'payments', main: 'payments' },
+    { path: 'payments', main: <PaymentSettingsFeature /> },
     { path: 'profile', main: <ProfileSettingsFeature /> },
     { path: 'security', main: <SecuritySettingsFeature /> },
     { path: 'general', exact: true, main: <GeneralSettingsFeature /> },

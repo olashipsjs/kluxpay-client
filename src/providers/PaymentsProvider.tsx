@@ -1,6 +1,6 @@
 import { GET_USER_PAYMENTS } from '@graphql/payment';
 import useApolloQuery from '@hooks/useApolloQuery';
-import Payment from '@ts_types/types';
+import Payment from '@ts_types/paayment';
 import React from 'react';
 
 const initialState: Payment.State = { payments: [] };

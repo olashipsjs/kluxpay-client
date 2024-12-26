@@ -12,7 +12,7 @@ import Alert from '@components/alert/Alert';
 import useStep from 'src/hooks/useStep';
 import Heading from '@components/base/heading/Heading';
 import useApolloMutation from '@hooks/useApolloMutation';
-import { CREATE_PAYMENT } from '@graphql/payment';
+import { CREATE_PAYMENT, UPDATE_PAYMENT } from '@graphql/payment';
 import usePayments from '@hooks/usePayments';
 import Grid from '@components/base/grid/Grid';
 
@@ -24,33 +24,53 @@ const validationSchema = Yup.object().shape({
   bankAccountNumber: Yup.string().required('Account number'),
 });
 
-const FormBlock = () => {
+const FormBlock = ({ id }: { id?: string }) => {
   const { setPayments } = usePayments();
   const { data, next } = useStep<any>();
-  const [createPayment, { loading, error }] = useApolloMutation(
-    CREATE_PAYMENT,
+  const [mutation, { loading, error }] = useApolloMutation(
+    id ? UPDATE_PAYMENT : CREATE_PAYMENT,
     {
       onCompleted: (res: any) => {
-        setPayments({
-          type: 'ADD_PAYMENT',
-          payload: { payment: res?.createPayment },
-        });
+        if (id) {
+          setPayments({
+            type: 'UPDATE_PAYMENT',
+            payload: { payment: res?.updatePayment },
+          });
+        } else {
+          setPayments({
+            type: 'ADD_PAYMENT',
+            payload: { payment: res?.createPayment },
+          });
+        }
         next(data);
       },
     }
   );
 
   const handleSubmit = async (values: typeof data) => {
-    await createPayment({
-      variables: {
-        payload: {
-          method: values.method,
-          details: values.details,
-          bankName: values.bankName,
-          bankAccountName: values.bankAccountName,
-          bankAccountNumber: values.bankAccountNumber,
-        },
-      },
+    const variables = id
+      ? {
+          id,
+          payload: {
+            method: values.method,
+            details: values.details,
+            bankName: values.bankName,
+            bankAccountName: values.bankAccountName,
+            bankAccountNumber: values.bankAccountNumber,
+          },
+        }
+      : {
+          payload: {
+            method: values.method,
+            details: values.details,
+            bankName: values.bankName,
+            bankAccountName: values.bankAccountName,
+            bankAccountNumber: values.bankAccountNumber,
+          },
+        };
+
+    await mutation({
+      variables,
     });
   };
 
@@ -146,7 +166,7 @@ const FormBlock = () => {
             disabled={loading}
           >
             <Button.Loader visible={loading} />
-            Create Payment
+            {id ? 'Update' : 'Create'} Payment
           </Button>
         </Form>
       </Formik>

@@ -2,18 +2,30 @@ import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Overlay from '@components/overlay/Overlay';
 import Step from '@components/step/Step';
-import Amount from './components/Amount';
-import Address from './components/Address';
 import Success from './components/Success';
-import Wallet from './components/Wallet';
+import useWallet from '@hooks/useWallet';
+import FormBlock from './components/FormBlock';
 
-const initialData = {
-  amount: '',
-  recipient: '',
-  walletId: '',
+type Props = {
+  coin: {
+    id: string;
+    symbol: string;
+    name: string;
+  };
+  walletId?: string;
+  contractAddress?: string;
 };
 
-const WithdrawFeature = () => {
+const WithdrawFeature = ({ contractAddress, walletId, coin }: Props) => {
+  const { wallet } = useWallet();
+
+  const initialData = {
+    to: '',
+    amount: '',
+    contractAddress,
+    walletId: walletId ? walletId : wallet?._id || '',
+  };
+
   return (
     <Overlay.Panel justifyContent={'end'}>
       <Overlay.Background />
@@ -24,7 +36,7 @@ const WithdrawFeature = () => {
           alignItems={'center'}
           justifyContent={'between'}
         >
-          <Heading fontSize={17}>Withdraw</Heading>
+          <Heading fontSize={17}>Send {coin.name}</Heading>
           <Overlay.Trigger
             py={6}
             border={1}
@@ -42,9 +54,7 @@ const WithdrawFeature = () => {
           p={12}
           initialData={initialData}
         >
-          <Step.Screen
-            screens={[<Amount />, <Address />, <Wallet />, <Success />]}
-          />
+          <Step.Screen screens={[<FormBlock />, <Success />]} />
         </Step>
       </Overlay.Content>
     </Overlay.Panel>

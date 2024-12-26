@@ -52,7 +52,10 @@ const Content = React.forwardRef(
     if (!domRect) return null;
 
     return (
-      <Overlay.Panel>
+      <Overlay.Panel
+        alignItems={'start'}
+        justifyContent={'start'}
+      >
         <Overlay.Background
           backdropBlur={'none'}
           backgroundColor={'transparent'}
@@ -66,7 +69,7 @@ const Content = React.forwardRef(
           top={top || domRect.top + 32 + 'px'}
           right={right || domRect.right + 'px'}
           width={width || domRect.width + 'px'}
-          left={domRect.left + Number(left || 0) + 'px'}
+          left={left || domRect.left + 'px'}
         />
       </Overlay.Panel>
     );

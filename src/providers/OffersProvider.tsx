@@ -48,8 +48,13 @@ const reducer = (state: Offer.State, action: Offer.Action): Offer.State => {
         }
         return offer;
       });
-
       return { ...state, offers: activatedOffers };
+
+    case 'SET_CURRENT_OFFER':
+      return {
+        ...state,
+        offer: action.payload.offer,
+      };
 
     default:
       return state;
@@ -78,10 +83,11 @@ const OffersProvider = ({ children }: Props) => {
 
   const value = React.useMemo(() => {
     return {
+      offer: state.offer,
       offers: state.offers,
       setOffers: dispatch,
     };
-  }, [state.offers, dispatch]);
+  }, [state.offer, state.offers, dispatch]);
 
   return (
     <OffersContext.Provider value={value}>{children}</OffersContext.Provider>
