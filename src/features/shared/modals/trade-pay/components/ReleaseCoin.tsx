@@ -82,10 +82,10 @@ const ReleaseCoin = () => {
         disabled={loading}
         onClick={() =>
           mutation({
-            fee: FEE,
-            amount: AMOUNT,
             to: trade.wallet?._id,
             walletId: wallet?._id,
+            fee: toNumber(String(FEE)),
+            amount: toNumber(String(AMOUNT)),
             contractAddress: COIN.contractAddress,
           })
         }

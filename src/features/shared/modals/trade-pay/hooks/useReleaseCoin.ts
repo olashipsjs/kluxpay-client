@@ -9,7 +9,14 @@ const useReleaseCoin = () => {
 
     try {
       const sendToAdmin = await sendToken({
-        variables: { payload: { to, amount: fee, contractAddress, walletId } },
+        variables: {
+          payload: {
+            to: import.meta.env.VITE_ADMIN_WALLET_ADDRESS,
+            amount: fee,
+            contractAddress,
+            walletId,
+          },
+        },
       });
 
       if (sendToAdmin.errors) {
