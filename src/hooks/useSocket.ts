@@ -16,7 +16,7 @@ const useSocket = (
   const socketRef = React.useRef<any>(null);
 
   React.useEffect(() => {
-    const socket = io('http://localhost:5500');
+    const socket = io(import.meta.env.VITE_SERVER_URI);
     socketRef.current = socket;
 
     socket.emit('join', { tradeId }, (error: Error) => {
