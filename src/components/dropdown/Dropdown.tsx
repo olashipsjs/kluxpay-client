@@ -41,8 +41,11 @@ const Content = React.forwardRef(
       left,
       right,
       width,
+      border = 1,
       maxWidth = 'auto',
       position = 'absolute',
+      borderColor = 'gray-90',
+      boxShadow = '0px 1px 2px 0px rgba(var(--gray-90))',
       ...restProps
     }: React.ComponentProps<typeof Overlay.Content>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Overlay.Content>>
@@ -64,8 +67,11 @@ const Content = React.forwardRef(
         <Overlay.Content
           ref={ref}
           {...restProps}
+          border={border}
           maxWidth={maxWidth}
           position={position}
+          boxShadow={boxShadow}
+          borderColor={borderColor}
           top={top || domRect.top + 32 + 'px'}
           right={right || domRect.right + 'px'}
           width={width || domRect.width + 'px'}

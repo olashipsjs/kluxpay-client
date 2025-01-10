@@ -2,92 +2,54 @@ import Box from '@components/base/box/Box';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
-import Overlay from '@components/overlay/Overlay';
 import Text from '@components/base/text/Text';
-import React from 'react';
+import Overlay from '@components/overlay/Overlay';
 
 const Success = () => {
   return (
-    <React.Fragment>
-      <Flex
-        px={20}
-        flexDirection={'column'}
-      >
-        <Iconify
-          width={'4em'}
-          color={'green-60'}
-          icon={'fluent:arrow-sync-checkmark-24-filled'}
-        />
-
+    <Flex
+      p={16}
+      minHeight={'60vh'}
+      alignItems={'center'}
+      flexDirection={'column'}
+      justifyContent={'center'}
+    >
+      <Iconify
+        width={96}
+        css={{ flex: 1 }}
+        color={'indigo-60'}
+        icon={'uim:circle-layer'}
+      />
+      <Box maxWidth={'320px'}>
         <Heading
-          mt={16}
-          as={'h3'}
           fontSize={21}
-          lineHeight={'md'}
+          textAlign={'center'}
         >
-          Great job! Your offer has been updated
+          Offer posted
         </Heading>
-
         <Text
           mt={8}
           as={'p'}
           fontSize={14}
-          lineHeight={'lg'}
-        ></Text>
-
-        <Heading
-          mt={20}
-          fontSize={14}
+          textAlign={'center'}
         >
-          Guidelines
-        </Heading>
-        <Box
-          px={32}
-          py={12}
-          mt={8}
-          as={'ul'}
-          rounded={6}
-          width={'full'}
-          backgroundColor={'orange-100'}
-          notLastChild={{
-            mb: 8,
-          }}
-        >
-          <Text
-            as={'li'}
-            fontSize={13}
-            lineHeight={'lg'}
-            color={'orange-30'}
-            listStyleType={'number'}
-          >
-            If your balance is lower than the specified offer amount, your offer
-            will not be listed or made visible to other traders.
-          </Text>
-          <Text
-            as={'li'}
-            fontSize={13}
-            lineHeight={'lg'}
-            color={'orange-30'}
-            listStyleType={'number'}
-          >
-            Any pending or unlisted offers will remain inactive until your
-            balance meets the required amount for the offer.
-          </Text>
-          <Text
-            as={'li'}
-            fontSize={13}
-            lineHeight={'lg'}
-            color={'orange-30'}
-            listStyleType={'number'}
-          >
-            Always monitor your balance and update your offer settings to
-            reflect your available funds to ensure uninterrupted trading.
-          </Text>
-        </Box>
+          Activate your offer to make it available to other trades on kluxpay
+          Market.
+        </Text>
+      </Box>
 
-        <Overlay.Trigger mt={24}>Okay I understand</Overlay.Trigger>
-      </Flex>
-    </React.Fragment>
+      <Overlay.Trigger
+        mt={12}
+        width={'fit'}
+        color={'gray-40'}
+        fontWeight={'semibold'}
+        borderColor={'gray-80'}
+        backgroundColor={'transparent'}
+        _hover={{ color: 'gray-10', backgroundColor: 'gray-100' }}
+      >
+        Manage offer
+      </Overlay.Trigger>
+    </Flex>
   );
 };
 

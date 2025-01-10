@@ -1,15 +1,27 @@
-import currencies from '@constants/currencies';
 import React from 'react';
+import Fiat from './fiat';
 
 namespace User {
   export type Type = {
     _id: string;
-    firstName: string;
-    lastName: string;
+    bio?: string;
     email: string;
-    isEmailVerified: boolean;
+    trades: number;
+    offers: number;
+    avatar: any;
+    fiat: Fiat.Type;
+    username: string;
+    lastName: string;
+    payments: number;
+    firstName: string;
+    isOnline: boolean;
+    referrals: number;
+    createdAt: number;
+    lastActive: number;
     dateOfBirth: string;
-    currency: (typeof currencies)[number]['name'];
+    referralCode: string;
+    isEmailVerified: boolean;
+    role: 'trader' | 'administrator';
   };
 
   export type State = {
@@ -19,7 +31,8 @@ namespace User {
   export type Action =
     | { type: 'VERIFY_EMAIL' }
     | { type: 'SET_USER'; payload: { user: State['user'] } }
-    | { type: 'UPDATE_USER'; payload: { user: Partial<Type> } };
+    | { type: 'UPDATE_USER'; payload: { user: Partial<Type> } }
+    | { type: 'CHANGE_USERNAME'; payload: { username: string } };
 
   export type Context = {
     setUser: React.Dispatch<Action>;

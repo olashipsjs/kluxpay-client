@@ -2,44 +2,38 @@ import * as Yup from 'yup';
 import useStep from '@hooks/useStep';
 import { Form, Formik } from 'formik';
 import Alert from '@components/alert/Alert';
-import { CREATE_TRADE } from '@graphql/trade';
 import Label from '@components/base/label/Label';
 import Button from '@components/base/button/Button';
 import FormField from '@components/formfield/FormField';
-import useApolloMutation from '@hooks/useApolloMutation';
 import TextField from '@components/base/textfield/TextField';
-import toNumber from '@utils/toNumber';
 import Box from '@components/base/box/Box';
 import Text from '@components/base/text/Text';
 import useTrades from '@hooks/useTrades';
-import useWallet from '@hooks/useWallet';
+import useWallets from '@hooks/useWallets';
+import useAsync from '@hooks/useAsync';
+import useCreateTrade from '../hooks/useCreateTrade';
+import toNumber from '@utils/toNumber';
 
 const validationSchema = Yup.object().shape({
   amount: Yup.string().required('Enter an amount'),
 });
 
 const FormBlock = () => {
-  const { wallet } = useWallet();
+  const { wallet } = useWallets();
   const { setTrades } = useTrades();
   const { data, next } = useStep<any>();
-  const [createTrade, { loading, error }] = useApolloMutation(CREATE_TRADE, {
-    onCompleted: (data) => {
-      console.log({ data });
-      if (data && data.createTrade) {
-        setTrades({ type: 'ADD_TRADE', payload: { trade: data.createTrade } });
-        next(data?.createTrade);
-      }
+  const { createTrade } = useCreateTrade();
+  const [async, { loading, error }] = useAsync(createTrade, {
+    onCompleted: (data: any) => {
+      setTrades({ type: 'ADD_TRADE', payload: { trade: data.createTrade } });
+      next(data?.createTrade);
     },
   });
 
   const handleSubmit = async (values: typeof data) => {
-    await createTrade({
-      variables: {
-        payload: {
-          ...values,
-          amount: toNumber(values.amount),
-        },
-      },
+    await async({
+      ...values,
+      amount: parseFloat(toNumber(values.amount || '0').toString()),
     });
   };
 

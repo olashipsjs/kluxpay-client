@@ -64,11 +64,11 @@ const Verify = () => {
               <Button
                 mt={8}
                 type={'submit'}
-                color={'gray-40'}
+                color={'gray-60'}
                 disabled={loading}
-                borderColor={'gray-90'}
+                borderColor={'gray-80'}
+                backgroundColor={'white'}
                 onClick={() => previous(data)}
-                backgroundColor={'transparent'}
                 _hover={{
                   color: 'gray-10',
                   backgroundColor: 'gray-100',

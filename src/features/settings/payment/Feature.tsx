@@ -20,9 +20,14 @@ const PaymentSettingsFeature = () => {
 
         <Overlay>
           <Overlay.Trigger
-            py={4}
-            fontSize={13}
+            py={6}
+            px={10}
             width={'fit'}
+            fontSize={13}
+            color={'gray-60'}
+            borderColor={'gray-80'}
+            backgroundColor={'white'}
+            _hover={{ color: 'gray-10', backgroundColor: 'gray-100' }}
           >
             New
           </Overlay.Trigger>

@@ -1,7 +1,7 @@
 import Alert from '@components/alert/Alert';
 import Anchor from '@components/anchor/Anchor';
 import Box from '@components/base/box/Box';
-import Loader from '@components/base/button/Loader';
+import Loader from '@components/loader/Loader';
 import Flex from '@components/base/flex/Flex';
 import Grid from '@components/base/grid/Grid';
 import Heading from '@components/base/heading/Heading';
@@ -9,27 +9,19 @@ import Image from '@components/base/image/Image';
 import Text from '@components/base/text/Text';
 import SmallChart from '@components/charts/SmallChart';
 import Divider from '@components/divider/Divider';
-import AssetBalance from '@components/shared/AssetBalance';
-import CoinChart from '@components/shared/CoinChart';
-import CoinData from '@components/shared/CoinData';
-import CoinList from '@components/shared/CoinList';
-import networks from '@constants/networks';
+import TokenBalance from '@components/shared/crypto/CryptoBalance';
+import CoinChart from '@components/shared/crypto/CryptoChart';
+import TokenData from '@components/shared/crypto/CryptoData';
+import CryptoList from '@components/shared/crypto/CryptoList';
+import useWallets from '@hooks/useWallets';
 import formatDecimal from '@utils/formatDecimal';
 import React from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
 
 const Assets = () => {
-  const [searchParams] = useSearchParams();
-  const { id } = useParams<{ id: string }>();
-
-  const WALLET_NAME = searchParams.get('name') || '';
-  const WALLET_NETWORK = searchParams.get('network') || '';
-  const WALLET_ADDRESS = searchParams.get('address') || '';
-
-  const { categoryId } = networks.find((n) => n.name === WALLET_NETWORK)!;
+  const { wallet } = useWallets();
 
   return (
-    <CoinList category={categoryId}>
+    <CryptoList category={'ethereum-ecosystem'}>
       {({ loading, data, error }) => {
         return (
           <Box
@@ -71,7 +63,7 @@ const Assets = () => {
             >
               {data
                 ? data.map((token: any) => {
-                    const URL = `/app/wallets/${id}/${token.id}/?name=${WALLET_NAME}&network=${WALLET_NETWORK}&address=${WALLET_ADDRESS}`;
+                    const URL = `/app/wallets/${wallet?._id}/${token.id}`;
 
                     return (
                       <Anchor
@@ -134,9 +126,9 @@ const Assets = () => {
                             </CoinChart>
                           </Flex>
 
-                          <CoinData
+                          <TokenData
                             id={token.id}
-                            network={WALLET_NETWORK}
+                            network={wallet ? wallet.network.name : ''}
                           >
                             {({ data }) => {
                               return (
@@ -146,8 +138,8 @@ const Assets = () => {
                                     flexDirection={'column'}
                                   >
                                     {data ? (
-                                      <AssetBalance
-                                        walletId={id || ''}
+                                      <TokenBalance
+                                        walletId={wallet?._id || ''}
                                         contractAddress={data.contractAddress}
                                       >
                                         {({ balance }) => {
@@ -161,7 +153,7 @@ const Assets = () => {
                                             )}`}</Heading>
                                           );
                                         }}
-                                      </AssetBalance>
+                                      </TokenBalance>
                                     ) : null}
                                     <Text
                                       mt={6}
@@ -181,7 +173,7 @@ const Assets = () => {
                                 </React.Fragment>
                               );
                             }}
-                          </CoinData>
+                          </TokenData>
                         </Grid>
                       </Anchor>
                     );
@@ -191,7 +183,7 @@ const Assets = () => {
           </Box>
         );
       }}
-    </CoinList>
+    </CryptoList>
   );
 };
 

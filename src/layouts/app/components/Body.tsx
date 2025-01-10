@@ -2,14 +2,21 @@ import Container from '@components/base/container/Container';
 import useUser from '@hooks/useUser';
 import { Route, Routes } from 'react-router-dom';
 import Flex from '@components/base/flex/Flex';
-import Loader from '@components/base/button/Loader';
+import Loader from '@components/loader/Loader';
 import useAuth from '@hooks/useAuth';
 import Section from '@components/base/section/Section';
 import SettingsLayout from '@layouts/settings/SettingsLayout';
 import WalletsLayout from '@layouts/wallets/WalletsLayout';
-import OffersLayout from '@layouts/offers/OffersLayout';
+import MarketLayout from '@layouts/offers/MarketLayout';
 import TradesLayout from '@layouts/trades/TradesLayout';
 import MyOffersFeature from '@features/my-offers/Feature';
+import DashboardFeature from '@features/dashboard/Feature';
+import SupportFeature from '@features/support/Feature';
+import ReferralFeature from '@features/referral/Feature';
+import ReferralsProvider from 'src/providers/ReferralsProvider';
+import VerificationBanner from './VerificationBanner';
+import Box from '@components/base/box/Box';
+import WalletsProvider from 'src/providers/WalletsProvider';
 
 const Loading = () => {
   return (
@@ -31,7 +38,26 @@ const routes = [
   {
     exact: false,
     path: '/*',
-    main: <OffersLayout />,
+    main: <DashboardFeature />,
+  },
+  {
+    exact: false,
+    path: 'support',
+    main: <SupportFeature />,
+  },
+  {
+    exact: false,
+    path: 'referral',
+    main: (
+      <ReferralsProvider>
+        <ReferralFeature />
+      </ReferralsProvider>
+    ),
+  },
+  {
+    exact: false,
+    path: 'market/*',
+    main: <MarketLayout />,
   },
   {
     exact: false,
@@ -65,26 +91,36 @@ const Body = () => {
 
   if (user && auth.accessToken) {
     return (
-      <Section backgroundColor={'gray-95'}>
+      <Section
+        width={'auto'}
+        ms={{ initial: '0px', md: '240px' }}
+      >
         <Container
-          px={0}
-          width={'auto'}
-          maxWidth={'full'}
+          maxWidth={'1024px'}
           minHeight={'screen'}
-          ms={{ initial: '0px', md: '280px' }}
-          pb={{ initial: 64, sm: 32 }}
+          notLastChild={{ mb: 24 }}
+          px={{ initial: 12, sm: 24 }}
+          pb={{ initial: 80, sm: 'auto' }}
         >
-          <Routes>
-            {routes.map((route, index) => {
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={route.main}
-                />
-              );
-            })}
-          </Routes>
+          <WalletsProvider>
+            <Box
+              pt={24}
+              notLastChild={{ mb: 24 }}
+            >
+              <VerificationBanner />
+              <Routes>
+                {routes.map((route, index) => {
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={route.main}
+                    />
+                  );
+                })}
+              </Routes>
+            </Box>
+          </WalletsProvider>
         </Container>
       </Section>
     );

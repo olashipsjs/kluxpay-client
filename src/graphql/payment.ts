@@ -1,8 +1,20 @@
-import { gql } from '@apollo/client/core/core.cjs';
+import { gql } from '@apollo/client';
 
 export const CREATE_PAYMENT = gql`
-  mutation CreatePayment($payload: CreatePaymentPayload!) {
-    createPayment(payload: $payload) {
+  mutation CreatePayment(
+    $method: String!
+    $details: String!
+    $bankName: String!
+    $bankAccountName: String!
+    $bankAccountNumber: String!
+  ) {
+    createPayment(
+      method: $method
+      bankName: $bankName
+      details: $details
+      bankAccountName: $bankAccountName
+      bankAccountNumber: $bankAccountNumber
+    ) {
       _id
       method
       bankName
@@ -14,8 +26,22 @@ export const CREATE_PAYMENT = gql`
 `;
 
 export const UPDATE_PAYMENT = gql`
-  mutation UpdatePayment($id: ID!, $payload: UpdatePaymentPayload!) {
-    updatePayment(id: $id, payload: $payload) {
+  mutation UpdatePayment(
+    $paymentId: ID!
+    $method: String!
+    $details: String!
+    $bankName: String!
+    $bankAccountName: String!
+    $bankAccountNumber: String!
+  ) {
+    updatePayment(
+      method: $method
+      details: $details
+      bankName: $bankName
+      paymentId: $paymentId
+      bankAccountName: $bankAccountName
+      bankAccountNumber: $bankAccountNumber
+    ) {
       _id
       method
       bankName

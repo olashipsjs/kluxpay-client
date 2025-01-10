@@ -1,86 +1,78 @@
+import { useApolloClient } from '@apollo/client';
 import { SEND_MAIL } from '@graphql/mail';
 import { GENERATE_OTP } from '@graphql/otp';
 import { CREATE_USER } from '@graphql/user';
-import { CREATE_WALLET } from '@graphql/wallet';
-import useApolloMutation from '@hooks/useApolloMutation';
+import { CREATE_WALLETS } from '@graphql/wallet';
 
 type Payload = {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
-  dateOfBirth: string;
+  username: string;
 };
 const useRegister = (options?: { onCompleted?: (data: any) => void }) => {
   options = options || {};
 
-  const [sendMail] = useApolloMutation(SEND_MAIL);
-  const [createUser] = useApolloMutation(CREATE_USER);
-  const [generateOtp] = useApolloMutation(GENERATE_OTP);
-  const [createWallet] = useApolloMutation(CREATE_WALLET);
+  const client = useApolloClient();
 
   const mutation = async (payload: Payload) => {
-    const { email, firstName, lastName, password, dateOfBirth } = payload;
+    const { email, firstName, lastName, password, username } = payload;
 
     try {
-      const userResponse = await createUser({
+      const userResponse = await client.mutate({
+        mutation: CREATE_USER,
         variables: {
-          payload: { email, firstName, lastName, password, dateOfBirth },
+          email,
+          firstName,
+          lastName,
+          password,
+          username,
         },
       });
 
-      if (userResponse.errors) {
-        console.log({ userResponse });
-        throw new Error(
-          (userResponse.errors as any)?.cause?.message ||
-            'Unable to complete the request. Try again later.'
-        );
-      }
-
-      const [walletResponse, otpResponse, mailResponse] = await Promise.all([
-        await createWallet({
-          variables: { payload: { email, networks: 'ethereum' } },
+      const [_, { data: OtpData }, __] = await Promise.all([
+        await client.mutate({
+          mutation: CREATE_WALLETS,
+          variables: { email, networks: 'ethereum' },
         }),
 
-        await generateOtp({ variables: { payload: { email } } }),
+        await client.mutate({
+          mutation: GENERATE_OTP,
+          variables: { email },
+        }),
 
-        await sendMail({
+        await client.mutate({
+          mutation: SEND_MAIL,
           variables: {
-            payload: {
-              recipients: email,
-              subject: 'Welcome to KluxPay',
-              template: 'welcome',
-              data: {
-                platform: 'Kluxpay',
-                firstName: firstName,
-              },
+            recipients: email,
+            subject: 'Welcome to KluxPay',
+            template: 'welcome',
+            data: {
+              platform: 'Kluxpay',
+              firstName: firstName,
             },
           },
         }),
       ]);
 
-      if (!otpResponse.data || !walletResponse.data || !mailResponse.data) {
-        throw new Error('Registration failed. Please try again later.');
-      }
-
-      const code = await otpResponse?.data?.generateOtp?.code;
+      const code = await OtpData?.generateOtp?.code;
 
       if (!code) {
         throw new Error('Registration failed. Please try again later.');
       }
 
-      await sendMail({
+      await client.mutate({
+        mutation: SEND_MAIL,
         variables: {
-          payload: {
-            recipients: email,
-            subject: 'Complete registration',
-            template: 'otp',
-            data: {
-              code,
-              title: 'Verify your account',
-              firstName: firstName,
-              label: 'To verify your account',
-            },
+          recipients: email,
+          subject: 'Complete registration',
+          template: 'otp',
+          data: {
+            code,
+            title: 'Verify your account',
+            firstName: firstName,
+            label: 'To verify your account',
           },
         },
       });
@@ -88,7 +80,9 @@ const useRegister = (options?: { onCompleted?: (data: any) => void }) => {
       const data = await userResponse.data?.createUser;
       return data;
     } catch (error) {
-      throw error;
+      throw new Error(
+        (error as Error).message || 'An unexpected error occurred.'
+      );
     }
   };
 

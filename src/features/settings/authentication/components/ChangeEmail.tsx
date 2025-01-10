@@ -1,16 +1,16 @@
-import Alert from '@components/alert/Alert';
-import Button from '@components/base/button/Button';
-import Loader from '@components/base/button/Loader';
-import Label from '@components/base/label/Label';
-import Text from '@components/base/text/Text';
-import TextField from '@components/base/textfield/TextField';
-import FormField from '@components/formfield/FormField';
-import { CHANGE_EMAIL } from '@graphql/auth';
-import useApolloMutation from '@hooks/useApolloMutation';
-import useAuth from '@hooks/useAuth';
-import useLocalStorage from '@hooks/useLocalStorage';
-import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import useAuth from '@hooks/useAuth';
+import { Form, Formik } from 'formik';
+import Toast from '@components/toast/Toast';
+import { CHANGE_EMAIL } from '@graphql/auth';
+import Grid from '@components/base/grid/Grid';
+import Flex from '@components/base/flex/Flex';
+import Button from '@components/base/button/Button';
+import useLocalStorage from '@hooks/useLocalStorage';
+import Heading from '@components/base/heading/Heading';
+import FormField from '@components/formfield/FormField';
+import useApolloMutation from '@hooks/useApolloMutation';
+import TextField from '@components/base/textfield/TextField';
 
 const validationSchema = Yup.object().shape({
   newEmail: Yup.string()
@@ -22,17 +22,20 @@ const ChangeEmail = () => {
   const { setAuth } = useAuth();
   const { clear } = useLocalStorage('kp_access_token');
 
-  const [changeEmail, { loading, error }] = useApolloMutation(CHANGE_EMAIL, {
-    onCompleted: () => {
-      clear();
-      setAuth({ type: 'SET_LOGGED_OUT' });
-    },
-  });
+  const [changeEmail, { loading, error, data }] = useApolloMutation(
+    CHANGE_EMAIL,
+    {
+      onCompleted: () => {
+        clear();
+        setAuth({ type: 'SET_LOGGED_OUT' });
+      },
+    }
+  );
 
   const initialValues = { newEmail: '' };
 
   const handleSubmit = async (values: typeof initialValues) => {
-    await changeEmail({ variables: { payload: values } });
+    await changeEmail({ variables: values });
   };
 
   return (
@@ -42,47 +45,68 @@ const ChangeEmail = () => {
       validationSchema={validationSchema}
     >
       <Form>
-        <FormField name={'newEmail'}>
-          <FormField.Sheet
-            ps={12}
-            alignItems={'center'}
+        <Grid
+          alignItems={'start'}
+          gridTemplateColumns={{ sm: '1fr 1fr 1fr' }}
+        >
+          <Heading
+            fontSize={14}
+            fontWeight={'semibold'}
           >
-            <Label>New email</Label>
-            <TextField
-              type={'email'}
-              css={{ flex: 1 }}
-              placeholder={'name@domain.com'}
-            />
-          </FormField.Sheet>
-        </FormField>
+            Change email
+          </Heading>
 
-        <Button
-          py={6}
-          mt={12}
-          width={'fit'}
-          type={'submit'}
-          disabled={loading}
-        >
-          <Loader visible={loading} />
-          Change
-        </Button>
+          <FormField name={'newEmail'}>
+            <FormField.Sheet alignItems={'center'}>
+              <TextField
+                type={'email'}
+                css={{ flex: 1 }}
+                placeholder={'name@domain.com'}
+              />
+            </FormField.Sheet>
+          </FormField>
 
-        <Text
-          as={'p'}
-          mt={8}
-          fontSize={12}
-        >
-          Upon completion you will be logged out of your account. You can sign
-          in again using your new credentials.
-        </Text>
+          <Flex
+            flexDirection={'column'}
+            alignItems={{ sm: 'end' }}
+          >
+            <Button
+              py={6}
+              px={10}
+              width={'fit'}
+              fontSize={13}
+              type={'submit'}
+              color={'gray-40'}
+              disabled={loading}
+              fontWeight={'semibold'}
+              borderColor={'gray-80'}
+              backgroundColor={'white'}
+              _hover={{ color: 'gray-10', backgroundColor: 'gray-100' }}
+            >
+              <Button.Loader
+                color={'gray-10'}
+                visible={loading}
+              />
+              Change
+            </Button>
+          </Flex>
+        </Grid>
 
-        <Alert
-          mt={12}
-          visible={error !== undefined}
-        >
-          <Alert.Icon />
-          <Alert.Message css={{ flex: 1 }}>{error?.message}</Alert.Message>
-        </Alert>
+        {/* error toast */}
+        <Toast visible={error !== undefined}>
+          <Toast.Panel>
+            <Toast.TextContext>{error?.message}</Toast.TextContext>
+          </Toast.Panel>
+        </Toast>
+
+        {/* success toast */}
+        <Toast visible={data && data.changeEmail}>
+          <Toast.Panel backgroundColor={'green-60'}>
+            <Toast.TextContext>
+              Legal names updated successfully
+            </Toast.TextContext>
+          </Toast.Panel>
+        </Toast>
       </Form>
     </Formik>
   );

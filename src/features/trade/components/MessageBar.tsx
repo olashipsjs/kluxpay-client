@@ -37,11 +37,11 @@ const MessageBar = () => {
             pe={'3px'}
             rounded={'full'}
             alignItems={'center'}
-            backgroundColor={'gray-100'}
           >
             <TextField
-              fontSize={16}
-              placeholder='Type a message...'
+              px={16}
+              fontSize={14}
+              placeholder="Say 'Hi'"
             />
             <Button
               p={4}

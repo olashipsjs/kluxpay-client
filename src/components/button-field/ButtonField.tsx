@@ -15,13 +15,15 @@ type Props = Omit<React.ComponentProps<typeof Button>, keyof OmitProps> &
 const ButtonField = React.forwardRef(
   (
     {
+      py = 6,
       value,
       onClick,
       children,
       fontSize = 13,
-      color = 'gray-40',
-      borderColor = 'gray-95',
-      backgroundColor = 'gray-95',
+      color = 'gray-10',
+      fontWeight = 'semibold',
+      borderColor = 'gray-80',
+      backgroundColor = 'transparent',
       ...rest
     }: Props,
     ref: React.ForwardedRef<React.ComponentRef<typeof Button>>
@@ -37,14 +39,16 @@ const ButtonField = React.forwardRef(
 
     return (
       <Button
+        py={py}
         ref={ref}
         fontSize={fontSize}
+        fontWeight={fontWeight}
         onClick={handleSetValue}
-        color={isActive ? 'white' : color}
-        borderColor={isActive ? 'gray-10' : borderColor}
-        backgroundColor={isActive ? 'gray-10' : backgroundColor}
+        color={isActive ? 'indigo-60' : color}
+        borderColor={isActive ? 'indigo-60' : borderColor}
+        backgroundColor={isActive ? 'white' : backgroundColor}
         _hover={{
-          backgroundColor: isActive ? '' : 'gray-90',
+          backgroundColor: isActive ? '' : 'gray-100',
         }}
         {...rest}
       >

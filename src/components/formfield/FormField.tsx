@@ -50,14 +50,17 @@ const Compound = React.forwardRef(
 const Sheet = React.forwardRef(
   (
     {
-      border = 1,
-      rounded = 12,
-      overflow = 'hidden',
-      borderColor = 'gray-80',
+      disabled,
+      rounded = 8,
+      outline = '1',
+      pointerEvents,
+      overflow = 'clip',
+      position = 'relative',
+      outlineStyle = 'solid',
       backgroundColor = 'white',
-      css,
+      outlineOffset = 'calc(1px * -1)',
       ...rest
-    }: React.ComponentProps<typeof Flex>,
+    }: React.ComponentProps<typeof Flex> & { disabled?: boolean },
     ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>
   ) => {
     const { meta } = useFormField();
@@ -66,34 +69,35 @@ const Sheet = React.forwardRef(
       <Flex
         {...rest}
         ref={ref}
-        border={border}
         rounded={rounded}
+        position={position}
         overflow={overflow}
-        borderColor={borderColor}
-        backgroundColor={backgroundColor}
-        css={{
-          transition: 'all .2s ease',
-          boxShadow:
-            meta!.error && meta!.touched
-              ? '0px 0px 0px 1.25px rgb(var(--red-60))'
-              : !meta!.error && meta!.touched
-              ? '0px 0px 0px 1.25px rgb(var(--indigo-60))'
-              : '0px .5px 1px 0px rgb(var(--gray-90))',
-        }}
-      ></Flex>
+        outlineStyle={outlineStyle}
+        outlineOffset={outlineOffset}
+        outlineWidth={meta.touched ? '2' : outline}
+        pointerEvents={disabled ? 'none' : pointerEvents}
+        backgroundColor={disabled ? 'gray-100' : backgroundColor}
+        outlineColor={
+          meta.error && meta.touched
+            ? 'red-60'
+            : meta.touched
+            ? 'indigo-60'
+            : 'gray-80'
+        }
+      />
     );
   }
 );
 
 const Slot = React.forwardRef(
   (
-    props: React.ComponentProps<typeof Flex>,
+    { ...restProps }: React.ComponentProps<typeof Flex>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Flex>>
   ) => {
     return (
       <Flex
-        {...props}
         ref={ref}
+        {...restProps}
       />
     );
   }
@@ -104,9 +108,8 @@ const Message = React.forwardRef(
     {
       children,
       fontSize = 13,
-      lineHeight = 'md',
-      color = 'gray-30',
-      letterSpacing = 'xs',
+      lineHeight = '1.36',
+      color = 'gray-40',
       ...rest
     }: React.ComponentProps<typeof Text>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Text>>
@@ -124,7 +127,6 @@ const Message = React.forwardRef(
         ref={ref}
         fontSize={fontSize}
         lineHeight={lineHeight}
-        letterSpacing={letterSpacing}
         color={meta?.error && meta.touched ? 'red-60' : color}
       >
         {data}

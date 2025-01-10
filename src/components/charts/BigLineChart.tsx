@@ -1,3 +1,4 @@
+import useUser from '@hooks/useUser';
 import formatDecimal from '@utils/formatDecimal';
 import {
   LineChart,
@@ -46,6 +47,7 @@ const yAxisCustomTick = (props: any) => {
 };
 
 const renderTooltip = (props: any) => {
+  const { user } = useUser();
   const { active, payload } = props;
 
   if (active && payload && payload.length) {
@@ -62,8 +64,18 @@ const renderTooltip = (props: any) => {
           boxShadow: '0px .5px 0px 0px rgba(var(--gray-80))',
         }}
       >
-        <p style={{ lineHeight: '1', fontWeight: 600 }}>
-          <span style={{ fontWeight: 400 }}>{timestamp}</span>: {value}
+        <p
+          style={{
+            lineHeight: '1',
+            fontWeight: 600,
+            color: 'rgb(var(--gray-10))',
+          }}
+        >
+          <span style={{ fontWeight: 400, color: 'rgb(var(--gray-60))' }}>
+            {timestamp}
+          </span>
+          : {`${user?.fiat.symbol}`}
+          {`${value}`}
         </p>
       </div>
     );
@@ -80,7 +92,7 @@ const BigLineChart = ({ data }: Props) => {
   return (
     <ResponsiveContainer
       width={'100%'}
-      height={348}
+      height={500}
     >
       <LineChart
         data={data}

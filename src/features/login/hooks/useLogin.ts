@@ -1,45 +1,43 @@
-import { SIGN_IN } from '@graphql/auth';
+import { useApolloClient } from '@apollo/client';
+import { LOGIN } from '@graphql/auth';
 import { SEND_MAIL } from '@graphql/mail';
-import useApolloMutation from '@hooks/useApolloMutation';
 import useLocalStorage from '@hooks/useLocalStorage';
+import { formatDistanceToNow } from 'date-fns';
 
 const useLogin = () => {
-  const [signIn] = useApolloMutation(SIGN_IN);
-  const [sendMail] = useApolloMutation(SEND_MAIL);
+  const client = useApolloClient();
   const { save } = useLocalStorage('kp_access_token');
 
   const login = async (payload: any) => {
     const { email, password } = payload;
 
     try {
-      const signInResponse = await signIn({
-        variables: { payload: { email, password } },
+      const { data: loginData } = await client.mutate({
+        mutation: LOGIN,
+        variables: { email, password },
       });
 
-      if (signInResponse.errors) {
-        throw new Error((signInResponse as any)?.errors?.cause?.message);
-      }
+      const date = new Date();
 
-      const sendMailResponse = await sendMail({
+      await client.mutate({
+        mutation: SEND_MAIL,
         variables: {
-          payload: {
-            template: 'login',
-            recipients: email,
-            subject: 'New login detected',
-            data: {
-              device: ``,
-            },
+          template: 'login',
+          recipients: email,
+          subject: 'New login detected',
+          data: {
+            time: formatDistanceToNow(date, {
+              addSuffix: true,
+              includeSeconds: true,
+            }),
           },
         },
       });
 
-      if (sendMailResponse.errors) {
-        throw new Error((sendMailResponse as any)?.errors?.cause?.message);
-      }
+      const accessToken = await loginData?.login?.accessToken;
+      save(accessToken);
 
-      const data = await signInResponse.data;
-      save(data?.signIn?.accessToken);
-      return data?.signIn;
+      return { accessToken };
     } catch (error) {
       throw error;
     }

@@ -10,9 +10,7 @@ const useResetPassword = () => {
     const { email, newPassword } = payload;
     try {
       const resetPasswordResponse = await resetPassword({
-        variables: {
-          payload: { email, newPassword },
-        },
+        variables: { email, newPassword },
       });
 
       if (resetPasswordResponse.errors) {
@@ -24,13 +22,11 @@ const useResetPassword = () => {
 
       const sendMailResponse = await sendMail({
         variables: {
-          payload: {
-            recipients: email,
-            subject: 'Password changed',
-            template: 'reset-password',
-            data: {
-              title: 'Password changed',
-            },
+          recipients: email,
+          subject: 'Password changed',
+          template: 'reset-password',
+          data: {
+            title: 'Password changed',
           },
         },
       });

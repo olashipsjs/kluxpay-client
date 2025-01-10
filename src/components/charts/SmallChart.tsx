@@ -6,7 +6,7 @@ type Props = {
 };
 
 const SmallChart = ({ data, dailyChange }: Props) => {
-  const formattedData = data.map(([timestamp, value]) => ({
+  const formattedData = data?.map(([timestamp, value]) => ({
     timestamp, // X-axis key
     value, // Y-axis key
   }));

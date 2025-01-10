@@ -18,6 +18,9 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         element: <AuthLayout />,
+        handle: {
+          crumb: () => 'Dashboard',
+        },
         children: [
           { path: 'login', element: <LoginPage /> },
           { index: true, element: <LoginPage /> },

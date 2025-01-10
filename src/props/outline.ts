@@ -4,10 +4,10 @@ const outlineProps = {
   outline: {
     properties: ['outline'],
     values: {
-      xs: '1px solid',
-      sm: '1px solid',
-      md: '1px solid',
-      lg: '1px solid',
+      xs: '1px',
+      sm: '2px',
+      md: '4px',
+      lg: '8px',
       none: 'none',
     },
   },

@@ -9,6 +9,45 @@ const layoutProps = {
     },
   },
 
+  columnCount: {
+    properties: ['columnCount'],
+    isResponsive: true,
+    values: {
+      auto: 'auto',
+      '1': '1',
+      '2': '2',
+      '3': '3',
+      '4': '4',
+      '5': '5',
+      '6': '6',
+      '7': '7',
+      '8': '8',
+      '9': '9',
+      '10': '10',
+      '11': '11',
+      '12': '12',
+    },
+  },
+
+  columnGap: {
+    properties: ['columnGap'],
+    isResponsive: true,
+    values: {
+      auto: 'auto',
+      '0': '0',
+      '2': '2px',
+      '4': '4px',
+      '6': '6px',
+      '8': '8px',
+      '10': '10px',
+      '12': '12px',
+      '16': '16px',
+      '20': '20px',
+      '24': '24px',
+      '32': '32px',
+    },
+  },
+
   pointerEvents: {
     properties: ['pointerEvents'],
     values: {

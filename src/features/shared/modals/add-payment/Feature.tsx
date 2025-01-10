@@ -34,13 +34,13 @@ const AddPaymentFeature = ({ id }: { id?: string }) => {
         >
           <Heading
             as={'h2'}
-            fontSize={16}
+            fontSize={19}
           >
             Payment method
           </Heading>
 
           <Overlay.Trigger
-            py={4}
+            py={6}
             px={12}
             width={'fit'}
             rounded={'full'}

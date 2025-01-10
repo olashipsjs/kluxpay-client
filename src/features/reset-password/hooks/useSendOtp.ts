@@ -11,7 +11,7 @@ const useSendOtp = () => {
 
     try {
       const generateOtpResponse = await generateOtp({
-        variables: { payload: { email } },
+        variables: { email },
       });
 
       if (generateOtpResponse.errors) {
@@ -29,15 +29,13 @@ const useSendOtp = () => {
 
       const sendMailResponse = await sendMail({
         variables: {
-          payload: {
-            template: 'otp',
-            recipients: email,
-            subject: 'One Time Password',
-            data: {
-              code,
-              title: 'One Time Password',
-              label: 'To reset your password',
-            },
+          template: 'otp',
+          recipients: email,
+          subject: 'One Time Password',
+          data: {
+            code,
+            title: 'One Time Password',
+            label: 'To reset your password',
           },
         },
       });

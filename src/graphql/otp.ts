@@ -1,16 +1,13 @@
-import { gql } from '@apollo/client/core/core.cjs';
+import { gql } from '@apollo/client';
 
 export const GENERATE_OTP = gql`
-  mutation GenerateOtp($payload: GenerateOtpPayload!) {
-    generateOtp(payload: $payload) {
-      code
-      expiresAt
-    }
+  mutation GenerateOtp($email: String!) {
+    generateOtp(email: $email)
   }
 `;
 
 export const VERIFY_OTP = gql`
-  mutation VerifyOtp($payload: VerifyOtpPayload!) {
-    verifyOtp(payload: $payload)
+  mutation VerifyOtp($email: String!, $code: String!) {
+    verifyOtp(email: $email, code: $code)
   }
 `;

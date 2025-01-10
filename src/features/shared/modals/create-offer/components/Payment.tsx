@@ -1,177 +1,135 @@
-import Button from '@components/base/button/Button';
-import Flex from '@components/base/flex/Flex';
-import Heading from '@components/base/heading/Heading';
-import Iconify from '@components/base/iconify/Iconify';
-import Text from '@components/base/text/Text';
-import FormField from '@components/formfield/FormField';
-import Overlay from '@components/overlay/Overlay';
-import usePayments from '@hooks/usePayments';
+import React from 'react';
+import * as Yup from 'yup';
+import Header from './Header';
 import useStep from '@hooks/useStep';
 import { Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import AddPaymentFeature from '../../add-payment/Feature';
-import Radio from '@components/base/radio/Radio';
-import React from 'react';
 import Box from '@components/base/box/Box';
+import Query from '@components/query/Query';
+import Flex from '@components/base/flex/Flex';
+import Text from '@components/base/text/Text';
+import { GET_USER_PAYMENTS } from '@graphql/payment';
+import Heading from '@components/base/heading/Heading';
+import Iconify from '@components/base/iconify/Iconify';
+import FormField from '@components/formfield/FormField';
+import ButtonField from '@components/button-field/ButtonField';
 
-const EmptyState = () => {
-  return (
-    <Flex
-      p={20}
-      mx={20}
-      rounded={12}
-      flexDirection={'column'}
-      backgroundColor={'gray-95'}
-    >
-      <Iconify
-        width={'32px'}
-        color={'gray-60'}
-        icon={'ph:cards-three-fill'}
-      />
-      <Heading
-        mt={12}
-        fontSize={16}
-        fontWeight={'regular'}
-      >
-        Get paid using your bank accounts
-      </Heading>
-      <Text
-        mt={4}
-        as={'p'}
-        fontSize={13}
-        color={'gray-60'}
-      >
-        We couldn’t find a payment method linked to your account.{' '}
-      </Text>
-      <Overlay mt={12}>
-        <Overlay.Trigger
-          py={4}
-          width={'fit'}
-          fontSize={13}
-          display={'inline'}
-        >
-          Add one
-        </Overlay.Trigger>
-        <AddPaymentFeature />
-      </Overlay>
-    </Flex>
-  );
-};
+const validationSchema = Yup.object().shape({
+  payment: Yup.object()
+    .shape({
+      method: Yup.string().required('Select a payment method'),
+    })
+    .required('Select a payment method'),
+});
 
 const Payment = () => {
   const { data, next } = useStep<any>();
-  const { payments } = usePayments();
 
-  if (payments.length === 0) return <EmptyState />;
-
-  const handleSubmit = (values: any) => next(values);
-
-  const validationSchema = Yup.object().shape({
-    payment: Yup.string().required('Choose a payment option'),
-  });
+  const handleSubmit = (values: any) => {
+    next({ ...data, ...values });
+  };
 
   return (
     <Formik
-      initialValues={data}
       onSubmit={handleSubmit}
+      initialValues={data}
       validationSchema={validationSchema}
     >
-      <Form>
-        <Box px={20}>
-          <Flex
-            alignItems={'center'}
-            justifyContent={'between'}
-          >
-            <Heading fontSize={14}>Found {payments.length} options</Heading>
+      {({ values }) => {
+        return (
+          <Form>
+            <Flex
+              minHeight={'60vh'}
+              flexDirection={'column'}
+            >
+              <Header data={values} />
 
-            <Overlay>
-              <Overlay.Trigger
-                py={4}
-                fontSize={13}
-                color={'gray-60'}
-                borderColor={'gray-80'}
-                backgroundColor={'transparent'}
-                _hover={{
-                  borderColor: 'transparent',
-                  backgroundColor: 'gray-95',
-                  color: 'gray-10',
-                }}
+              <Box
+                p={16}
+                css={{ flex: 1 }}
+                notLastChild={{ mb: 24 }}
               >
-                Add more
-              </Overlay.Trigger>
-              <AddPaymentFeature />
-            </Overlay>
-          </Flex>
+                <Heading fontSize={21}>How would you like to get paid?</Heading>
 
-          <FormField
-            mt={12}
-            gap={0}
-            border={1}
-            rounded={12}
-            name={'payment'}
-            overflow={'clip'}
-            borderColor={'gray-80'}
-            boxShadow={'0px .5px 1px 0px rgb(var(--gray-90))'}
-            notLastChild={{
-              borderBottom: 1,
-              borderBottomColor: 'gray-80',
-            }}
-          >
-            {payments.map((payment) => {
-              return (
-                <Radio
-                  key={payment._id}
-                  justifyContent={'start'}
-                  value={payment._id}
-                >
-                  {({ isActive }) => {
-                    return (
-                      <React.Fragment>
-                        <Radio.Switch
-                          color={'white'}
-                          backgroundColor={
-                            isActive ? 'indigo-60' : 'transparent'
-                          }
-                          _hover={{
-                            backgroundColor: isActive ? '' : 'gray-90',
-                          }}
-                        />
-                        <Box>
-                          <Heading
-                            fontSize={14}
-                            textAlign={'left'}
-                            fontWeight={'regular'}
-                          >
-                            {payment.method}
-                          </Heading>
-                          <Text
-                            mt={2}
-                            as={'p'}
-                            fontSize={12}
-                            textAlign={'left'}
-                            color={'gray-60'}
-                          >
-                            {payment.bankAccountName}
-                          </Text>
-                        </Box>
-                      </React.Fragment>
-                    );
-                  }}
-                </Radio>
-              );
-            })}
+                <FormField name={'payment'}>
+                  <FormField.Message />
 
-            <FormField.Message />
-          </FormField>
+                  <Query query={GET_USER_PAYMENTS}>
+                    <Query.Loader />
+                    <Query.Error>
+                      <Text
+                        fontSize={14}
+                        color={'red-60'}
+                        fontWeight={'medium'}
+                      >
+                        {'Something went wrong.'}
+                      </Text>
+                    </Query.Error>
+                    <Query.Data>
+                      {({ data }) => {
+                        const payments = data?.getUserPayments;
 
-          <Button
-            mt={24}
-            type={'submit'}
-          >
-            Confirmation
-          </Button>
-        </Box>
-      </Form>
+                        return payments?.map((payment: any) => {
+                          return (
+                            <ButtonField
+                              py={8}
+                              px={10}
+                              gap={6}
+                              rounded={8}
+                              type={'submit'}
+                              value={payment}
+                              key={payment._id}
+                              textAlign={'left'}
+                              fontWeight={'regular'}
+                              justifyContent={'between'}
+                            >
+                              {({ isActive }) => {
+                                return (
+                                  <React.Fragment>
+                                    <Box
+                                      width={'full'}
+                                      alignItems={'center'}
+                                      justifyContent={'between'}
+                                    >
+                                      <Heading
+                                        mb={8}
+                                        fontSize={14}
+                                      >
+                                        {payment.bankName}
+                                      </Heading>
+
+                                      <Text
+                                        fontSize={12}
+                                        color={'gray-60'}
+                                        textTransform={'capitalize'}
+                                      >
+                                        {payment.bankAccountName} -{' '}
+                                        {payment.bankAccountNumber}
+                                      </Text>
+                                    </Box>
+                                    {isActive ? (
+                                      <Iconify
+                                        width={20}
+                                        color={'indigo-60'}
+                                        icon={
+                                          'fluent:checkmark-starburst-24-filled'
+                                        }
+                                      />
+                                    ) : null}
+                                  </React.Fragment>
+                                );
+                              }}
+                            </ButtonField>
+                          );
+                        });
+                      }}
+                    </Query.Data>
+                  </Query>
+                </FormField>
+              </Box>
+            </Flex>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

@@ -4,14 +4,14 @@ import UserProvider from 'src/providers/UserProvider';
 import OffersProvider from 'src/providers/OffersProvider';
 import PaymentsProvider from 'src/providers/PaymentsProvider';
 import Body from './components/Body';
-import WalletProvider from 'src/providers/WalletProvider';
+import WalletsProvider from 'src/providers/WalletsProvider';
 import SideBar from './components/SideBar';
 import Banner from './components/Banner';
-import VerificationBanner from './components/VerificationBanner';
-import Header from './components/Header';
 import TradesProvider from 'src/providers/TradesProvider';
 import { Helmet } from 'react-helmet-async';
 import React from 'react';
+import Container from '@components/base/container/Container';
+import Header from './components/Header';
 
 const AppLayout = () => {
   return (
@@ -20,24 +20,28 @@ const AppLayout = () => {
         <title>Kluxpay - app</title>
       </Helmet>
 
-      <AuthProvider>
-        <UserProvider>
-          <WalletProvider>
+      <UserProvider>
+        <AuthProvider>
+          <WalletsProvider>
             <OffersProvider>
               <TradesProvider>
                 <PaymentsProvider>
                   <Banner />
-                  <VerificationBanner />
                   <Header />
-                  <SideBar />
-                  <Body />
-                  <BottomBar />
+                  <Container
+                    p={0}
+                    maxWidth={'1280px'}
+                  >
+                    <SideBar />
+                    <Body />
+                    <BottomBar />
+                  </Container>
                 </PaymentsProvider>
               </TradesProvider>
             </OffersProvider>
-          </WalletProvider>
-        </UserProvider>
-      </AuthProvider>
+          </WalletsProvider>
+        </AuthProvider>
+      </UserProvider>
     </React.Fragment>
   );
 };

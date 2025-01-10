@@ -1,6 +1,6 @@
 import Alert from '@components/alert/Alert';
 import Button from '@components/base/button/Button';
-import Loader from '@components/base/button/Loader';
+import Loader from '@components/loader/Loader';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
@@ -11,28 +11,31 @@ import Divider from '@components/divider/Divider';
 import FormField from '@components/formfield/FormField';
 import Overlay from '@components/overlay/Overlay';
 import networks from '@constants/networks';
-import { CREATE_WALLET } from '@graphql/wallet';
+import { CREATE_WALLETS } from '@graphql/wallet';
 import useApolloMutation from '@hooks/useApolloMutation';
 import useStep from '@hooks/useStep';
-import useWallet from '@hooks/useWallet';
+import useWallets from '@hooks/useWallets';
 import { Formik, Form } from 'formik';
 import React from 'react';
 
 const Network = () => {
-  const { setWallets } = useWallet();
+  const { setWallets } = useWallets();
   const { data, next } = useStep<any>();
-  const [createWallet, { loading, error }] = useApolloMutation(CREATE_WALLET, {
-    onCompleted: (res) => {
-      setWallets({
-        type: 'ADD_WALLET',
-        payload: { wallets: res?.createWallet },
-      });
-      next(res?.createWallet);
-    },
-  });
+  const [createWallets, { loading, error }] = useApolloMutation(
+    CREATE_WALLETS,
+    {
+      onCompleted: (res) => {
+        setWallets({
+          type: 'ADD_WALLET',
+          payload: { wallets: res?.createWallets },
+        });
+        next(res?.createWallets);
+      },
+    }
+  );
 
   const handleSubmit = async (values: typeof data) => {
-    await createWallet({ variables: { payload: values } });
+    await createWallets({ variables: { payload: values } });
   };
 
   return (

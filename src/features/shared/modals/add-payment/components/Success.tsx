@@ -5,22 +5,16 @@ import Text from '@components/base/text/Text';
 
 const Success = () => {
   return (
-    <Flex
-      p={16}
-      rounded={12}
-      flexDirection={'column'}
-      backgroundColor={'gray-95'}
-    >
+    <Flex flexDirection={'column'}>
       <Iconify
-        width={'32px'}
+        width={'40px'}
         color={'green-60'}
         icon={'material-symbols-light:check-circle-rounded'}
       />
       <Heading
         mt={20}
-        fontSize={16}
+        fontSize={19}
         lineHeight={'md'}
-        fontWeight={'regular'}
       >
         Payment option added
       </Heading>
@@ -28,7 +22,7 @@ const Success = () => {
       <Text
         mt={6}
         as={'p'}
-        fontSize={13}
+        fontSize={14}
         lineHeight={'lg'}
       >
         Your payment method has been successfully added. You can now link it to

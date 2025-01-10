@@ -30,7 +30,7 @@ const LoginFeature = () => {
         fontSize={14}
         textAlign={'center'}
       >
-        Don't have an an account?
+        Don't have an account?
         <Anchor
           ms={4}
           color={'orange-60'}

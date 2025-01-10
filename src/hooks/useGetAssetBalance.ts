@@ -6,7 +6,7 @@ type Props = {
   platform: string;
   contractAddress?: string;
 };
-const useGetAssetBalance = ({ platform, contractAddress }: Props) => {
+const useGetTokenBalance = ({ platform, contractAddress }: Props) => {
   const payload = {
     platform,
     tokenAddress: contractAddress,
@@ -18,9 +18,9 @@ const useGetAssetBalance = ({ platform, contractAddress }: Props) => {
     onError: (error) => console.log({ error }),
   });
 
-  const balance = data?.getAssetBalance;
+  const balance = data?.getTokenBalance;
 
   return { balance, loading, error };
 };
 
-export default useGetAssetBalance;
+export default useGetTokenBalance;

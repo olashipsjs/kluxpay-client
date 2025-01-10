@@ -144,7 +144,7 @@ const Background = React.forwardRef(
 const Content = React.forwardRef(
   (
     {
-      rounded = 20,
+      rounded = 8,
       zIndex = '999',
       width = 'full',
       maxWidth = '720px',

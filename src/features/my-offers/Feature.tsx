@@ -1,58 +1,53 @@
 import React from 'react';
+import useOffers from '@hooks/useOffers';
 import Flex from '@components/base/flex/Flex';
 import OfferList from './components/OfferList';
 import Overlay from '@components/overlay/Overlay';
-import Heading from '@components/base/heading/Heading';
-import Container from '@components/base/container/Container';
-import CreateOfferFeature from '@features/shared/modals/create-offer/Feature';
-import Iconify from '@components/base/iconify/Iconify';
 import Divider from '@components/divider/Divider';
+import Heading from '@components/base/heading/Heading';
+import Iconify from '@components/base/iconify/Iconify';
+import CreateOfferFeature from '@features/shared/modals/create-offer/Feature';
 
 const MyOffersFeature = () => {
+  const { setOffers } = useOffers();
+
   return (
     <React.Fragment>
-      <Container
-        pt={20}
-        mb={16}
-        maxWidth={'1120px'}
-      >
-        <Flex
-          alignItems={'center'}
-          justifyContent={'between'}
+      <Flex justifyContent={'between'}>
+        <Heading
+          fontSize={21}
+          fontWeight={'semibold'}
         >
-          <Heading>Manage Offers</Heading>
+          Manage Offers
+        </Heading>
 
-          <Overlay>
-            <Overlay.Trigger
-              py={8}
-              gap={6}
-              fontSize={14}
-              color={'gray-60'}
-              fontWeight={'medium'}
-              borderColor={'gray-90'}
-              backgroundColor={'white'}
-              _hover={{
-                color: 'gray-10',
-                backgroundColor: 'gray-100',
-              }}
-            >
-              Post
-              <Iconify
-                width={'20px'}
-                icon={'ph:pencil-circle-fill'}
-              />
-            </Overlay.Trigger>
-            <CreateOfferFeature />
-          </Overlay>
-        </Flex>
+        <Overlay>
+          <Overlay.Trigger
+            p={4}
+            size={'fit'}
+            fontSize={13}
+            rounded={'full'}
+            color={'white'}
+            fontWeight={'semibold'}
+            borderColor={'transparent'}
+            backgroundColor={'indigo-60'}
+            onClick={() => setOffers({ type: 'UNSET_CURRENT_OFFER' })}
+          >
+            <Iconify
+              width={20}
+              icon={'fluent:add-24-filled'}
+            />
+          </Overlay.Trigger>
+          <CreateOfferFeature />
+        </Overlay>
+      </Flex>
 
-        <Divider
-          my={12}
-          backgroundColor={'transparent'}
-        />
+      <Divider
+        my={12}
+        backgroundColor={'transparent'}
+      />
 
-        <OfferList />
-      </Container>
+      <OfferList />
     </React.Fragment>
   );
 };

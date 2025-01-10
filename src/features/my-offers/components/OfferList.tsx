@@ -1,108 +1,70 @@
 import useOffers from '@hooks/useOffers';
-import Loader from '@components/base/button/Loader';
-import Flex from '@components/base/flex/Flex';
-import Iconify from '@components/base/iconify/Iconify';
-import Heading from '@components/base/heading/Heading';
-import Text from '@components/base/text/Text';
-import Box from '@components/base/box/Box';
 import Item from './Item';
 import Grid from '@components/base/grid/Grid';
-
-const EmptyState = () => {
-  const { offers } = useOffers();
-
-  return (
-    <Box
-      p={20}
-      rounded={12}
-      backgroundColor={'white'}
-    >
-      <Iconify
-        width={'32px'}
-        color={'orange-60'}
-        icon={'emojione-v1:empty-note-pad'}
-      />
-
-      <Heading mt={12}>Found {offers?.length} offers</Heading>
-      <Text
-        mt={6}
-        as={'p'}
-        fontSize={16}
-      >
-        No offers available right now — Click on the top-right corner to post
-        new offers.
-      </Text>
-    </Box>
-  );
-};
+import { GET_USER_OFFERS } from '@graphql/offer';
+import Query from '@components/query/Query';
+import Iconify from '@components/base/iconify/Iconify';
+import Heading from '@components/base/heading/Heading';
+import Flex from '@components/base/flex/Flex';
 
 const OfferList = () => {
-  const { offers } = useOffers();
-
-  if (offers === undefined) {
-    return (
-      <Flex justifyContent={'center'}>
-        <Loader
-          visible={true}
-          width={'24px'}
-          color={'indigo-60'}
-        />
-      </Flex>
-    );
-  }
-
-  if (offers === null) {
-    return (
-      <Flex
-        py={12}
-        px={12}
-        gap={12}
-        rounded={12}
-        alignItems={'center'}
-        backgroundColor={'white'}
-      >
-        <Iconify
-          p={4}
-          width={'32px'}
-          rounded={'full'}
-          color={'orange-60'}
-          backgroundColor={'orange-100'}
-          icon={'material-symbols-light:warning-rounded'}
-        />
-
-        <Text
-          as={'p'}
-          fontSize={16}
-          lineHeight={'md'}
-        >
-          Unable to fetch your offers. Try again later.
-        </Text>
-      </Flex>
-    );
-  }
-
-  if (offers?.length === 0) return <EmptyState />;
+  const { offers, setOffers } = useOffers();
 
   return (
-    <Grid
-      gap={6}
-      gridTemplateColumns={{
-        initial: '1fr',
-        sm: '1fr 1fr',
-        md: '1fr 1fr 1fr',
+    <Query
+      query={GET_USER_OFFERS}
+      onCompleted={(data) => {
+        if (data && data.getUserOffers) {
+          setOffers({
+            type: 'SET_OFFERS',
+            payload: { offers: data && data.getUserOffers },
+          });
+        }
       }}
     >
-      {offers && offers.length > 0
-        ? offers.map((offer) => {
+      <Query.Loader />
+      <Query.Error
+        alignItems={'center'}
+        flexDirection={'column'}
+      >
+        <Iconify
+          width={32}
+          color={'orange-60'}
+          icon={'icon-park-twotone:doc-fail'}
+        />
+        <Heading
+          mt={12}
+          fontSize={17}
+        >
+          We are unable to fetch your offers. Try again later.
+        </Heading>
+      </Query.Error>
+      <Query.Data>
+        {offers?.length === 0 ? (
+          <Flex>
+            <Heading
+              fontSize={17}
+              fontWeight={'semibold'}
+            >
+              No offers found
+            </Heading>
+          </Flex>
+        ) : null}
+        <Grid
+          gap={6}
+          gridTemplateColumns={'1fr'}
+        >
+          {offers?.map((offer: any) => {
             return (
               <Item
                 offer={offer}
                 key={offer._id}
               />
             );
-          })
-        : null}
-    </Grid>
+          })}
+        </Grid>
+      </Query.Data>
+    </Query>
   );
 };
 

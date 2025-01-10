@@ -1,7 +1,17 @@
-import { gql } from '@apollo/client/core/core.cjs';
+import { gql } from '@apollo/client';
 
 export const SEND_MAIL = gql`
-  mutation SendMail($payload: SendMailPayload!) {
-    sendMail(payload: $payload)
+  mutation SendMail(
+    $data: JSON
+    $subject: String!
+    $template: String!
+    $recipients: String!
+  ) {
+    sendMail(
+      data: $data
+      subject: $subject
+      template: $template
+      recipients: $recipients
+    )
   }
 `;

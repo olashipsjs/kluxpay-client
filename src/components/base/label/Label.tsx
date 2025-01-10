@@ -27,9 +27,9 @@ const variants = {
 const labelVariants = csx({
   variants,
   defaultVariants: {
-    fontSize: 13,
+    fontSize: 14,
     lineHeight: '1',
-    letterSpacing: 'xs',
+    color: 'gray-10',
     fontWeight: 'medium',
     display: 'inlineBlock',
   },

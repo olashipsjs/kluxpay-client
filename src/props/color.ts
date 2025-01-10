@@ -149,6 +149,12 @@ const colorProps = {
     values: VALUES,
   },
 
+  outlineColor: {
+    isResponsive: true,
+    properties: ['outlineColor'],
+    values: VALUES,
+  },
+
   borderColor: {
     isResponsive: true,
     properties: ['borderColor'],

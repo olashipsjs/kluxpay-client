@@ -33,7 +33,9 @@ const useGetCoinPrice = (coinId: string, currency: string) => {
     client
   );
 
-  return { price: data ? data[coinId][currency] : 0, isLoading, error };
+  const price = data?.[coinId]?.[currency];
+
+  return { price: data ? price : 0, isLoading, error };
 };
 
 export default useGetCoinPrice;

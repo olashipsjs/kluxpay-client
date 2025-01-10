@@ -1,7 +1,5 @@
-import { GET_USER_PAYMENTS } from '@graphql/payment';
-import useApolloQuery from '@hooks/useApolloQuery';
-import Payment from '@ts_types/paayment';
 import React from 'react';
+import Payment from '@ts_types/paayment';
 
 const initialState: Payment.State = { payments: [] };
 
@@ -49,15 +47,6 @@ type Props = React.PropsWithChildren;
 
 const PaymentsProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  useApolloQuery<any>(GET_USER_PAYMENTS, {
-    onCompleted: (data) => {
-      dispatch({
-        type: 'SET_PAYMENTS',
-        payload: { payments: data?.getUserPayments },
-      });
-    },
-  });
 
   const value = React.useMemo<Payment.Context>(() => {
     return { payments: state.payments, setPayments: dispatch };

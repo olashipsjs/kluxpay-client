@@ -30,7 +30,6 @@ const headingVariants = csx({
   defaultVariants: {
     fontSize: 24,
     fontWeight: 'medium',
-    letterSpacing: 'xs',
     color: 'gray-10',
   },
 });

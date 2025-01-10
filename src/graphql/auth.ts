@@ -1,22 +1,20 @@
-import { gql } from '@apollo/client/core/core.cjs';
+import { gql } from '@apollo/client';
 
-export const SIGN_IN = gql`
-  mutation SignIn($payload: SignInPayload!) {
-    signIn(payload: $payload) {
-      accessToken
-    }
+export const LOGIN = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password)
   }
 `;
 
 export const RESET_PASSWORD = gql`
-  mutation ResetPassword($payload: ResetPasswordPayload!) {
-    resetPassword(payload: $payload)
+  mutation ResetPassword($email: String!, $newPassword: String!) {
+    resetPassword(email: $email, newPassword: $newPassword)
   }
 `;
 
 export const VERIFY_EMAIL = gql`
-  mutation VerifyEmail($payload: VerifyEmailPayload!) {
-    verifyEmail(payload: $payload)
+  mutation VerifyEmail {
+    verifyEmail
   }
 `;
 
@@ -27,13 +25,19 @@ export const REFRESH_ACCESS_TOKEN = gql`
 `;
 
 export const CHANGE_EMAIL = gql`
-  mutation ChangeEmail($payload: ChangeEmailPayload!) {
-    changeEmail(payload: $payload)
+  mutation ChangeEmail($newEmail: String!) {
+    changeEmail(newEmail: $newEmail)
   }
 `;
 
 export const CHANGE_PASSWORD = gql`
-  mutation ChangePassword($payload: ChangePasswordPayload!) {
-    changePassword(payload: $payload)
+  mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
+    changePassword(oldPassword: $oldPassword, newPassword: $newPassword)
+  }
+`;
+
+export const CHANGE_USERNAME = gql`
+  mutation ChangeUsername($username: String!) {
+    changeUsername(username: $username)
   }
 `;

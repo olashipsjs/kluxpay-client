@@ -1,20 +1,31 @@
-import { gql } from '@apollo/client/core/core.cjs';
+import { gql } from '@apollo/client';
 
 export const CREATE_TRADE = gql`
-  mutation CreateTrade($payload: CreateTradePayload!) {
-    createTrade(payload: $payload) {
+  mutation CreateTrade($offerId: ID!, $rate: Float!, $amount: Float!) {
+    createTrade(offerId: $offerId, rate: $rate, amount: $amount) {
       _id
       rate
       amount
       offer {
         type
-        coinId
+        coin
         minLimit
         maxLimit
+        fiat {
+          id
+          name
+          symbol
+          sign
+        }
         createdBy {
           _id
           firstName
           lastName
+          username
+          avatar {
+            url
+          }
+          email
         }
         payment {
           _id
@@ -24,14 +35,15 @@ export const CREATE_TRADE = gql`
           bankAccountNumber
         }
       }
-      wallet {
-        _id
-        publicKey
-      }
       createdBy {
         _id
         firstName
         lastName
+        username
+        email
+        avatar {
+          url
+        }
       }
     }
   }
@@ -43,13 +55,19 @@ export const GET_USER_TRADES = gql`
       _id
       rate
       amount
+      status
       createdAt
       updatedAt
       offer {
         _id
-        fiat
+        fiat {
+          id
+          name
+          sign
+          symbol
+        }
         type
-        coinId
+        coin
         notes
         minLimit
         maxLimit
@@ -57,6 +75,11 @@ export const GET_USER_TRADES = gql`
           _id
           firstName
           lastName
+          email
+          username
+          avatar {
+            url
+          }
         }
         payment {
           _id
@@ -67,12 +90,13 @@ export const GET_USER_TRADES = gql`
           bankAccountNumber
         }
       }
-      wallet {
-        _id
-        publicKey
-      }
       createdBy {
         _id
+        email
+        avatar {
+          url
+        }
+        username
         firstName
         lastName
       }
@@ -80,21 +104,32 @@ export const GET_USER_TRADES = gql`
   }
 `;
 
-export const GET_TRADE = gql`
-  query GetTrade($id: ID!) {
-    getTrade(id: $id) {
+export const GET_TRADE_BY_ID = gql`
+  query GetTradeById($tradeId: ID!) {
+    getTradeById(tradeId: $tradeId) {
       _id
       rate
       amount
+      status
       offer {
         _id
-        fiat
+        fiat {
+          id
+          name
+          sign
+          symbol
+        }
         type
-        coinId
+        coin
         minLimit
         maxLimit
         createdBy {
           _id
+          email
+          avatar {
+            url
+          }
+          username
           firstName
           lastName
         }
@@ -108,6 +143,11 @@ export const GET_TRADE = gql`
       }
       createdBy {
         _id
+        email
+        avatar {
+          url
+        }
+        username
         firstName
         lastName
       }

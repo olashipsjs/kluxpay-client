@@ -187,9 +187,9 @@ const Content = React.forwardRef(
           overflowY={overflowY}
           boxShadow={boxShadow}
           borderColor={borderColor}
-          left={domRect.left + 'px' || left}
-          width={domRect.width + 'px' || width}
-          top={domRect.top + domRect.height + 8 + 'px' || top}
+          left={left || domRect.left + 'px'}
+          width={width || domRect.width + 'px'}
+          top={top || domRect.top + domRect.height + 8 + 'px'}
         />
       </Overlay.Panel>
     );
@@ -203,7 +203,7 @@ const Option = React.memo(
         name,
         value,
         onClick,
-        py = 4,
+        py = 6,
         px = 8,
         gap = 12,
         rounded = 8,

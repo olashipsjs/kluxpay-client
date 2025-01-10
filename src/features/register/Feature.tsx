@@ -4,13 +4,14 @@ import Success from './components/Success';
 import Heading from '@components/base/heading/Heading';
 import Text from '@components/base/text/Text';
 import Anchor from '@components/anchor/Anchor';
+import Username from './components/Username';
 
 const initialData = {
   email: '',
+  username: '',
   lastName: '',
   password: '',
   firstName: '',
-  dateOfBirth: '2000-06-28',
 };
 
 const RegisterFeature = () => {
@@ -38,7 +39,7 @@ const RegisterFeature = () => {
 
       <Step.Screen
         mt={32}
-        screens={[<Names />, <Success />]}
+        screens={[<Names />, <Username />, <Success />]}
       />
 
       <Text

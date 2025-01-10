@@ -1,5 +1,6 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('kp_access_token');
@@ -7,6 +8,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
+      'apollo-require-preflight': true,
       Authorization: token ? `Bearer ${token}` : '',
     },
   };
@@ -14,7 +16,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(
-    new HttpLink({
+    createUploadLink({
       credentials: 'include',
       uri: import.meta.env.VITE_APOLLO_SERVER_URI!,
     })

@@ -11,13 +11,13 @@ const menu = [
   },
   {
     label: 'Wallets',
-    url: '/app/wallets/',
-    icon: 'fluent:layer-diagonal-24-regular',
+    url: '/app/my-offers/',
+    icon: 'fluent:fire-24-regular',
   },
   {
     label: 'Trade',
     url: '/app/trades/',
-    icon: 'fluent:arrow-repeat-1-24-regular',
+    icon: 'fluent:coin-stack-24-regular',
   },
   {
     label: 'Offers',
@@ -27,7 +27,7 @@ const menu = [
   {
     label: 'More',
     url: '/app/settings/',
-    icon: 'fluent:options-24-regular',
+    icon: 'fluent:settings-24-regular',
   },
 ];
 

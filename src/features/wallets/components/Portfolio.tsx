@@ -2,25 +2,21 @@ import Box from '@components/base/box/Box';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Overlay from '@components/overlay/Overlay';
-import AssetBalance from '@components/shared/AssetBalance';
-import CoinPrice from '@components/shared/CoinPrice';
+import TokenBalance from '@components/shared/crypto/CryptoBalance';
+import CoinPrice from '@components/shared/crypto/CryptoPrice';
 import networks from '@constants/networks';
 import UpdateWalletFeature from '@features/shared/modals/update-wallet/Feature';
 import useUser from '@hooks/useUser';
+import useWallets from '@hooks/useWallets';
 import currencySymbol from '@utils/currencySymbol';
 import formatDecimal from '@utils/formatDecimal';
 import React from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
 
 const Portfolio = () => {
-  const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
   const { user } = useUser();
+  const { wallet } = useWallets();
 
-  const WALLET_NAME = searchParams.get('name') || '';
-  const WALLET_NETWORK = searchParams.get('network') || '';
-
-  const { symbol } = networks.find((n) => n.name === WALLET_NETWORK)!;
+  const { symbol } = networks.find((n) => n.name === wallet?.network)!;
 
   return (
     <Box
@@ -35,14 +31,14 @@ const Portfolio = () => {
         justifyContent={'between'}
       >
         <CoinPrice
-          coinId={WALLET_NETWORK}
+          coinId={wallet?.network || ''}
           fiat={user?.currency}
         >
           {({ price }) => {
             return (
-              <AssetBalance
-                walletId={id || ''}
+              <TokenBalance
                 contractAddress={''}
+                walletId={wallet?._id || ''}
               >
                 {({ balance }) => {
                   return (
@@ -75,7 +71,7 @@ const Portfolio = () => {
                     </React.Fragment>
                   );
                 }}
-              </AssetBalance>
+              </TokenBalance>
             );
           }}
         </CoinPrice>
@@ -92,7 +88,7 @@ const Portfolio = () => {
           lineHeight={'1'}
           textTransform={'capitalize'}
         >
-          {WALLET_NAME}
+          {wallet?.name || 'No name'}
         </Heading>
 
         <Overlay>

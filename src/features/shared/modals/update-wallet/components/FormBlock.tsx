@@ -1,13 +1,13 @@
 import Alert from '@components/alert/Alert';
 import Button from '@components/base/button/Button';
-import Loader from '@components/base/button/Loader';
+import Loader from '@components/loader/Loader';
 import Label from '@components/base/label/Label';
 import TextField from '@components/base/textfield/TextField';
 import FormField from '@components/formfield/FormField';
 import { UPDATE_WALLET } from '@graphql/wallet';
 import useApolloMutation from '@hooks/useApolloMutation';
 import useStep from '@hooks/useStep';
-import useWallet from '@hooks/useWallet';
+import useWallets from '@hooks/useWallets';
 import { Form, Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
 
 const FormBlock = () => {
   const navigate = useNavigate();
-  const { setWallets } = useWallet();
+  const { setWallets } = useWallets();
   const { data, next } = useStep<any>();
   const { id } = useParams<{ id: string }>();
 

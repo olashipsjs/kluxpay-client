@@ -1,38 +1,63 @@
+import Button from '@components/base/button/Button';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Overlay from '@components/overlay/Overlay';
+import useStep from '@hooks/useStep';
 
-const Header = () => {
+const Header = ({ data }: { data: any }) => {
+  const { previous, step } = useStep();
+
   return (
     <Flex
+      py={10}
+      px={16}
       gap={8}
-      py={12}
-      px={20}
+      top={'0px'}
+      zIndex={2}
+      borderBottom={1}
+      position={'sticky'}
       alignItems={'center'}
+      backgroundColor={'white'}
+      justifyContent={'between'}
+      borderBottomColor={'gray-90'}
     >
+      {step > 0 ? (
+        <Button
+          p={0}
+          width={'fit'}
+          color={'gray-70'}
+          borderColor={'transparent'}
+          onClick={() => previous(data)}
+          _hover={{ color: 'gray-10' }}
+          backgroundColor={'transparent'}
+        >
+          <Iconify
+            width={20}
+            icon={'fluent:chevron-left-24-filled'}
+          />
+        </Button>
+      ) : null}
+
       <Heading
         as={'h2'}
-        fontSize={21}
+        fontSize={16}
         lineHeight={'md'}
-        css={{ flex: 1 }}
+        textAlign={'center'}
+        fontWeight={'semibold'}
       >
-        Post offer
+        Create an offer
       </Heading>
 
       <Overlay.Trigger
-        py={2}
-        px={12}
+        p={0}
         width={'fit'}
-        color={'gray-60'}
+        color={'indigo-60'}
         borderColor={'transparent'}
-        backgroundColor={'gray-90'}
-        _hover={{ color: 'gray-10', backgroundColor: 'gray-80' }}
+        _hover={{ color: 'indigo-40' }}
+        backgroundColor={'transparent'}
       >
-        <Iconify
-          width={16}
-          icon={'fluent:arrow-minimize-24-regular'}
-        />
+        Cancel
       </Overlay.Trigger>
     </Flex>
   );

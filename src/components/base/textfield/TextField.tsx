@@ -46,9 +46,8 @@ const textFieldVariants = csx({
     outline: 'none',
     display: 'block',
     color: 'gray-10',
-    letterSpacing: 'xs',
-    fontWeight: 'medium',
-    lineHeight: '1.5em',
+    lineHeight: '1.5',
+    fontWeight: 'semibold',
     backgroundColor: 'transparent',
   },
 });
@@ -90,8 +89,12 @@ const Compound = React.forwardRef(
           value = value.replace(/\.(?=[^.]*)$/, '');
         }
 
-        const formattedNumber = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        value = formattedNumber;
+        const [integer, decimal] = value.split('.');
+        const formattedInteger = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        value =
+          decimal !== undefined
+            ? `${formattedInteger}.${decimal}`
+            : formattedInteger;
       }
 
       helper.setValue(value);

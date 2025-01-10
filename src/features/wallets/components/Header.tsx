@@ -4,15 +4,15 @@ import Container from '@components/base/container/Container';
 import Heading from '@components/base/heading/Heading';
 import Divider from '@components/divider/Divider';
 import Tabs from '@components/tabs/Tabs';
-import useWallet from '@hooks/useWallet';
+import useWallets from '@hooks/useWallets';
 import { useParams } from 'react-router-dom';
 
 const WalletsTabs = () => {
-  const { wallets, wallet } = useWallet();
+  const { wallets } = useWallets();
   const { id } = useParams<{ id: string }>();
 
   return (
-    <Tabs defaultValue={wallet?._id || ''}>
+    <Tabs defaultValue={''}>
       <Tabs.List
         px={0}
         py={0}

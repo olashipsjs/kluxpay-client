@@ -1,42 +1,27 @@
 import Box from '@components/base/box/Box';
-import Container from '@components/base/container/Container';
+import { Route, Routes } from 'react-router-dom';
 import TradeFeature from '@features/trade/Feature';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import EmptyState from './EmptyState';
+import TradeChatFeature from '@features/trade-chat/Feature';
 
 const routes = [
-  { path: '/', exact: false, main: <EmptyState /> },
-  { path: '/:id', exact: false, main: <TradeFeature /> },
+  { path: '/', exact: false, main: <TradeFeature /> },
+  { path: '/:id', exact: false, main: <TradeChatFeature /> },
 ];
 
 const Router = () => {
-  const location = useLocation();
-
-  const CURRENT_PATH = location.pathname;
-  const isParentRoute = CURRENT_PATH === '/app/trades/';
-
   return (
-    <Box
-      width={'auto'}
-      ms={{ initial: 0, md: '360px' }}
-      display={{ initial: isParentRoute ? 'hidden' : 'block', md: 'block' }}
-    >
-      <Container
-        p={0}
-        maxWidth={'full'}
-      >
-        <Routes>
-          {routes.map((route) => {
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={route.main}
-              />
-            );
-          })}
-        </Routes>
-      </Container>
+    <Box>
+      <Routes>
+        {routes.map((route) => {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.main}
+            />
+          );
+        })}
+      </Routes>
     </Box>
   );
 };

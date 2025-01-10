@@ -1,4 +1,4 @@
-import { GET_USER } from '@graphql/user';
+import { GET_LOGGED_IN_USER } from '@graphql/user';
 import useApolloQuery from '@hooks/useApolloQuery';
 import User from '@ts_types/user';
 import React from 'react';
@@ -17,6 +17,12 @@ const reducer = (state: User.State, action: User.Action): User.State => {
       return { ...state, user: { ...state.user!, ...action.payload.user } };
     case 'VERIFY_EMAIL':
       return { ...state, user: { ...state.user!, isEmailVerified: true } };
+    case 'CHANGE_USERNAME':
+      return {
+        ...state,
+        user: { ...state.user!, username: action.payload.username },
+      };
+
     default:
       return state;
   }
@@ -26,10 +32,10 @@ type Props = React.PropsWithChildren;
 const UserProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  useApolloQuery<any>(GET_USER, {
+  useApolloQuery<any>(GET_LOGGED_IN_USER, {
     onCompleted: (data) => {
-      if (data?.getUser) {
-        dispatch({ type: 'SET_USER', payload: { user: data.getUser } });
+      if (data && data?.getLoggedInUser) {
+        dispatch({ type: 'SET_USER', payload: { user: data.getLoggedInUser } });
       }
     },
     onError: () => dispatch({ type: 'SET_USER', payload: { user: null } }),

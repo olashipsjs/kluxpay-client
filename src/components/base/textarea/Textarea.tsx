@@ -44,9 +44,8 @@ const textareaVariants = csx({
     outline: 'none',
     display: 'block',
     color: 'gray-10',
-    lineHeight: '1.5em',
-    letterSpacing: 'xs',
-    fontWeight: 'medium',
+    lineHeight: '1.5',
+    fontWeight: 'semibold',
     backgroundColor: 'transparent',
   },
 });

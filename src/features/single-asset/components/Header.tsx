@@ -1,7 +1,7 @@
 import Flex from '@components/base/flex/Flex';
 import Text from '@components/base/text/Text';
 import Heading from '@components/base/heading/Heading';
-import useGetAssetBalance from 'src/hooks/useGetAssetBalance';
+import useGetTokenBalance from 'src/hooks/useGetTokenBalance';
 import params from 'src/utils/params';
 import Box from '@components/base/box/Box';
 import Image from '@components/base/image/Image';
@@ -23,7 +23,7 @@ type Props = {
 const Header = ({ id, image, symbol, price, platform }: Props) => {
   const network = params.queryValue('network');
 
-  const { balance, loading } = useGetAssetBalance({
+  const { balance, loading } = useGetTokenBalance({
     contractAddress: platform?.contract_address,
     platform: network || '',
   });

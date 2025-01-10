@@ -7,10 +7,9 @@ import FormField from '@components/formfield/FormField';
 import Label from '@components/base/label/Label';
 import TextField from '@components/base/textfield/TextField';
 import Button from '@components/base/button/Button';
-import Loader from '@components/base/button/Loader';
+import Loader from '@components/loader/Loader';
 import Alert from '@components/alert/Alert';
-import Flex from '@components/base/flex/Flex';
-import Overlay from '@components/overlay/Overlay';
+import Box from '@components/base/box/Box';
 
 const Generate = () => {
   const { data, next } = useStep<any>();
@@ -36,33 +35,21 @@ const Generate = () => {
       validationSchema={validationSchema}
     >
       <Form>
-        <FormField name={'email'}>
-          <Label>Email</Label>
-          <FormField.Sheet>
-            <TextField
-              disabled
-              autoComplete={'email'}
-              placeholder={'e.g johndoe@mail.com'}
-            />
-          </FormField.Sheet>
-          <FormField.Message>Generate new One Time Password</FormField.Message>
-        </FormField>
+        <Box notLastChild={{ mb: 16 }}>
+          <FormField name={'email'}>
+            <Label>Email</Label>
+            <FormField.Sheet>
+              <TextField
+                disabled
+                autoComplete={'email'}
+                placeholder={'e.g johndoe@mail.com'}
+              />
+            </FormField.Sheet>
+            <FormField.Message>
+              Generate new One Time Password
+            </FormField.Message>
+          </FormField>
 
-        <Flex
-          mt={24}
-          gap={6}
-        >
-          <Overlay.Trigger
-            color={'gray-60'}
-            borderColor={'gray-90'}
-            backgroundColor={'transparent'}
-            _hover={{
-              color: 'gray-10',
-              backgroundColor: 'gray-95',
-            }}
-          >
-            Cancel
-          </Overlay.Trigger>
           <Button
             type={'submit'}
             disabled={loading}
@@ -70,15 +57,12 @@ const Generate = () => {
             <Loader visible={loading} />
             Generate OTP
           </Button>
-        </Flex>
 
-        <Alert
-          mt={12}
-          visible={error !== undefined}
-        >
-          <Alert.Icon />
-          <Alert.Message css={{ flex: 1 }}>{error?.message}</Alert.Message>
-        </Alert>
+          <Alert visible={error !== undefined}>
+            <Alert.Icon />
+            <Alert.Message css={{ flex: 1 }}>{error?.message}</Alert.Message>
+          </Alert>
+        </Box>
       </Form>
     </Formik>
   );

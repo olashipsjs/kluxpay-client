@@ -8,9 +8,7 @@ const useVerifyOtp = () => {
     const { email, code } = payload;
     try {
       const verifyOtpResponse = await verifyOtp({
-        variables: {
-          payload: { email, code },
-        },
+        variables: { email, code },
       });
 
       if (verifyOtpResponse.errors) {

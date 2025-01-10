@@ -1,6 +1,4 @@
 import React from 'react';
-import useApolloQuery from '@hooks/useApolloQuery';
-import { GET_USER_TRADES } from '@graphql/trade';
 import Trades from '@ts_types/trades';
 
 const initialState: Trades.State = {
@@ -50,25 +48,6 @@ type Props = React.PropsWithChildren;
 
 const TradesProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  useApolloQuery<{ getUserTrades: Trades.Type[] }>(GET_USER_TRADES, {
-    onCompleted: (data) => {
-      dispatch({
-        type: 'SET_TRADES',
-        payload: { trades: data.getUserTrades },
-      });
-      dispatch({
-        type: 'SET_CURRENT_TRADE',
-        payload: { trade: data.getUserTrades[0] },
-      });
-    },
-    onError: () => {
-      dispatch({
-        type: 'SET_TRADES',
-        payload: { trades: null },
-      });
-    },
-  });
 
   const value = React.useMemo(() => {
     return {

@@ -13,7 +13,7 @@ import typographyProps from '@props/typography';
 import spaceProps from '@props/space';
 import effectsProps from '@props/effects';
 import placementProps from '@props/placement';
-import Loader from './Loader';
+import Loader from '../../loader/Loader';
 import extractProps from '@utils/extractProps';
 
 namespace Button {
@@ -40,19 +40,18 @@ const variants = {
 const buttonProps = csx({
   variants: variants,
   defaultVariants: {
-    width: 'full',
-    py: 12,
+    py: 10,
     px: 12,
     gap: 4,
     border: 1,
-    rounded: 12,
+    rounded: 8,
     fontSize: 14,
+    width: 'full',
     color: 'white',
     lineHeight: '1',
     transition: '200',
     cursor: 'pointer',
     textAlign: 'center',
-    letterSpacing: 'xs',
     fontWeight: 'medium',
     alignItems: 'center',
     display: 'inlineFlex',
@@ -103,11 +102,35 @@ const Compound = React.forwardRef((props: Button.Props, ref: Button.Ref) => {
   );
 });
 
+const ButtonLoader = React.forwardRef(
+  (
+    {
+      width = 14,
+      height = 14,
+      color = 'white',
+      icon = 'svg-spinners:3-dots-fade',
+      ...restProps
+    }: React.ComponentProps<typeof Loader>,
+    ref: React.ForwardedRef<React.ComponentRef<typeof Loader>>
+  ) => {
+    return (
+      <Loader
+        ref={ref}
+        icon={icon}
+        width={width}
+        color={color}
+        height={height}
+        {...restProps}
+      />
+    );
+  }
+);
+
 const Button = Compound as typeof Compound & {
-  Loader: typeof Loader;
+  Loader: typeof ButtonLoader;
 };
 
-Button.Loader = Loader;
+Button.Loader = ButtonLoader;
 Button.displayName = 'Button';
 
 export default Button;

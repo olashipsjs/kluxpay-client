@@ -1,7 +1,5 @@
 import React from 'react';
 import Offer from '@ts_types/offer';
-import useApolloQuery from '@hooks/useApolloQuery';
-import { GET_USER_OFFERS } from '@graphql/offer';
 
 const initialState: Offer.State = {
   offers: undefined,
@@ -56,6 +54,12 @@ const reducer = (state: Offer.State, action: Offer.Action): Offer.State => {
         offer: action.payload.offer,
       };
 
+    case 'UNSET_CURRENT_OFFER':
+      return {
+        ...state,
+        offer: undefined,
+      };
+
     default:
       return state;
   }
@@ -65,21 +69,6 @@ type Props = React.PropsWithChildren;
 
 const OffersProvider = ({ children }: Props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  useApolloQuery<{ getUserOffers: Offer.Type[] }>(GET_USER_OFFERS, {
-    onCompleted: (data) => {
-      dispatch({
-        type: 'SET_OFFERS',
-        payload: { offers: data.getUserOffers },
-      });
-    },
-    onError: () => {
-      dispatch({
-        type: 'SET_OFFERS',
-        payload: { offers: null },
-      });
-    },
-  });
 
   const value = React.useMemo(() => {
     return {

@@ -1,72 +1,77 @@
-import React from 'react';
+import Coin from './components/Coin';
 import Type from './components/Type';
-import Step from '@components/step/Step';
-import Settings from './components/Settings';
-import Payment from './components/Payment';
-import Summary from './components/Summary';
-import Success from './components/Success';
-import Overlay from '@components/overlay/Overlay';
-import useApolloQuery from '@hooks/useApolloQuery';
-import { GET_OFFER } from '@graphql/offer';
-import coins from 'src/constants/coins';
-import Divider from '@components/divider/Divider';
-import Header from './components/Header';
-import { useSearchParams } from 'react-router-dom';
 import useUser from '@hooks/useUser';
+import Notes from './components/Notes';
+import Step from '@components/step/Step';
+import useOffers from '@hooks/useOffers';
+import Margin from './components/Margin';
+import Limits from './components/Limits';
+import Success from './components/Success';
+import Payment from './components/Payment';
+import Duration from './components/Duration';
+import Overlay from '@components/overlay/Overlay';
+import Fiat from './components/Fiat';
 
 const CreateOfferFeature = () => {
+  const { offer } = useOffers();
   const { user } = useUser();
-  const [searchParams] = useSearchParams();
-  const ID = searchParams.get('id');
-
-  const { data } = useApolloQuery(GET_OFFER, {
-    variables: { id: ID },
-  });
-
-  const offer = data?.getOffer;
 
   const initialData = {
-    type: offer ? offer.type : '',
+    coin: offer ? offer.coin : '',
     notes: offer ? offer.notes : '',
-    fiat: offer ? offer.fiat : user?.currency,
-    coinId: offer ? offer.coinId : coins[0].id,
-    amount: offer ? offer.amount : '',
-    timeout: offer ? offer.timeout : 15,
     maxLimit: offer ? offer.maxLimit : '',
     minLimit: offer ? offer.minLimit : '',
-    payment: offer ? offer.payment._id : '',
-    priceMargin: offer ? offer.priceMargin : '',
+    payment: offer ? offer.payment : '',
+    margin: offer ? offer.margin : '',
+    type: offer ? offer.type : 'sell',
+    timeout: offer ? offer.timeout : 15,
+    fiat: offer ? offer.fiat : user?.fiat.symbol,
+  };
+
+  const getScreens = (data: typeof initialData) => {
+    if (data.type === 'sell') {
+      return [
+        <Fiat key={'fiat'} />,
+        <Coin key='coin' />,
+        <Type key='type' />,
+        <Payment key='payment' />,
+        <Limits key='limits' />,
+        <Margin key='margin' />,
+        <Duration key='duration' />,
+        <Notes key='notes' />,
+        <Success key='success' />,
+      ];
+    }
+    return [
+      <Fiat key={'fiat'} />,
+      <Coin key='coin' />,
+      <Type key='type' />,
+      <Limits key='limits' />,
+      <Margin key='margin' />,
+      <Duration key='duration' />,
+      <Notes key='notes' />,
+      <Success key='success' />,
+    ];
   };
 
   return (
-    <React.Fragment>
-      <Overlay.Panel justifyContent={{ initial: 'end', sm: 'center' }}>
-        <Overlay.Background />
-        <Overlay.Content
-          maxWidth={'400px'}
-          maxHeight={'88vh'}
-          overflow={'scroll'}
+    <Overlay.Panel justifyContent={'end'}>
+      <Overlay.Background />
+      <Overlay.Content
+        maxWidth={'400px'}
+        maxHeight={'88vh'}
+        overflowY={'scroll'}
+      >
+        <Step
+          overflow={'clip'}
+          initialData={initialData}
         >
-          <Step
-            overflow={'clip'}
-            initialData={initialData}
-          >
-            <Header />
-            <Divider backgroundColor={'gray-90'} />
-            <Step.Screen
-              pt={20}
-              screens={[
-                <Type />,
-                <Settings />,
-                <Payment />,
-                <Summary />,
-                <Success />,
-              ]}
-            />
-          </Step>
-        </Overlay.Content>
-      </Overlay.Panel>
-    </React.Fragment>
+          {({ data }) => {
+            return <Step.Screen screens={getScreens(data)} />;
+          }}
+        </Step>
+      </Overlay.Content>
+    </Overlay.Panel>
   );
 };
 

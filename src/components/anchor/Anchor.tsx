@@ -40,13 +40,12 @@ const variants = {
 const linkVariants = csx({
   variants,
   defaultVariants: {
-    rounded: 12,
+    rounded: 8,
     fontSize: 14,
     lineHeight: '1',
     transition: '200',
     cursor: 'pointer',
     textAlign: 'center',
-    letterSpacing: 'xs',
     color: 'gray-60',
     alignItems: 'center',
     justifyContent: 'center',

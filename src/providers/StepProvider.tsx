@@ -13,7 +13,9 @@ export const StepContext = React.createContext<Context | undefined>(undefined);
 
 type Props = {
   defaultStep?: number;
-  children: React.ReactNode;
+  children:
+    | ((args: { step: number; data: Context['data'] }) => React.ReactNode)
+    | React.ReactNode;
   initialData: { [key: string]: any };
 };
 
@@ -40,7 +42,11 @@ const StepProvider = ({ defaultStep = 0, children, initialData }: Props) => {
 
   const value = { step, data, next, previous, setData, reset };
 
-  return <StepContext.Provider value={value}>{children}</StepContext.Provider>;
+  return (
+    <StepContext.Provider value={value}>
+      {typeof children === 'function' ? children({ step, data }) : children}
+    </StepContext.Provider>
+  );
 };
 
 export default StepProvider;

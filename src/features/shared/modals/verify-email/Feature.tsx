@@ -8,7 +8,7 @@ import Step from '@components/step/Step';
 import useUser from '@hooks/useUser';
 import Generate from './components/Generate';
 import Verify from './components/Verify';
-import Success from './components/Success';
+import Text from '@components/base/text/Text';
 
 const VerifyEmailFeature = () => {
   const { user } = useUser();
@@ -21,19 +21,28 @@ const VerifyEmailFeature = () => {
           py={12}
           px={20}
           gap={8}
-          alignItems={'center'}
+          justifyContent={'between'}
         >
-          <Iconify
-            p={2}
-            width={'32px'}
-            color={'white'}
-            rounded={'full'}
-            backgroundColor={'gray-70'}
-            icon={'material-symbols-light:person-rounded'}
-          />
           <Box css={{ flex: 1 }}>
             <Heading fontSize={17}>Verify email address</Heading>
+            <Text fontSize={14}>
+              Complete onboarding by verifying your email address
+            </Text>
           </Box>
+
+          <Overlay.Trigger
+            p={0}
+            size={'24px'}
+            color={'gray-60'}
+            borderColor={'transparent'}
+            backgroundColor={'transparent'}
+            _hover={{ color: 'gray-10', backgroundColor: 'gray-95' }}
+          >
+            <Iconify
+              width={16}
+              icon={'fluent:dismiss-24-regular'}
+            />
+          </Overlay.Trigger>
         </Flex>
 
         <Divider backgroundColor={'gray-90'} />
@@ -45,7 +54,7 @@ const VerifyEmailFeature = () => {
         >
           <Step.Screen
             py={20}
-            screens={[<Generate />, <Verify />, <Success />]}
+            screens={[<Generate />, <Verify />]}
           />
         </Step>
       </Overlay.Content>

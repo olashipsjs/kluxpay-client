@@ -1,21 +1,22 @@
-import Heading from '@components/base/heading/Heading';
 import React from 'react';
 import Names from './components/Names';
+import Heading from '@components/base/heading/Heading';
 import Divider from '@components/divider/Divider';
-import DateOfBirth from './components/DateOfBirth';
+import Username from './components/Username';
+import Avatar from './components/Avatar';
+import Bio from './components/Bio';
 
 const ProfileSettingsFeature = () => {
   return (
     <React.Fragment>
       <Heading fontSize={21}>Profile</Heading>
-      <Divider my={16} />
-      <Heading fontSize={14}>Legal Names</Heading>
-      <Divider my={4} />
+      <Avatar />
+      <Divider backgroundColor={'gray-90'} />
       <Names />
-      <Divider my={12} />
-      <Heading fontSize={14}>Date of Birth</Heading>
-      <Divider my={4} />
-      <DateOfBirth />
+      <Divider backgroundColor={'gray-90'} />
+      <Username />
+      <Divider backgroundColor={'gray-90'} />
+      <Bio />
     </React.Fragment>
   );
 };

@@ -10,14 +10,15 @@ import useAlert from '@hooks/useAlert';
 const Compound = React.forwardRef(
   (
     {
-      px = 12,
+      px = 10,
       py = 8,
       visible,
       timeout,
       onClose,
       children,
       gap = 6,
-      rounded = 12,
+      rounded = 8,
+      zIndex = '999',
       alignItems = 'start',
       flexDirection = 'row',
       backgroundColor = 'red-60',
@@ -44,6 +45,7 @@ const Compound = React.forwardRef(
                   ref={ref}
                   {...rest}
                   gap={gap}
+                  zIndex={zIndex}
                   rounded={rounded}
                   alignItems={alignItems}
                   flexDirection={flexDirection}
@@ -87,10 +89,10 @@ const Icon = React.forwardRef(
 const Message = React.forwardRef(
   (
     {
-      fontSize = 14,
+      fontSize = 13,
       color = 'white',
-      lineHeight = 'lg',
-      letterSpacing = 'xs',
+      lineHeight = '1.36',
+      fontWeight = 'medium',
       ...rest
     }: React.ComponentProps<typeof Text>,
     ref: React.ForwardedRef<React.ComponentRef<typeof Text>>
@@ -102,7 +104,7 @@ const Message = React.forwardRef(
         color={color}
         fontSize={fontSize}
         lineHeight={lineHeight}
-        letterSpacing={letterSpacing}
+        fontWeight={fontWeight}
       />
     );
   }

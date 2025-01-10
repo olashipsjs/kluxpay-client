@@ -3,15 +3,10 @@ import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Iconify from '@components/base/iconify/Iconify';
 import Text from '@components/base/text/Text';
-import coins from '@constants/coins';
-import useOffers from '@hooks/useOffers';
 import useStep from '@hooks/useStep';
 
 const Success = () => {
   const { data } = useStep<any>();
-  const { offer } = useOffers();
-
-  const coin = coins.find((coin) => coin.id === offer?.coinId)!;
 
   return (
     <Flex
@@ -27,7 +22,7 @@ const Success = () => {
         fontSize={19}
         textAlign={'center'}
       >
-        You're trading {`${data.amount} ${coin.symbol.toUpperCase()}`}
+        You're now in Trade.
       </Heading>
 
       <Text

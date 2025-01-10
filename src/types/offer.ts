@@ -5,15 +5,17 @@ namespace Offer {
     amount: number;
     minLimit: number;
     maxLimit: number;
-    priceMargin: number;
-    fiat: string;
-    payment: any;
-    coinId: string;
+    margin: number;
+    fiat: any;
+    payment?: any;
+    coin: any;
     _id: string;
+    timeout: number;
     notes: string;
     type: 'buy' | 'sell';
     isActive: boolean;
-    createdBy?: User.Type;
+    createdBy: User.Type;
+    createdAt: number;
   };
 
   export type State = { offer?: Type; offers: null | undefined | Type[] };
@@ -39,6 +41,9 @@ namespace Offer {
     | {
         type: 'SET_CURRENT_OFFER';
         payload: { offer: Type };
+      }
+    | {
+        type: 'UNSET_CURRENT_OFFER';
       };
 
   export type Context = {

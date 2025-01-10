@@ -1,15 +1,19 @@
-import { gql } from '@apollo/client/core/core.cjs';
+import { gql } from '@apollo/client';
 
-export const CREATE_WALLET = gql`
-  mutation CreateWallet($payload: CreateWalletPayload!) {
-    createWallet(payload: $payload) {
+export const CREATE_WALLETS = gql`
+  mutation CreateWallets($email: String!, $networks: String!) {
+    createWallets(email: $email, networks: $networks) {
       _id
       name
       privateKey
       publicKey
-      network
-      escrow
-      balance
+      network {
+        _id
+        name
+        image
+        symbol
+        ticker
+      }
     }
   }
 `;
@@ -21,10 +25,20 @@ export const UPDATE_WALLET = gql`
       name
       privateKey
       publicKey
-      network
-      escrow
-      balance
+      network {
+        _id
+        name
+        image
+        symbol
+        ticker
+      }
     }
+  }
+`;
+
+export const GET_USER_BALANCE = gql`
+  query GetUserBalance {
+    getUserBalance
   }
 `;
 
@@ -35,8 +49,13 @@ export const GET_USER_WALLETS = gql`
       name
       privateKey
       publicKey
-      network
-      balance
+      network {
+        _id
+        name
+        image
+        symbol
+        ticker
+      }
     }
   }
 `;
@@ -46,29 +65,15 @@ export const GET_WALLET = gql`
     getWallet(id: $id) {
       _id
       name
-      ss
       privateKey
       publicKey
-      network
-      balance
+      network {
+        _id
+        name
+        image
+        symbol
+        ticker
+      }
     }
-  }
-`;
-
-export const GET_BALANCE = gql`
-  query GetBalance {
-    getBalance
-  }
-`;
-
-export const SEND_TOKEN = gql`
-  mutation SendToken($payload: SendTokenPayload!) {
-    sendToken(payload: $payload)
-  }
-`;
-
-export const GET_ASSET_BALANCE = gql`
-  query GetAssetBalance($payload: GetAssetBalancePayload!) {
-    getAssetBalance(payload: $payload)
   }
 `;

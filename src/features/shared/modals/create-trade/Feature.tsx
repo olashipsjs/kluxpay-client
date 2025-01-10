@@ -1,25 +1,20 @@
 import Overlay from '@components/overlay/Overlay';
 import Step from '@components/step/Step';
-import { useParams } from 'react-router-dom';
 import FormBlock from './components/FormBlock';
 import Flex from '@components/base/flex/Flex';
 import Heading from '@components/base/heading/Heading';
 import Success from './components/Success';
-import useWallet from '@hooks/useWallet';
 
 type Props = {
   rate: number;
+  offerId: string; // From the route params
 };
 
-const CreateTradeFeature = ({ rate }: Props) => {
-  const { offerId } = useParams<{ offerId: string }>();
-  const { wallet } = useWallet();
-
+const CreateTradeFeature = ({ rate, offerId }: Props) => {
   const initialData = {
     rate,
     amount: '',
-    offer: offerId,
-    wallet: wallet?._id || '',
+    offerId: offerId,
   };
 
   return (

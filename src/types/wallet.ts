@@ -7,11 +7,18 @@ namespace Wallet {
     escrow: number;
     balance: number;
     publicKey: 'string';
-    network: string;
+    network: {
+      _id: string;
+      name: string;
+      image: string;
+      symbol: string;
+      ticker: string;
+    };
     user: User.Type;
   };
 
   export type State = {
+    token: any;
     wallet?: Wallet.Type;
     wallets: Wallet.Type[] | null | undefined;
   };
@@ -33,9 +40,14 @@ namespace Wallet {
         type: 'DELETE_WALLET';
         payload: { walletId: string };
       }
-    | { type: 'SET_CURRENT_WALLET'; payload: { walletId: string } };
+    | { type: 'SET_CURRENT_WALLET'; payload: { wallet: Type } }
+    | {
+        type: 'SET_TOKEN_';
+      }
+    | { type: 'SET_CURRENT_TOKEN'; payload: { token: any } };
 
   export type Context = {
+    token: any;
     wallet?: Wallet.Type;
     wallets: State['wallets'];
     setWallets: React.Dispatch<Action>;

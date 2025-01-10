@@ -11,11 +11,11 @@ import useReleaseCoin from '../hooks/useReleaseCoin';
 import useAsync from '@hooks/useAsync';
 import Alert from '@components/alert/Alert';
 import toNumber from '@utils/toNumber';
-import useWallet from '@hooks/useWallet';
+import useWallets from '@hooks/useWallets';
 import Overlay from '@components/overlay/Overlay';
 
 const ReleaseCoin = () => {
-  const { wallet } = useWallet();
+  const { wallet } = useWallets();
   const { trade } = useTrades();
 
   if (!trade) return null;

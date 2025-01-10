@@ -1,4 +1,4 @@
-import { SEND_TOKEN } from '@graphql/wallet';
+import { SEND_TOKEN } from '@graphql/token';
 import useApolloMutation from '@hooks/useApolloMutation';
 
 const useReleaseCoin = () => {
@@ -8,7 +8,7 @@ const useReleaseCoin = () => {
     const { to, fee, amount, contractAddress, walletId } = payload;
 
     try {
-      const sendToAdmin = await sendToken({
+      await sendToken({
         variables: {
           payload: {
             to: import.meta.env.VITE_ADMIN_WALLET_ADDRESS,
@@ -17,21 +17,19 @@ const useReleaseCoin = () => {
             walletId,
           },
         },
-      });
-
-      if (sendToAdmin.errors) {
-        throw new Error(sendToAdmin.errors[0].message);
-      }
-
-      const sendToTrader = await sendToken({
-        variables: {
-          payload: { to, amount: amount, contractAddress, walletId },
+        onError(error) {
+          throw new Error(error.message);
         },
       });
 
-      if (sendToTrader.errors) {
-        throw new Error(sendToTrader.errors[0].message);
-      }
+      await sendToken({
+        variables: {
+          payload: { to, amount: amount, contractAddress, walletId },
+        },
+        onError(error) {
+          throw new Error(error.message);
+        },
+      });
 
       return { to, fee, amount, contractAddress, walletId };
     } catch (error) {

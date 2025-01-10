@@ -1,5 +1,5 @@
 import Box from '@components/base/box/Box';
-import Loader from '@components/base/button/Loader';
+import Loader from '@components/loader/Loader';
 import Dropdown from '@components/dropdown/Dropdown';
 import FormField from '@components/formfield/FormField';
 import Iconify from '@components/base/iconify/Iconify';

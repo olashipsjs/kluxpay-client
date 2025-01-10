@@ -1,175 +1,182 @@
 import Offer from '@ts_types/offer';
-import Button from '@components/base/button/Button';
-import Avatar from '@components/avatar/Avatar';
 import Box from '@components/base/box/Box';
-import Heading from '@components/base/heading/Heading';
-import Text from '@components/base/text/Text';
 import Flex from '@components/base/flex/Flex';
-import Divider from '@components/divider/Divider';
-import CoinPrice from '@components/shared/CoinPrice';
-import coins from '@constants/coins';
-import marginPrice from '@utils/marginPrice';
-import Overlay from '@components/overlay/Overlay';
-import Iconify from '@components/base/iconify/Iconify';
-import MangeOfferFeature from '@features/shared/modals/manage-offer/Feature';
-import Anchor from '@components/anchor/Anchor';
-import React from 'react';
-import currencySymbol from '@utils/currencySymbol';
+import Text from '@components/base/text/Text';
+import Avatar from '@components/avatar/Avatar';
+import { formatDistanceToNow } from 'date-fns';
 import formatDecimal from '@utils/formatDecimal';
+import Heading from '@components/base/heading/Heading';
+import Iconify from '@components/base/iconify/Iconify';
+import Dropdown from '@components/dropdown/Dropdown';
+import ManageOfferFeature from '@features/shared/dropdowns/manage-offers/Feature';
+import useOffers from '@hooks/useOffers';
+import Badge from '@components/badge/Badge';
+
+const List = ({ label, value }: { label: string; value: string }) => {
+  return (
+    <Flex justifyContent={'between'}>
+      <Text
+        fontSize={13}
+        color={'gray-60'}
+        fontWeight={'medium'}
+      >
+        {label}
+      </Text>
+      <Text
+        fontSize={13}
+        color={'gray-10'}
+        fontWeight={'semibold'}
+      >
+        {value}
+      </Text>
+    </Flex>
+  );
+};
 
 type Props = { offer: Offer.Type };
 
 const Item = ({ offer }: Props) => {
-  const activeCoin = coins.find((coin) => coin.id === offer.coinId)!;
+  const { setOffers } = useOffers();
+
+  const RATE = offer.coin.quote[offer.fiat.symbol].price;
+  const PERCENTAGE = offer.margin / 100;
+  const AMOUNT_TO_ADD = RATE * PERCENTAGE;
+
+  const AMOUNT =
+    offer.type === 'sell' ? RATE + AMOUNT_TO_ADD : RATE - AMOUNT_TO_ADD;
 
   return (
-    <Button
-      p={0}
+    <Flex
+      p={16}
       gap={0}
-      rounded={12}
+      border={1}
+      rounded={8}
       width={'full'}
-      overflow={'clip'}
       color={'gray-40'}
-      alignItems={'stretch'}
       borderColor={'gray-90'}
       flexDirection={'column'}
-      justifyContent={'start'}
       backgroundColor={'white'}
-      boxShadow={'0px .5px 1px 0px rgb(var(--gray-90))'}
-      _hover={{ backgroundColor: 'gray-100' }}
+      boxShadow={'0px 1px 0px 0px rgb(var(--gray-90))'}
     >
       <Flex
-        p={12}
         gap={12}
         width={'full'}
         alignItems={'start'}
       >
+        <Box
+          py={2}
+          css={{ flex: 1 }}
+        >
+          <Flex
+            gap={6}
+            alignItems={'center'}
+          >
+            <Heading
+              fontSize={21}
+              textAlign={'left'}
+            >
+              {`${offer.fiat.sign}`}
+              {formatDecimal(AMOUNT || 0)}
+            </Heading>
+            <Badge
+              py={4}
+              px={8}
+              rounded={8}
+              backgroundColor={'indigo-60'}
+            >
+              <Badge.Caption
+                fontSize={12}
+                lineHeight={'1'}
+                color={'white'}
+                fontWeight={'semibold'}
+              >{`${offer.type === 'sell' ? '+' : '-'}${
+                offer.margin
+              }%`}</Badge.Caption>
+            </Badge>
+          </Flex>
+
+          <Text
+            fontSize={13}
+            color={'gray-60'}
+            textAlign={'left'}
+            fontWeight={'medium'}
+            textTransform={'capitalize'}
+          >{`${offer.type} ${offer.coin.symbol}`}</Text>
+        </Box>
+
+        <Dropdown
+          justifyContent={'end'}
+          minWidth={'200px'}
+        >
+          <Dropdown.Trigger
+            p={0}
+            size={'24px'}
+            color={'gray-40'}
+            borderColor={'transparent'}
+            backgroundColor={'gray-95'}
+            _hover={{ color: 'gray-10', backgroundColor: 'gray-90' }}
+            onClick={() => {
+              setOffers({ type: 'SET_CURRENT_OFFER', payload: { offer } });
+            }}
+          >
+            <Iconify
+              width={20}
+              icon={'fluent:more-horizontal-24-regular'}
+            />
+          </Dropdown.Trigger>
+          <ManageOfferFeature />
+        </Dropdown>
+      </Flex>
+
+      <Box
+        mt={20}
+        notLastChild={{ mb: 8 }}
+      >
+        <List
+          label={'Min. Limit'}
+          value={`${offer.fiat.symbol}${formatDecimal(offer.minLimit)}`}
+        />
+        <List
+          label={'Max. Limit'}
+          value={`${offer.fiat.symbol}${formatDecimal(offer.maxLimit)}`}
+        />
+        <List
+          label={'Offer time limit'}
+          value={`${offer.timeout} minutes`}
+        />
+        <List
+          label={'Offer status'}
+          value={offer.isActive ? 'Active' : 'Not Active'}
+        />
+      </Box>
+
+      <Flex
+        mt={20}
+        alignItems={'center'}
+        justifyContent={'between'}
+      >
         <Avatar
-          p={8}
+          p={6}
           border={1}
-          size={'40px'}
+          size={'32px'}
           rounded={'full'}
           borderColor={'gray-90'}
           backgroundColor={'white'}
           boxShadow={'0px .75px 1px 0px rgb(var(--gray-80))'}
         >
-          <Avatar.Picture src={activeCoin.image} />
+          <Avatar.Picture src={offer.coin.logo} />
         </Avatar>
 
-        <Box
-          py={2}
-          css={{ flex: 1 }}
-        >
-          <Heading
-            fontSize={14}
-            textAlign={'left'}
-            fontWeight={'semibold'}
-            textTransform={'capitalize'}
-          >{`${offer.type} ${activeCoin.symbol.toUpperCase()}`}</Heading>
-          <Text
-            mt={8}
-            as={'p'}
-            fontSize={13}
-            color={'gray-40'}
-            textAlign={'left'}
-            textTransform={'capitalize'}
-          >{`${offer.payment.method}`}</Text>
-        </Box>
-
-        <Overlay>
-          {({ setIsOpen }) => {
-            return (
-              <React.Fragment>
-                <Anchor
-                  px={12}
-                  py={2}
-                  borderColor={'transparent'}
-                  backgroundColor={'gray-90'}
-                  onClick={() => setIsOpen(true)}
-                  to={`/app/my-offers/?id=${offer._id}`}
-                  _hover={{
-                    color: 'gray-10',
-                    backgroundColor: 'gray-80',
-                  }}
-                >
-                  <Iconify
-                    width={'16px'}
-                    icon={'ph:sliders-horizontal-fill'}
-                  />
-                </Anchor>
-                <MangeOfferFeature />
-              </React.Fragment>
-            );
-          }}
-        </Overlay>
+        <Text
+          fontSize={12}
+          color={'gray-60'}
+          fontWeight={'medium'}
+        >{`${formatDistanceToNow(new Date(offer.createdAt), {
+          includeSeconds: true,
+          addSuffix: true,
+        })}`}</Text>
       </Flex>
-
-      <Divider backgroundColor={'gray-90'} />
-
-      <Box p={12}>
-        <Flex justifyContent={'between'}>
-          <Text fontSize={13}>{`${currencySymbol(offer.fiat)} ${formatDecimal(
-            offer.minLimit
-          )} `}</Text>
-          <Text fontSize={13}>{`${currencySymbol(offer.fiat)} ${formatDecimal(
-            offer.maxLimit
-          )}`}</Text>
-        </Flex>
-
-        <Divider my={12} />
-
-        <Flex justifyContent={'between'}>
-          <Box>
-            <Heading
-              fontSize={12}
-              textAlign={'left'}
-            >
-              Amount
-            </Heading>
-            <Heading
-              mt={8}
-              fontSize={21}
-            >
-              {`${offer.amount} `}
-              <Text
-                fontSize={12}
-                color={'gray-60'}
-                css={{ verticalAlign: 'middle' }}
-              >{` ${activeCoin.symbol.toUpperCase()}`}</Text>
-            </Heading>
-          </Box>
-
-          <Box>
-            <Heading
-              fontSize={12}
-              textAlign={'right'}
-            >
-              Price
-            </Heading>
-            <CoinPrice
-              coinId={offer.coinId}
-              fiat={offer.fiat}
-            >
-              {({ price }) => {
-                return (
-                  <Heading
-                    mt={8}
-                    fontSize={21}
-                  >
-                    <Text
-                      fontSize={12}
-                      color={'gray-60'}
-                      css={{ verticalAlign: 'middle' }}
-                    >{`${currencySymbol(offer.fiat)} `}</Text>
-                    {`${marginPrice(price, offer.priceMargin)} `}
-                  </Heading>
-                );
-              }}
-            </CoinPrice>
-          </Box>
-        </Flex>
-      </Box>
-    </Button>
+    </Flex>
   );
 };
 
