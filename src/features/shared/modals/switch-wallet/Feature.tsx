@@ -80,7 +80,7 @@ const SwitchWalletFeature = () => {
                       <CryptoBalance walletId={wallet._id}>
                         {({ balance }) => {
                           return (
-                            <CryptoPrice coinId={'1027'}>
+                            <CryptoPrice coinId={1027}>
                               {({ data }) => {
                                 const price =
                                   data.quote[user?.fiat?.symbol || 'USD'].price;
