@@ -50,70 +50,76 @@ const textareaVariants = csx({
   },
 });
 
-const Textarea = React.forwardRef(
-  (props: Textarea.Props, ref: Textarea.Ref) => {
-    const [extractedVariants, extractedProps] = extractProps(props, variants);
+const Textarea = React.forwardRef((props: Textarea.Props, _: Textarea.Ref) => {
+  const [extractedVariants, extractedProps] = extractProps(props, variants);
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null!);
 
-    const {
-      as,
-      onChange,
-      rows,
-      id,
-      value,
-      css,
-      _hover,
-      _active,
-      _placeholder,
-      ...restProps
-    } = extractedProps;
+  const {
+    as,
+    onChange,
+    rows,
+    id,
+    value,
+    css,
+    _hover,
+    _active,
+    _placeholder,
+    ...restProps
+  } = extractedProps;
 
-    const Component = (as || 'textarea') as React.ElementType;
+  const Component = (as || 'textarea') as React.ElementType;
 
-    const { field, helper } = useFormField();
+  const { field, helper } = useFormField();
 
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      event.preventDefault();
-      const value = event.target.value;
-      helper.setValue(value);
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    event.preventDefault();
+    const value = event.target.value;
+    helper.setValue(value);
 
-      onChange && onChange(event);
-    };
+    onChange && onChange(event);
+  };
 
-    const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      event.preventDefault();
-      helper.setTouched(true);
-    };
+  const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    event.preventDefault();
+    helper.setTouched(true);
+  };
 
-    const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      event.preventDefault();
-      helper.setTouched(false);
-    };
+  const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    event.preventDefault();
+    helper.setTouched(false);
+  };
 
-    return (
-      <Component
-        rows={rows}
-        id={field.name || id}
-        {...restProps}
-        css={textareaVariants({
-          ...extractedVariants,
-          css,
-          _active,
-          _placeholder: {
-            fontSize: 14,
-            color: 'gray-70',
-            fontWeight: 'regular',
-            ..._placeholder,
-          },
-          _hover,
-        })}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        onChange={handleChange}
-        value={value || field.value}
-        ref={ref}
-      />
-    );
-  }
-);
+  React.useEffect(() => {
+    if (textareaRef.current && field.value) {
+      textareaRef.current.style.height = '100%';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [field.value, textareaRef.current]);
+
+  return (
+    <Component
+      rows={rows}
+      {...restProps}
+      id={field.name || id}
+      css={textareaVariants({
+        ...extractedVariants,
+        css,
+        _active,
+        _placeholder: {
+          fontSize: 14,
+          color: 'gray-60',
+          fontWeight: 'regular',
+          ..._placeholder,
+        },
+        _hover,
+      })}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      onChange={handleChange}
+      value={value || field.value}
+      ref={textareaRef}
+    />
+  );
+});
 
 export default Textarea;

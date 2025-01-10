@@ -37,6 +37,8 @@ export const CREATE_TRADE = gql`
       }
       createdBy {
         _id
+        isOnline
+        lastActive
         firstName
         lastName
         username
@@ -92,6 +94,8 @@ export const GET_USER_TRADES = gql`
       }
       createdBy {
         _id
+        isOnline
+        lastActive
         email
         avatar {
           url
@@ -111,8 +115,10 @@ export const GET_TRADE_BY_ID = gql`
       rate
       amount
       status
+      createdAt
       offer {
         _id
+        notes
         fiat {
           id
           name
@@ -121,11 +127,14 @@ export const GET_TRADE_BY_ID = gql`
         }
         type
         coin
+        timeout
         minLimit
         maxLimit
         createdBy {
           _id
           email
+          isOnline
+          lastActive
           avatar {
             url
           }
@@ -143,6 +152,124 @@ export const GET_TRADE_BY_ID = gql`
       }
       createdBy {
         _id
+        isOnline
+        lastActive
+        email
+        avatar {
+          url
+        }
+        username
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const COMPLETE_TRADE = gql`
+  mutation CompleteTrade($tradeId: ID!) {
+    completeTrade(tradeId: $tradeId) {
+      _id
+      rate
+      amount
+      status
+      createdAt
+      offer {
+        _id
+        notes
+        fiat {
+          id
+          name
+          sign
+          symbol
+        }
+        type
+        coin
+        timeout
+        minLimit
+        maxLimit
+        createdBy {
+          _id
+          email
+          isOnline
+          lastActive
+          avatar {
+            url
+          }
+          username
+          firstName
+          lastName
+        }
+        payment {
+          _id
+          method
+          details
+          bankAccountName
+          bankAccountNumber
+        }
+      }
+      createdBy {
+        _id
+        isOnline
+        lastActive
+        email
+        avatar {
+          url
+        }
+        username
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const CANCEL_TRADE = gql`
+  mutation CancelTrade($tradeId: ID!) {
+    cancelTrade(tradeId: $tradeId) {
+      _id
+      rate
+      amount
+      status
+      createdAt
+      offer {
+        _id
+        notes
+        fiat {
+          id
+          name
+          sign
+          symbol
+        }
+        type
+        coin
+        timeout
+        minLimit
+        maxLimit
+        createdBy {
+          _id
+          email
+          isOnline
+          lastActive
+          avatar {
+            url
+          }
+          username
+          firstName
+          lastName
+        }
+        payment {
+          _id
+          method
+          details
+          bankAccountName
+          bankAccountNumber
+        }
+      }
+      createdBy {
+        _id
+        isOnline
+        lastActive
         email
         avatar {
           url

@@ -7,7 +7,8 @@ namespace Trades {
     _id: string;
     rate: number;
     amount: number;
-    createAt: Date;
+    createdAt: Date;
+    status: string;
     wallet?: Wallet.Type;
     offer: Offer.Type;
     createdBy: User.Type;
@@ -22,12 +23,12 @@ namespace Trades {
         payload: { trade: Type };
       }
     | {
-        type: 'UPDATE_TRADE';
+        type: 'SET_CURRENT_TRADE';
         payload: { trade: Type };
       }
     | {
-        type: 'SET_CURRENT_TRADE';
-        payload: { trade: Type };
+        type: 'SET_TRADE_STATUS';
+        payload: { tradeId: string; status: string };
       };
 
   export type Context = {

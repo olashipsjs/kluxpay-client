@@ -17,7 +17,7 @@ namespace User {
     isOnline: boolean;
     referrals: number;
     createdAt: number;
-    lastActive: number;
+    lastActive: Date;
     dateOfBirth: string;
     referralCode: string;
     isEmailVerified: boolean;

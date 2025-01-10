@@ -72,7 +72,7 @@ const TradeFeature = () => {
                         fontWeight={'semibold'}
                         textTransform={'capitalize'}
                       >
-                        {trade.offer.createdBy?.username}
+                        {createdBy?.username}
                       </Heading>
                       <Text
                         mt={6}

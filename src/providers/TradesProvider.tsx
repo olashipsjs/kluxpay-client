@@ -23,15 +23,17 @@ const reducer = (state: Trades.State, action: Trades.Action): Trades.State => {
           : [action.payload.trade],
       };
 
-    case 'UPDATE_TRADE':
-      const updatedOffers = state.trades?.map((trade) => {
-        if (trade._id === action.payload.trade._id) {
-          return { ...trade, ...action.payload.trade };
-        }
-        return trade;
-      });
+    case 'SET_TRADE_STATUS':
+      const foundTrade = state.trades?.find(
+        (trade) => trade._id === action.payload.tradeId
+      );
 
-      return { ...state, trades: updatedOffers };
+      return {
+        ...state,
+        trade: foundTrade
+          ? { ...foundTrade, status: action.payload.status }
+          : foundTrade,
+      };
 
     case 'SET_CURRENT_TRADE':
       return {

@@ -1,11 +1,11 @@
 import Box from '@components/base/box/Box';
 import { Route, Routes } from 'react-router-dom';
 import TradeFeature from '@features/trade/Feature';
-import TradeChatFeature from '@features/trade-chat/Feature';
+import SingleTradeFeature from '@features/single-trade/Feature';
 
 const routes = [
   { path: '/', exact: false, main: <TradeFeature /> },
-  { path: '/:id', exact: false, main: <TradeChatFeature /> },
+  { path: '/:id', exact: false, main: <SingleTradeFeature /> },
 ];
 
 const Router = () => {
